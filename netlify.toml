@@ -1,0 +1,6 @@
+[[plugins]]
+    package = "netlify-plugin-cloudinary"
+
+    [plugins.inputs]
+    deliveryType = "upload"
+    folder = "cards"
