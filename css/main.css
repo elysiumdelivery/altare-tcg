@@ -1,5 +1,42 @@
 @import "card.css";
 
+body {
+  background: lightblue;
+}
+
+nav {
+  padding-bottom: 14px;
+}
+
+nav a {
+  padding: 15px;
+  background: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+nav a:hover:not(.active) {
+  background: grey;
+}
+
+video {
+  width: 100%;
+  height: auto;
+}
+
+section {
+  padding: 30px;
+  background: white;
+  border-radius: 20px;
+  border-top-left-radius: 0;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
 footer svg {
   width: 1em;
 }
