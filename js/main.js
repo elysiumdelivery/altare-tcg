@@ -4,7 +4,9 @@
 const card_list = document.getElementById("card-list");
 const CLOUD_NAME = "dazcxdgiy";
 const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
+const CSV_FILENAME = "Test Card List CSV.csv";
 
+//Holds the data of all cards after parsing the CSV file.
 let cards_data = {};
 
 //Custom Card component. Use it like this:
@@ -31,7 +33,7 @@ class Card extends HTMLElement {
 }
 
 function getCSV() {
-  Papa.parse("Test Card List CSV.csv", {
+  Papa.parse(CSV_FILENAME, {
     download: true,
     //To treat the first row as column titles
     header: true,
