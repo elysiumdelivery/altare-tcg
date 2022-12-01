@@ -3,6 +3,10 @@
 const card_list = document.getElementById("card-list");
 const CLOUD_NAME = "dazcxdgiy";
 const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
+const CSV_FILENAME = "Test Card List CSV.csv";
+
+//Holds the data of all cards after parsing the CSV file.
+let cards_data = {};
 
 //Custom Card component. Use it like this:
 //<tcg-card card-id="[CARD_ID]"></tcg-card>
@@ -27,6 +31,17 @@ class Card extends HTMLElement {
   }
 }
 
+function getCSV() {
+  Papa.parse(CSV_FILENAME, {
+    download: true,
+    //To treat the first row as column titles
+    header: true,
+    complete: (result) => {
+      cards_data = result.data;
+    },
+  });
+}
+
 //Renders some sample images from Cloudinary's sample folder using our Card component.
 function renderImages() {
   for (let i = 2; i <= 5; i++) {
@@ -40,6 +55,7 @@ function renderImages() {
 function main() {
   customElements.define("tcg-card", Card);
   renderImages();
+  getCSV();
 }
 
 main();
