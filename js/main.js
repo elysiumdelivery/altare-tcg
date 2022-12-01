@@ -1,5 +1,4 @@
 //Happy Birthday Leader! 🎇💙
-//import Papa from "papaparse"
 
 const card_list = document.getElementById("card-list");
 const CLOUD_NAME = "dazcxdgiy";
