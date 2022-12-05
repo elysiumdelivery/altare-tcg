@@ -1,33 +1,37 @@
 //Happy Birthday Leader! 🎇💙
 
-const card_list = document.getElementById("card-list");
+const CARD_LIST = document.getElementById("card-list");
+const GACHA_BUTTON = document.getElementById("gacha-button");
 const CLOUD_NAME = "dazcxdgiy";
 const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
-const CSV_FILENAME = "Test Card List CSV.csv";
+const CSV_FILENAME = "../Test Card List CSV.csv";
+const CARDS_PER_PULL = 10;
+let pathname = window.location.pathname;
+const CURRENT_PAGE = pathname.slice(pathname.lastIndexOf("/"), pathname.length);
 
 //Holds the data of all cards after parsing the CSV file.
-let cards_data = {};
+let cards_data = [];
 
 //Custom Card component. Use it like this:
-//<tcg-card card-id="[CARD_ID]"></tcg-card>
+//<tcg-card card-id="[COLLECTOR_NUMBER]"></tcg-card>
 class Card extends HTMLElement {
+  data = {};
+
   constructor() {
     super();
+    this.data = cards_data.find(
+      (card) => card["Collector Number"] == this.getAttribute("card-id")
+    );
     const image = document.createElement("img");
     image.src = this.getImageURL();
     image.classList.add("card-image");
     this.appendChild(image);
   }
 
-  //This returns an url of the form:
-  //`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/cld-sample-${CARD_ID}`
-  //if "card-id" isn't supplied it returns a F L O W E R 🌸 sample image url.
+  //Returns an url of the form:
+  //`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${RARITY}/${FILENAME}.png`
   getImageURL() {
-    return `${CLOUDINARY_URL}${
-      this.hasAttribute("card-id")
-        ? `cld-sample-${this.getAttribute("card-id")}`
-        : "sample.jpg"
-    }`;
+    return `${CLOUDINARY_URL}${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
   }
 }
 
@@ -38,24 +42,60 @@ function getCSV() {
     header: true,
     complete: (result) => {
       cards_data = result.data;
+      if (CURRENT_PAGE == "/index.html") {
+        renderCards(cards_data, CARD_LIST);
+      }
     },
   });
 }
 
-//Renders some sample images from Cloudinary's sample folder using our Card component.
-function renderImages() {
-  for (let i = 2; i <= 5; i++) {
-    card_list.insertAdjacentHTML(
+//Pulls n cards from the passed "cards" array using the Fisher-Yates Shuffle.
+function pullCards(cards, n) {
+  if (n <= 0) {
+    throw "n must be a positive integer bigger than 0";
+  }
+  let len = cards.length;
+  if (n > len) {
+    throw "Not enough elements in array";
+  }
+  let samples = [...cards];
+
+  while (len) {
+    let i = Math.floor(Math.random() * len--);
+    let j = samples[len];
+    samples[len] = samples[i];
+    samples[i] = j;
+  }
+  return samples.slice(0, n);
+}
+
+//Pulls "n" number of cards from the cards_data array and renders them in CARD_LIST.
+function pullGacha(n) {
+  let pulled = pullCards(cards_data, n);
+  renderCards(pulled, CARD_LIST, true);
+}
+
+//Renders a list of cards in the element specified in htmlLocation.
+//If replace is true, overwrites all elements inside htmlLocation.
+//else, adds the cards to the rest of the inner content.
+function renderCards(cards, htmlLocation, replace = false) {
+  if (replace) {
+    htmlLocation.innerHTML = "";
+  }
+  for (let i = 0; i < cards.length; i++) {
+    htmlLocation.insertAdjacentHTML(
       "beforeend",
-      `<tcg-card card-id="${i}"></tcg-card>`
+      `<tcg-card card-id="${cards[i]["Collector Number"]}"></tcg-card>`
     );
   }
 }
 
 function main() {
   customElements.define("tcg-card", Card);
-  renderImages();
   getCSV();
+  if (CURRENT_PAGE == "/gacha.html") {
+    GACHA_BUTTON.onclick = (event) => pullGacha(CARDS_PER_PULL);
+  }
 }
 
 main();
