@@ -8,6 +8,8 @@ const CSV_FILENAME = "../Test Card List CSV.csv";
 const CARDS_PER_PULL = 10;
 let pathname = window.location.pathname;
 const CURRENT_PAGE = pathname.slice(pathname.lastIndexOf("/"), pathname.length);
+const PAGES_WHERE_CARD_HIDDEN = ["/gacha.html"];
+const CARD_ART_HIDDEN_ON_LOAD = PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
 
 //Holds the data of all cards after parsing the CSV file.
 let cards_data = [];
@@ -29,12 +31,34 @@ async function defineCardComponent() {
       this.innerHTML = html;
       const image = this.getElementsByClassName("card-image")[0];
       image.src = this.getImageURL();
+      if (CARD_ART_HIDDEN_ON_LOAD) {
+        this.flipCard();
+        this.setupFlipping();
+      }
     }
 
     //Returns an url of the form:
     //`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${RARITY}/${FILENAME}.png`
     getImageURL() {
       return `${CLOUDINARY_URL}${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
+    }
+
+    flipCard() {
+      this.getElementsByClassName("card-back")[0].classList.toggle("hidden");
+      this.getElementsByClassName("card-front")[0].classList.toggle("hidden");
+    }
+
+    setupFlipping() {
+      const card_cover = this.getElementsByClassName("card-cover")[0];
+      card_cover.onclick = (event) => this.flipCard();
+      //Necessary for keyboard focus
+      card_cover.setAttribute("tabindex", 0);
+      //To allow flipping from keyboard
+      card_cover.onkeydown = (event) => {
+        if (event.key === "Enter") {
+          this.flipCard();
+        }
+      };
     }
   }
   customElements.define("tcg-card", Card);

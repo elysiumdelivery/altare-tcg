@@ -1,4 +1,18 @@
-.card-image {
+
+.card, .card-front, .card-back {
+    display: inline;
+}
+
+.hidden {
+    display: none;
+}
+
+.card-image, .card-cover {
     width: 20%;
     margin: 3%;
+}
+
+.card-cover {
+    border: solid;
+    border-color: dodgerblue;
 }
