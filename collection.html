@@ -19,22 +19,15 @@
     <!-- Enables media queries on mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter&family=Zen+Dots&display=swap" rel="stylesheet">
-    <style>@import url('https://fonts.googleapis.com/css2?family=Inter&family=Zen+Dots&display=swap');</style>
-
     <!-- CSS-->
     <link type="text/css" rel="stylesheet" href="css/main.css" />
-    <link type="text/css" rel="stylesheet" href="css/welcome.css" />
 
     <title>Regis Altare Booster Pack Simulator</title>
   </head>
 
   <body>
     <main>
-      <h1 id="page-header">The Regis Altare Birthday Project 2023</h1>
-      <br/>
+      <h1>The Regis Altare Birthday Project 2023</h1>
 
       <nav>
         <a class="active" href="index.html">Main Page</a>
@@ -42,10 +35,10 @@
         <a href="pages/message-board.html">Birthday Message Board</a>
       </nav>
 
-      <section id="welcome-splash">
-        <h2>Happy Birthday Altare!</h2>
-        <h3>Let's see what the Altventurers have made for you</h3>
-        <svg>down emote here</svg>
+      <section id="card-list">
+        <!--Test image serving-->
+        <img class="card-image" src="images/elysium_delivery_services.jpg" />
+        <tcg-card></tcg-card>
       </section>
 
       <footer>
@@ -65,15 +58,8 @@
       </footer>
     </main>
 
-    <div id="splash-overlay" class="active">
-      <span>Loading</span>
-      <span>.</span>
-      <span>.</span>
-      <span>.</span>
-    </div>
-
     <!-- Javascript must be at end so it can access the loaded DOM -->
     <script type="text/javascript" src="js/papaparse.min.js"></script>
-    <script type="text/javascript" src="js/welcome.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>
