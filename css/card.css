@@ -15,4 +15,5 @@
 .card-cover {
     border: solid;
     border-color: dodgerblue;
+    cursor: pointer;
 }
