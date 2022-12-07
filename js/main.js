@@ -14,25 +14,30 @@ let cards_data = [];
 
 //Custom Card component. Use it like this:
 //<tcg-card card-id="[COLLECTOR_NUMBER]"></tcg-card>
-class Card extends HTMLElement {
-  data = {};
+async function defineCardComponent() {
+  let html = await fetch("../card.html");
+  html = await html.text();
 
-  constructor() {
-    super();
-    this.data = cards_data.find(
-      (card) => card["Collector Number"] == this.getAttribute("card-id")
-    );
-    const image = document.createElement("img");
-    image.src = this.getImageURL();
-    image.classList.add("card-image");
-    this.appendChild(image);
-  }
+  class Card extends HTMLElement {
+    data = {};
 
-  //Returns an url of the form:
-  //`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${RARITY}/${FILENAME}.png`
-  getImageURL() {
-    return `${CLOUDINARY_URL}${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
+    constructor() {
+      super();
+      this.data = cards_data.find(
+        (card) => card["Collector Number"] == this.getAttribute("card-id")
+      );
+      this.innerHTML = html;
+      const image = this.getElementsByClassName("card-image")[0];
+      image.src = this.getImageURL();
+    }
+
+    //Returns an url of the form:
+    //`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${RARITY}/${FILENAME}.png`
+    getImageURL() {
+      return `${CLOUDINARY_URL}${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
+    }
   }
+  customElements.define("tcg-card", Card);
 }
 
 function getCSV() {
@@ -90,8 +95,8 @@ function renderCards(cards, htmlLocation, replace = false) {
   }
 }
 
-function main() {
-  customElements.define("tcg-card", Card);
+async function main() {
+  await defineCardComponent();
   getCSV();
   if (CURRENT_PAGE == "/gacha.html") {
     GACHA_BUTTON.onclick = (event) => pullGacha(CARDS_PER_PULL);
