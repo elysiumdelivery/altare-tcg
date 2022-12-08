@@ -1,6 +1,6 @@
 //Happy Birthday Leader! 🎇💙
 
-const CARD_LIST = document.getElementById("card-list");
+const COLLECTIONS_MAIN_CONTENT = document.getElementById("card-list");
 const GACHA_BUTTON = document.getElementById("gacha-button");
 const CLOUD_NAME = "dazcxdgiy";
 const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
@@ -22,6 +22,8 @@ async function defineCardComponent() {
 
   class Card extends HTMLElement {
     data = {};
+    front;
+    back;
 
     constructor() {
       super();
@@ -29,11 +31,13 @@ async function defineCardComponent() {
         (card) => card["Collector Number"] == this.getAttribute("card-id")
       );
       this.innerHTML = html;
+      this.front = this.getElementsByClassName("card-front")[0];
+      this.back = this.getElementsByClassName("card-back")[0];
       const image = this.getElementsByClassName("card-image")[0];
       image.src = this.getImageURL();
+      this.setupOnClickEvents();
       if (CARD_ART_HIDDEN_ON_LOAD) {
         this.flipCard();
-        this.setupFlipping();
       }
     }
 
@@ -44,35 +48,28 @@ async function defineCardComponent() {
     }
 
     flipCard() {
-      this.getElementsByClassName("card-back")[0].classList.toggle("hidden");
-      this.getElementsByClassName("card-front")[0].classList.toggle("hidden");
+      this.front.classList.toggle("hidden");
+      this.back.classList.toggle("hidden");
     }
 
-    setupFlipping() {
-      const card_cover = this.getElementsByClassName("card-cover")[0];
-      card_cover.onclick = (event) => this.flipCard();
-      //Necessary for keyboard focus
-      card_cover.setAttribute("tabindex", 0);
-      //To allow flipping from keyboard
-      card_cover.onkeydown = (event) => {
-        if (event.key === "Enter") {
-          this.flipCard();
-        }
-      };
+    //Binds the card's onclick events to flip and show the description popup.
+    setupOnClickEvents() {
+      this.back.onclick = (event) => this.flipCard();
+      this.front.onclick = (event) => alert("TODO: Description popup.");
     }
   }
   customElements.define("tcg-card", Card);
 }
 
-function getCSV() {
+function getCSVAndMaybeRenderCollection() {
   Papa.parse(CSV_FILENAME, {
     download: true,
     //To treat the first row as column titles
     header: true,
     complete: (result) => {
       cards_data = result.data;
-      if (CURRENT_PAGE == "/index.html") {
-        renderCards(cards_data, CARD_LIST);
+      if (CURRENT_PAGE == "/collection.html") {
+        renderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
       }
     },
   });
@@ -99,9 +96,9 @@ function pullCards(cards, n) {
 }
 
 //Pulls "n" number of cards from the cards_data array and renders them in CARD_LIST.
-function pullGacha(n) {
+function pullAndRenderCards(n) {
   let pulled = pullCards(cards_data, n);
-  renderCards(pulled, CARD_LIST, true);
+  renderCards(pulled, COLLECTIONS_MAIN_CONTENT, true);
 }
 
 //Renders a list of cards in the element specified in htmlLocation.
@@ -121,9 +118,9 @@ function renderCards(cards, htmlLocation, replace = false) {
 
 async function main() {
   await defineCardComponent();
-  getCSV();
+  getCSVAndMaybeRenderCollection();
   if (CURRENT_PAGE == "/gacha.html") {
-    GACHA_BUTTON.onclick = (event) => pullGacha(CARDS_PER_PULL);
+    GACHA_BUTTON.onclick = (event) => pullAndRenderCards(CARDS_PER_PULL);
   }
 }
 

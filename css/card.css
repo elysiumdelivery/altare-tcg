@@ -3,17 +3,27 @@
     display: inline;
 }
 
-.hidden {
-    display: none;
+/* Override default button styling */
+.card-front, .card-back {
+    display: inline;
+    width: 200px;
+    margin: 3%;
+    border: 0;
+    padding: 0;
+    background: none;
+    cursor: pointer;
 }
 
 .card-image, .card-cover {
-    width: 20%;
-    margin: 3%;
+    width: 100%;
 }
 
 .card-cover {
+    margin: 3%;
     border: solid;
     border-color: dodgerblue;
-    cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }
