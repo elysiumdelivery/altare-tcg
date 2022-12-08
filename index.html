@@ -33,18 +33,11 @@
 
   <body>
     <main>
-      <!-- <h1 id="page-header">The Regis Altare Birthday Project 2023</h1>
-      <br/> -->
-
-      <!-- <nav>
-        <a class="active" href="index.html">Main Page</a>
-        <a href="collection.html">Collection</a>
-        <a href="pages/message-board.html">Birthday Message Board</a>
-      </nav> -->
 
       <section id="welcome-splash-1" class="welcome-splash">
         <h2>Happy Birthday Altare!</h2>
         <h3>Let's see what the Altventurers have made for you</h3>
+        <!-- TODO: change this to an svg or img of an arrow -->
         <button onclick="toggleWelcomeTwo()">arrow</button>
       </section>
 
@@ -53,12 +46,18 @@
         <nav id="welcome-nav">
           <a href="index.html">Play Gacha</a>
           <a href="collection.html">Full Deck</a>
-          <a href="collection.html">Artist/Writer Bday Messages</a>
+          <a href="pages/messages.html">Artist/Writer Bday Messages</a>
           <a href="pages/message-board.html">Kudoboard</a>
           <a href="pages/credits.html">Credits</a>
         </nav>
       </section>
 
+      <div id="splash-overlay" class="active">
+        <span>Loading</span>
+        <span>.</span>
+        <span>.</span>
+        <span>.</span>
+      </div>
       
       <footer>
         <a href="https://github.com/elysiumdelivery/altare-tcg"
@@ -76,13 +75,6 @@
         >
       </footer>
     </main>
-
-    <div id="splash-overlay" class="active">
-      <span>Loading</span>
-      <span>.</span>
-      <span>.</span>
-      <span>.</span>
-    </div>
 
     <!-- Javascript must be at end so it can access the loaded DOM -->
     <script type="text/javascript" src="js/papaparse.min.js"></script>

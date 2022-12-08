@@ -1,4 +1,4 @@
-@import "style.css";
+/* welcome page styling goes here */
 
 #welcome-splash-1 {
     margin: 5em auto;
@@ -25,6 +25,7 @@
     justify-content: center;
 
     width: 75%;
+    min-height: 70vh;
 
     opacity: 0;
     transform: translateY(-25%);
