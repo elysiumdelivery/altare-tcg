@@ -4,9 +4,6 @@
 body {
   background: var(--accent-color);
   font-family: 'Inter', sans-serif;
-
-  max-width: 80vmax;
-  margin: auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -41,3 +38,4 @@ footer svg {
   color: white;
   text-shadow: 4px 4px 1px rgb(13 66 163), -3px -3px 1px rgb(148 186 255);
 }
+
