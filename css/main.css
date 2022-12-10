@@ -12,7 +12,7 @@ font-family: 'Inter', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-font-family: 'Zen Dots', cursive;
+font-family: 'Zen Dots', fantasy;
 }
 
 video {
@@ -44,3 +44,13 @@ footer svg {
   text-shadow: 4px 4px 1px rgb(13 66 163), -3px -3px 1px rgb(148 186 255);
 }
 
+/* screen reader friendly styling */
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}

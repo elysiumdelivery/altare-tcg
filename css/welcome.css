@@ -1,14 +1,14 @@
 /* welcome page styling goes here */
 
-#welcome-splash-1 {
+#welcome-message {
     margin: 5em auto;
 }
-#welcome-splash-1.active.scroll-up {
+#welcome-message.active.scroll-up {
     opacity: 0;
     transform: translateY(25%);
 }
 
-#welcome-splash-2 {
+#welcome-fancy-menu {
     position: absolute;
     top: 0;
     left: 10%;
@@ -46,7 +46,6 @@
     position: absolute;
     top: 0;
     left: auto;
-    /* width: 100%; */
     max-height: 100vh;
     animation-name: alt-float;
     animation-duration: 5s;
@@ -93,11 +92,18 @@
     transform: scale(1);
 }
 
+#welcome-nav a.special-nav-card {
+    /* border gradient only seems to work when adding it to the bg property */
+    border-color: transparent;
+    background: linear-gradient(45deg, #a7daf5, #ffffff, #a7daf5) padding-box,
+                linear-gradient(45deg, gold, #ffffff, gold) border-box;
+}
+
 #welcome-nav a:hover, #welcome-nav a:focus-visible {
     box-shadow: 2px 2px 5px var(--accent-color), -2px -2px 5px var(--accent-color);
 }
 
-#splash-overlay {
+#loading-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -116,13 +122,13 @@
     pointer-events: none;
 }
 
-#splash-overlay.active {
+#loading-overlay.active {
     transform: translateY(0%);
     opacity: 1;
     pointer-events: auto;
 }
 
-#splash-overlay span {
+#loading-overlay span {
 
     margin: 0 0.15em;
 
@@ -131,7 +137,7 @@
     color: white;
     text-shadow: 2px 2px 1px rgb(105, 158, 255);
 
-    animation-name: splash-overlay-loading-hop;
+    animation-name: loading-overlay-loading-hop;
     animation-timing-function: ease-in-out;
     animation-duration: 0.8s;
     animation-iteration-count: infinite;
@@ -141,17 +147,17 @@
     transform-origin: 50% 100%;
 }
 
-#splash-overlay span:nth-child(2) {
+#loading-overlay span:nth-child(2) {
     animation-delay: 0.25s;
 }
-#splash-overlay span:nth-child(3) {
+#loading-overlay span:nth-child(3) {
     animation-delay: 0.5s;
 }
-#splash-overlay span:nth-child(4) {
+#loading-overlay span:nth-child(4) {
     animation-delay: 0.75s;
 }
 
-@keyframes splash-overlay-loading-hop {
+@keyframes loading-overlay-loading-hop {
     0% {
         transform: translateY(0%);
     }
@@ -185,7 +191,7 @@
         max-height: 100vh;
     }
 
-    #welcome-splash-2 {
+    #welcome-fancy-menu {
         top: 0;
         left: 0;
         width: 100%;
@@ -225,9 +231,9 @@
     }
     
     #welcome-nav a:nth-child(1) {
-        top: 5%;
-        left: 7%;
-        transform: scale(1) rotate3d(0.5, 1, 0, 30deg);
+        bottom: 0%;
+        left: 42%;
+        transform: scale(1.15) rotate3d(0.5, 0.25, -0.5, 30deg);
     }
     #welcome-nav a:nth-child(2) {
         top: 37%;
@@ -245,8 +251,8 @@
         transform: scale(1) rotate3d(0.25, -1, 0.25, 30deg);
     }
     #welcome-nav a:nth-child(5) {
-        bottom: 3%;
-        left: 42%;
-        transform: scale(1) rotate3d(0.5, 0.25, -0.5, 30deg)
+        top: 5%;
+        left: 7%;
+        transform: scale(1) rotate3d(0.5, 1, 0, 30deg);
     }
 }

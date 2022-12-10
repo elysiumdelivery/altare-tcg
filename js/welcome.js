@@ -1,6 +1,6 @@
-const splash_overlay = document.getElementById("splash-overlay");
-const welcome_splash_1 = document.getElementById("welcome-splash-1");
-const welcome_splash_2 = document.getElementById("welcome-splash-2");
+const loading_overlay = document.getElementById("loading-overlay");
+const welcome_message = document.getElementById("welcome-message");
+const welcome_fancy_menu = document.getElementById("welcome-fancy-menu");
 
 
 // temp callback to remove splash overlay screen for now.
@@ -8,12 +8,19 @@ const welcome_splash_2 = document.getElementById("welcome-splash-2");
 document.body.onload = function () {
     setTimeout(function () {
         window.scrollTo(0, 0)
-        splash_overlay.classList.remove("active");
-        welcome_splash_1.classList.add("active");
+        loading_overlay.classList.remove("active");
+        welcome_message.classList.remove("visually-hidden");
+        setTimeout(function () {
+            loading_overlay.classList.add("visually-hidden");
+            welcome_message.classList.add("active");
+        }, 100);
     }, 2000);
 }
 
 function toggleWelcomeTwo () {
-    welcome_splash_1.classList.add("scroll-up");
-    welcome_splash_2.classList.add("active");
+    welcome_message.classList.add("scroll-up");
+    welcome_fancy_menu.classList.remove("visually-hidden");
+    setTimeout(function () {
+        welcome_fancy_menu.classList.add("active");
+    }, 100);
 }
