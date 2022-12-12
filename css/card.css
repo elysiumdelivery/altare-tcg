@@ -1,29 +1,85 @@
-
-.card, .card-front, .card-back {
-    display: inline;
+.card,
+.card-front,
+.card-back {
+  display: inline;
 }
 
 /* Override default button styling */
-.card-front, .card-back {
-    display: inline;
-    width: 200px;
-    margin: 3%;
-    border: 0;
-    padding: 0;
-    background: none;
-    cursor: pointer;
+.card-front,
+.card-back {
+  display: inline;
+  width: 200px;
+  margin: 3%;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
 }
 
-.card-image, .card-cover {
-    width: 100%;
+.card-image,
+.card-cover {
+  width: 100%;
 }
 
 .card-cover {
-    margin: 3%;
-    border: solid;
-    border-color: dodgerblue;
+  margin: 3%;
+  border: solid;
+  border-color: dodgerblue;
 }
 
-.hidden {
-    display: none;
+.dialog-title {
+  grid-area: head;
+  text-align: center;
+}
+
+.details-dialog-card {
+  width: 300px;
+  grid-area: card;
+}
+
+.details-dialog-text {
+  padding: 0 30px;
+  overflow: auto;
+  grid-area: text;
+}
+
+#card-details-dialog-close {
+  grid-area: x;
+}
+
+[role="alertdialog"],
+[role="dialog"] {
+  top: 2rem;
+  left: 50vw; /* move to the middle of the screen (assumes relative parent is the body/viewport) */
+  transform: translateX(-50%); /* move backwards 50% of this element's width */
+  position: fixed;
+  box-sizing: border-box;
+  padding: 15px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background-color: #fff;
+  height: 90%;
+  width: 90%;
+  display: grid;
+  grid-template-areas:
+    ".     x"
+    "head  head"
+    "card  text"
+    "card  text";
+}
+
+@media screen and (max-width: 1000px) {
+  [role="dialog"] {
+    grid-template-areas:
+      ".     x"
+      "head  head"
+      "text  text"
+      "card  card";
+    overflow: auto;
+  }
+
+  .details-dialog-text {
+    /* Override overflow: auto for small screens, and let whole dialog scroll instead of just the text section */
+    overflow: visible;
+  }
 }

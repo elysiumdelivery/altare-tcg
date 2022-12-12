@@ -10,6 +10,10 @@ let pathname = window.location.pathname;
 const CURRENT_PAGE = pathname.slice(pathname.lastIndexOf("/"), pathname.length);
 const PAGES_WHERE_CARD_HIDDEN = ["/gacha.html"];
 const CARD_ART_HIDDEN_ON_LOAD = PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
+const DETAILS_DIALOG = document.getElementById("card-details-dialog");
+const DETAILS_DIALOG_CLOSE = document.getElementById(
+  "card-details-dialog-close"
+);
 
 //Holds the data of all cards after parsing the CSV file.
 let cards_data = [];
@@ -55,10 +59,43 @@ async function defineCardComponent() {
     //Binds the card's onclick events to flip and show the description popup.
     setupOnClickEvents() {
       this.back.onclick = (event) => this.flipCard();
-      this.front.onclick = (event) => alert("TODO: Description popup.");
+      this.front.onclick = (event) => this.showDetails();
+    }
+
+    showDetails() {
+      showDetailsDialog(this.data, this.getImageURL());
     }
   }
   customElements.define("tcg-card", Card);
+}
+
+function showDetailsDialog(data, cardUrl) {
+  DETAILS_DIALOG.classList.remove("hidden");
+  DETAILS_DIALOG.getElementsByClassName("dialog-title")[0].innerHTML = "";
+  DETAILS_DIALOG.getElementsByClassName("dialog-title")[0].insertAdjacentHTML(
+    "beforeend",
+    `
+    <h2 class="card-name">${data["Card Display Name"]}</h2>
+    <p>${data["Card Level"]} | ${data["Card HP"]}HP |  ${data["Card Element"]} |  #${data["Collector Number"]}</p>
+    <p>Artist: ${data["Artist Credit"]} | Writer: ${data["Writer Credit"]}</p>
+  `
+  );
+  DETAILS_DIALOG.getElementsByClassName("details-dialog-card")[0].src = cardUrl;
+  DETAILS_DIALOG.getElementsByClassName("details-dialog-text")[0].innerHTML =
+    "";
+  DETAILS_DIALOG.getElementsByClassName(
+    "details-dialog-text"
+  )[0].insertAdjacentHTML(
+    "beforeend",
+    `
+    <h3>${data["Attack 1 Name"]}</h3>
+    <p>${data["Attack 1 Description"]}</p>
+    <p><i>${data["Attack 1 Extended Lore"]}</i></p>
+    <h3>${data["Attack 2 Name"]}</h3>
+    <p>${data["Attack 2 Description"]}</p>
+    <p><i>${data["Attack 2 Extended Lore"]}</i></p>
+  `
+  );
 }
 
 function getCSVAndMaybeRenderCollection() {
@@ -121,6 +158,10 @@ async function main() {
   getCSVAndMaybeRenderCollection();
   if (CURRENT_PAGE == "/gacha.html") {
     GACHA_BUTTON.onclick = (event) => pullAndRenderCards(CARDS_PER_PULL);
+  }
+  if (CURRENT_PAGE == "/gacha.html" || CURRENT_PAGE == "/collection.html") {
+    DETAILS_DIALOG_CLOSE.onclick = (event) =>
+      DETAILS_DIALOG.classList.add("hidden");
   }
 }
 

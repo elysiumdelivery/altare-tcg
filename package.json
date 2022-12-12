@@ -1,7 +1,12 @@
 {
   "name": "altare-tcg",
   "version": "0.0.1",
+  "type": "module",
   "dependencies": {
-    "prettier": "2.7.1"
+    "a11y-dialog": "^7.5.2"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "prettier": "^2.7.1"
   }
 }

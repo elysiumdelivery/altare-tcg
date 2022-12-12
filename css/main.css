@@ -40,3 +40,7 @@ footer {
 footer svg {
   width: 1em;
 }
+
+.hidden {
+  display: none;
+}
