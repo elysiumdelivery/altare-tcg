@@ -30,22 +30,12 @@
       <h1>The Regis Altare Birthday Project 2023</h1>
 
       <nav>
-        <a href="../pages/collection.html">Collection</a>
+        <a class="active" href="../pages/collection.html">Collection</a>
         <a href="../pages/gacha.html">Gacha</a>
-        <a class="active" href="../pages/message-board.html">Birthday Message Board</a>
+        <a href="../pages/message-board.html">Birthday Message Board</a>
       </nav>
 
-      <section>
-        <a href="https://www.kudoboard.com/boards/qQ8344eM" target="_blank"
-          >Go to message wall</a
-        >
-        <video autoplay muted loop controls>
-          <source
-            src="https://res.cloudinary.com/dazcxdgiy/video/upload/v1669320701/kudoboard_qbu1gi.mp4"
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
+      <section id="card-list">
       </section>
 
       <footer>
@@ -64,5 +54,9 @@
         >
       </footer>
     </main>
+
+    <!-- Javascript must be at end so it can access the loaded DOM -->
+    <script type="text/javascript" src="../js/papaparse.min.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
   </body>
 </html>
