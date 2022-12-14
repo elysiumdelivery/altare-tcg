@@ -9,9 +9,7 @@ document.body.onload = function () {
     setTimeout(function () {
         window.scrollTo(0, 0)
         loading_overlay.classList.remove("active");
-        welcome_message.classList.remove("visually-hidden");
         setTimeout(function () {
-            loading_overlay.classList.add("visually-hidden");
             welcome_message.classList.add("active");
         }, 100);
     }, 2000);
@@ -19,7 +17,6 @@ document.body.onload = function () {
 
 function toggleWelcomeTwo () {
     welcome_message.classList.add("scroll-up");
-    welcome_fancy_menu.classList.remove("visually-hidden");
     setTimeout(function () {
         welcome_fancy_menu.classList.add("active");
     }, 100);

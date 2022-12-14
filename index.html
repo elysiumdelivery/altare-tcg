@@ -33,15 +33,15 @@
 
   <body>
     <main>
-      <section id="welcome-message" class="welcome-splash visually-hidden" role="region" aria-live="polite">
+      <section id="welcome-message" class="welcome-splash" aria-live="polite">
         <h2>Happy Birthday Altare!</h2>
         <h3>Let's see what the Altventurers have made for you</h3>
         <!-- TODO: change this to an svg or img of an arrow -->
         <button onclick="toggleWelcomeTwo()">arrow</button>
       </section>
 
-      <section id="welcome-fancy-menu" class="welcome-splash visually-hidden" role="region" aria-live="polite">
-        <img id="altare-img" src="images/AltareSplash.png" />
+      <section id="welcome-fancy-menu" class="welcome-splash">
+        <img id="altare-img" src="images/AltareSplash.png" alt="A full screen splash of Altare jumping down from above"/>
         <nav id="welcome-nav">
           <a class="special-nav-card" href="index.html">Play Gacha</a>
           <a href="collection.html">Full Deck</a>
@@ -52,7 +52,7 @@
       </section>
 
       <div id="loading-overlay" class="active">
-        <span>Loading</span>
+        <span aria-live="polite">Loading</span>
         <span>.</span>
         <span>.</span>
         <span>.</span>
