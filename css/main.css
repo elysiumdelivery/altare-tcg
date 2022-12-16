@@ -43,3 +43,13 @@ footer svg {
   color: white;
   text-shadow: 4px 4px 1px rgb(13 66 163), -3px -3px 1px rgb(148 186 255);
 }
+
+.visually-hidden:not(:focus):not(:active) {
+  clip: rect(0 0 0 0); 
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; 
+  width: 1px;
+}

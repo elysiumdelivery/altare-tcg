@@ -1,5 +1,6 @@
 const loading_overlay = document.getElementById("loading-overlay");
 const welcome_message = document.getElementById("welcome-message");
+const welcome_message_button = document.getElementById("welcome-splash-button");
 const welcome_fancy_menu = document.getElementById("welcome-fancy-menu");
 
 
@@ -17,6 +18,7 @@ document.body.onload = function () {
 
 function toggleWelcomeTwo () {
     welcome_message.classList.add("scroll-up");
+    welcome_message.setAttribute('aria-hidden', 'true');
     setTimeout(function () {
         welcome_fancy_menu.classList.add("active");
     }, 100);

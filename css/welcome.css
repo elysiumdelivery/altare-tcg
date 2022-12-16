@@ -6,6 +6,7 @@
 #welcome-message.active.scroll-up {
     opacity: 0;
     transform: translateY(25%);
+    visibility: hidden;
 }
 
 #welcome-fancy-menu {
@@ -30,6 +31,7 @@
     opacity: 0;
     transform: translateY(-25%);
     transition: 1s transform ease 0.25s, 1s opacity ease 0.25s;
+    visibility: hidden;
 
     pointer-events: none;
 
@@ -40,6 +42,7 @@
     opacity: 1;
     transform: translateY(0%) !important;
     pointer-events: auto;
+    visibility: visible;
 }
 
 #altare-img {
@@ -110,6 +113,7 @@
     width: 100vw;
     height: 100vh;
     background-color: var(--accent-color);
+    z-index: 999;
 
     display: flex;
     flex-direction: row;
@@ -120,12 +124,14 @@
     transform: translateY(-100%);
     opacity: 0;
     pointer-events: none;
+    visibility: hidden;
 }
 
 #loading-overlay.active {
     transform: translateY(0%);
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
 }
 
 #loading-overlay span {
