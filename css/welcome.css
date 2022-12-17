@@ -1,0 +1,264 @@
+/* welcome page styling goes here */
+
+#welcome-message {
+    margin: 5em auto;
+}
+#welcome-message.active.scroll-up {
+    opacity: 0;
+    transform: translateY(25%);
+    visibility: hidden;
+}
+
+#welcome-fancy-menu {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+
+    padding: 0;
+    background-color: transparent;
+}
+
+.welcome-splash {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 75%;
+    min-height: 70vh;
+
+    opacity: 0;
+    transform: translateY(-25%);
+    transition: 1s transform ease 0.25s, 1s opacity ease 0.25s;
+    visibility: hidden;
+
+    pointer-events: none;
+
+    text-align: center;
+}
+
+.welcome-splash.active, .welcome-splash.active #welcome-nav {
+    opacity: 1;
+    transform: translateY(0%) !important;
+    pointer-events: auto;
+    visibility: visible;
+}
+
+#altare-img {
+    position: absolute;
+    top: 0;
+    left: auto;
+    max-height: 100vh;
+    animation-name: alt-float;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+    animation-direction: alternate;
+    animation-timing-function: ease;
+}
+
+#welcome-nav {
+    position: absolute;
+    top: calc(50% - 25vmin);
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100vmin;
+    transition: 1s transform ease;
+    transition-delay: 0.5s;
+    transform: translateY(-25%);
+}
+
+#welcome-nav a {
+    position: absolute;
+    width: 16vmin;
+    height: 20vmin;
+    background: white;
+    border-radius: 5px;
+    border: 5px solid gray;
+
+    box-sizing: border-box;
+    padding: 1em;
+
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: var(--accent-color);
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.25s transform ease, 0.25s box-shadow ease;
+    transform: scale(1);
+}
+
+#welcome-nav a.special-nav-card {
+    /* border gradient only seems to work when adding it to the bg property */
+    border-color: transparent;
+    background: linear-gradient(45deg, #a7daf5, #ffffff, #a7daf5) padding-box,
+                linear-gradient(45deg, gold, #ffffff, gold) border-box;
+}
+
+#welcome-nav a:hover, #welcome-nav a:focus-visible {
+    box-shadow: 2px 2px 5px var(--accent-color), -2px -2px 5px var(--accent-color);
+}
+
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--accent-color);
+    z-index: 999;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.5s transform ease-in, 0.5s opacity ease;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+#loading-overlay.active {
+    transform: translateY(0%);
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+}
+
+#loading-overlay span {
+
+    margin: 0 0.15em;
+
+    font-style: italic;
+    font-size: 2em;
+    color: white;
+    text-shadow: 2px 2px 1px rgb(105, 158, 255);
+
+    animation-name: loading-overlay-loading-hop;
+    animation-timing-function: ease-in-out;
+    animation-duration: 0.8s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+
+    transform-origin: 50% 100%;
+}
+
+#loading-overlay span:nth-child(2) {
+    animation-delay: 0.25s;
+}
+#loading-overlay span:nth-child(3) {
+    animation-delay: 0.5s;
+}
+#loading-overlay span:nth-child(4) {
+    animation-delay: 0.75s;
+}
+
+@keyframes loading-overlay-loading-hop {
+    0% {
+        transform: translateY(0%);
+    }
+    100% {
+        transform: translateY(-50%);
+    }
+}
+
+@keyframes alt-float {
+    0% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(10px);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    main {
+        position: absolute;
+        top: 0;
+        left: 0;
+        /* prevent horiz scrolling */
+        overflow-x: hidden; 
+    }
+
+    #altare-img {
+        top: calc(50% - 80vmin);
+        right: 0;
+        width: 100%;
+        max-height: 100vh;
+    }
+
+    #welcome-fancy-menu {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+    }
+
+    #welcome-nav {
+        position: absolute;
+        bottom: 1em;
+        right: 0;
+        top: auto;
+        height: 100%;
+        max-height: none;
+        padding: 2em;
+
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        align-items: flex-end;
+        justify-content: flex-end;
+    }
+
+    #welcome-nav a {
+        position: relative;
+        width: 50%;
+        height: auto;
+        transform: none;
+        padding: 0.75em 0.5em;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+
+    #welcome-nav a:hover, #welcome-nav a:focus-visible {
+        transform: scale(1.1) rotate3d(0, 0, 0, 0deg) !important;
+    }
+    
+    #welcome-nav a:nth-child(1) {
+        bottom: 0%;
+        left: 42%;
+        transform: scale(1.15) rotate3d(0.5, 0.25, -0.5, 30deg);
+    }
+    #welcome-nav a:nth-child(2) {
+        top: 37%;
+        left: 10%;
+        transform: scale(1) rotate3d(-0.5, 1, 0, 30deg);
+    }
+    #welcome-nav a:nth-child(3) {
+        right: 14%;
+        bottom: 15%;
+        transform: scale(1) rotate3d(0.85, -1, 0, 30deg);
+    }
+    #welcome-nav a:nth-child(4) {
+        top: 25%;
+        right: 5%;
+        transform: scale(1) rotate3d(0.25, -1, 0.25, 30deg);
+    }
+    #welcome-nav a:nth-child(5) {
+        top: 5%;
+        left: 7%;
+        transform: scale(1) rotate3d(0.5, 1, 0, 30deg);
+    }
+}
