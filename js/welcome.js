@@ -18,7 +18,6 @@ document.body.onload = function () {
 
 function toggleWelcomeTwo () {
     welcome_message.classList.add("scroll-up");
-    welcome_message.setAttribute('aria-hidden', 'true');
     setTimeout(function () {
         welcome_fancy_menu.classList.add("active");
     }, 100);
