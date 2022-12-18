@@ -91,7 +91,7 @@ function updateDetailsDialog(data, cardUrl) {
     "beforeend",
     `
     <h2 class="card-name">${data["Card Display Name"]}</h2>
-    <p>${data["Card Level"]} | ${data["Card HP"]}HP |  ${data["Card Element"]} |  #${data["Collector Number"]}</p>
+    <p>Level: ${data["Card Level"]} | HP: ${data["Card HP"]} |  Element: ${data["Card Element"]} |  Card #: ${data["Collector Number"]}</p>
     <p>Artist: ${data["Artist Credit"]} | Writer: ${data["Writer Credit"]}</p>
   `
   );
