@@ -10,10 +10,8 @@ let pathname = window.location.pathname;
 const CURRENT_PAGE = pathname.slice(pathname.lastIndexOf("/"), pathname.length);
 const PAGES_WHERE_CARD_HIDDEN = ["/gacha.html"];
 const CARD_ART_HIDDEN_ON_LOAD = PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
-const DETAILS_DIALOG = document.getElementById("card-details-dialog");
-const DETAILS_DIALOG_CLOSE = document.getElementById(
-  "card-details-dialog-close"
-);
+let DETAILS_DIALOG_EL = null;
+let DETAILS_DIALOG_A11Y = null;
 
 //Holds the data of all cards after parsing the CSV file.
 let cards_data = [];
@@ -63,16 +61,33 @@ async function defineCardComponent() {
     }
 
     showDetails() {
-      showDetailsDialog(this.data, this.getImageURL());
+      updateDetailsDialog(this.data, this.getImageURL());
+      DETAILS_DIALOG_A11Y.show();
     }
   }
   customElements.define("tcg-card", Card);
 }
 
-function showDetailsDialog(data, cardUrl) {
-  DETAILS_DIALOG.classList.remove("hidden");
-  DETAILS_DIALOG.getElementsByClassName("dialog-title")[0].innerHTML = "";
-  DETAILS_DIALOG.getElementsByClassName("dialog-title")[0].insertAdjacentHTML(
+async function setupDetailsDialog() {
+  // Don't make another dialog container if a previous page already set it up
+  if (document.getElementById("card-details-dialog")) {
+    return;
+  }
+  let html = await fetch("../details-dialog.html");
+  html = await html.text();
+  document.body.innerHTML += html;
+  DETAILS_DIALOG_EL = document.getElementById("card-details-dialog");
+  // A11yDialog handles toggling accessibility properties when the dialog shows/ hides,
+  // as well as closing on esc, clicking outside of the dialog, etc.
+  DETAILS_DIALOG_A11Y = new A11yDialog(document.getElementById("card-details"));
+}
+
+function updateDetailsDialog(data, cardUrl) {
+  // Header
+  DETAILS_DIALOG_EL.getElementsByClassName("dialog-title")[0].innerHTML = "";
+  DETAILS_DIALOG_EL.getElementsByClassName(
+    "dialog-title"
+  )[0].insertAdjacentHTML(
     "beforeend",
     `
     <h2 class="card-name">${data["Card Display Name"]}</h2>
@@ -80,10 +95,13 @@ function showDetailsDialog(data, cardUrl) {
     <p>Artist: ${data["Artist Credit"]} | Writer: ${data["Writer Credit"]}</p>
   `
   );
-  DETAILS_DIALOG.getElementsByClassName("details-dialog-card")[0].src = cardUrl;
-  DETAILS_DIALOG.getElementsByClassName("details-dialog-text")[0].innerHTML =
+  // Card
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].src =
+    cardUrl;
+  // Clear + set card metadata
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
     "";
-  DETAILS_DIALOG.getElementsByClassName(
+  DETAILS_DIALOG_EL.getElementsByClassName(
     "details-dialog-text"
   )[0].insertAdjacentHTML(
     "beforeend",
@@ -156,12 +174,12 @@ function renderCards(cards, htmlLocation, replace = false) {
 async function main() {
   await defineCardComponent();
   getCSVAndMaybeRenderCollection();
-  if (CURRENT_PAGE == "/gacha.html") {
-    GACHA_BUTTON.onclick = (event) => pullAndRenderCards(CARDS_PER_PULL);
-  }
-  if (CURRENT_PAGE == "/gacha.html" || CURRENT_PAGE == "/collection.html") {
-    DETAILS_DIALOG_CLOSE.onclick = (event) =>
-      DETAILS_DIALOG.classList.add("hidden");
+  switch (CURRENT_PAGE) {
+    case "/gacha.html":
+      GACHA_BUTTON.onclick = (event) => pullAndRenderCards(CARDS_PER_PULL);
+      await setupDetailsDialog();
+    case "/collection.html":
+      await setupDetailsDialog();
   }
 }
 
