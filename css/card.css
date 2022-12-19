@@ -43,12 +43,11 @@
   grid-area: text;
 }
 
-#card-details-dialog-close {
+.card-details-dialog-close {
   grid-area: x;
 }
 
-[role="alertdialog"],
-[role="dialog"] {
+#card-details-dialog {
   top: 2rem;
   left: 50vw; /* move to the middle of the screen (assumes relative parent is the body/viewport) */
   transform: translateX(-50%); /* move backwards 50% of this element's width */
@@ -68,8 +67,12 @@
     "card  text";
 }
 
+[role="dialog"][aria-hidden="true"] {
+  display: none;
+}
+
 @media screen and (max-width: 1000px) {
-  [role="dialog"] {
+  #card-details-dialog {
     grid-template-areas:
       ".     x"
       "head  head"
@@ -82,4 +85,17 @@
     /* Override overflow: auto for small screens, and let whole dialog scroll instead of just the text section */
     overflow: visible;
   }
+}
+
+.dialog-container,
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.dialog-overlay {
+  background-color: rgba(43, 46, 56, 0.7);
 }

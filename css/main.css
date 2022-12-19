@@ -1,22 +1,23 @@
 @import "card.css";
 
+/* General styling that applies to all pages */
+
+:root {
+  --accent-color: #54acdc;
+}
+
 body {
-  background: lightblue;
+  background: var(--accent-color);
+  font-family: "Inter", sans-serif;
 }
 
-nav {
-  padding-bottom: 14px;
-}
-
-nav a {
-  padding: 15px;
-  background: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-}
-
-nav a:hover:not(.active) {
-  background: grey;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Zen Dots", fantasy;
 }
 
 video {
@@ -29,6 +30,8 @@ section {
   background: white;
   border-radius: 20px;
   border-top-left-radius: 0;
+
+  min-height: 50vh;
 }
 
 footer {
@@ -39,6 +42,21 @@ footer {
 
 footer svg {
   width: 1em;
+}
+
+#page-header {
+  color: white;
+  text-shadow: 4px 4px 1px rgb(13 66 163), -3px -3px 1px rgb(148 186 255);
+}
+
+.visually-hidden:not(:focus):not(:active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 .hidden {

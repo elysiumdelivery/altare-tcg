@@ -5,7 +5,7 @@ Make a local copy of the repo
 
 `git clone https://github.com/elysiumdelivery/altare-tcg.git`
 
-Inside the created folder, run the following to install dependencies. (Currently this is just Prettier, so if you skip this step, the app will load locally, but you just won't get auto-formatting.)
+Inside the created folder, run the following to install dev dependencies.
 
 `npm install`
 
@@ -13,7 +13,13 @@ Make a local branch (you cannot push changes directly to `main`). `<your-branch-
 
 `git checkout -b <your-branch-name> origin/main`
 
-To view the app locally, open `index.html` in your browser, and refresh each time you make a code change. Happy coding!
+## Local hot refresh
+Because browsers are finnicky about accessing local files if there isn't a web server serving the page, live-server starts a development server and serves from there. Go to the folder you saved the git repo in and run
+
+`live-server`
+
+and the app should be served at `http://localhost:8080`, auto-reloading on each file save.
+
 ## Non-coder
 You can use the Github UI for simple text changes/ typo fixes:
 ![image](https://user-images.githubusercontent.com/47371080/201824933-0ae51ae2-bfbe-42fe-8a2b-c04b89665e1e.png)
