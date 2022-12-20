@@ -75,7 +75,7 @@ async function setupDetailsDialog() {
   }
   let html = await fetch("../details-dialog.html");
   html = await html.text();
-  document.body.innerHTML += html;
+  document.body.insertAdjacentHTML("beforeend", html);
   DETAILS_DIALOG_EL = document.getElementById("card-details-dialog");
   // A11yDialog handles toggling accessibility properties when the dialog shows/ hides,
   // as well as closing on esc, clicking outside of the dialog, etc.
