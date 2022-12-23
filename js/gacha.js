@@ -1,10 +1,94 @@
 import { renderCards } from "./cards.js";
+import { cards_by_rarity } from "./main.js";
 
 export const GACHA_BUTTON = document.getElementById("gacha-button");
-export const CARDS_PER_PULL = 10;
+//Card slots on each pull, representing the percent chance of getting a card of that rarity in each slot.
+//The sum of all rarities on a slot should be 100 or higher for proper function.
+const slots = [
+  {
+    Common: 100,
+    Uncommon: 0,
+    Rare: 0,
+    HoloRare: 0,
+    UltraRare: 0,
+    SecretRare: 0,
+  },
+  {
+    Common: 80,
+    Uncommon: 20,
+    Rare: 0,
+    HoloRare: 0,
+    UltraRare: 0,
+    SecretRare: 0,
+  },
+  {
+    Common: 0,
+    Uncommon: 100,
+    Rare: 0,
+    HoloRare: 0,
+    UltraRare: 0,
+    SecretRare: 0,
+  },
+  {
+    Common: 26,
+    Uncommon: 26,
+    Rare: 0,
+    HoloRare: 21,
+    UltraRare: 16,
+    SecretRare: 11,
+  },
+  {
+    Common: 0,
+    Uncommon: 0,
+    Rare: 40,
+    HoloRare: 20,
+    UltraRare: 20,
+    SecretRare: 20,
+  },
+];
+//Slots that replace one or more normal slots on special conditions.
+//This can be used to help collect all cards.
+const specialSlots = {
+  69: {
+    Common: 0,
+    Uncommon: 0,
+    Rare: 0,
+    HoloRare: 100 / 3,
+    UltraRare: 100 / 3,
+    SecretRare: 100 / 3,
+  },
+};
 
-//Pulls n cards from the passed "cards" array using the Fisher-Yates Shuffle.
-function pullCards(cards, n) {
+//Pulls a set of cards guided by an array of "slots" passed to the function.
+function pullCards(slots) {
+  let cards = [];
+  for (let slot of slots) {
+    let dice = Math.floor(Math.random() * 100) + 1;
+    if (dice in specialSlots) {
+      slot = specialSlots[dice];
+    }
+    for (let rarity in cards_by_rarity) {
+      if (dice <= slot[rarity]) {
+        cards.push(getRandomCards(cards_by_rarity[rarity], 1)[0]);
+        break;
+      } else {
+        dice -= slot[rarity];
+      }
+    }
+  }
+  return cards;
+}
+
+function pullCardsManyTimes(slots, times) {
+  let pulls = [];
+  for (let n = 0; n < times; n++) {
+    pulls.push(pullCards(slots));
+  }
+  return pulls;
+}
+
+//Gets n cards from the passed "cards" array using the Fisher-Yates Shuffle.
+function getRandomCards(cards, n) {
   if (n <= 0) {
     throw "n must be a positive integer bigger than 0";
   }
@@ -23,8 +107,35 @@ function pullCards(cards, n) {
   return samples.slice(0, n);
 }
 
-//Pulls "n" number of cards from the cards_data array and renders them in CARD_LIST.
-export function pullAndRenderCards(cards_data, n, render_location) {
-  let pulled = pullCards(cards_data, n);
+//Pulls cards from the cards_data array and renders them in CARD_LIST.
+export function pullAndRenderCards(cards_data, render_location) {
+  //let pulled = getRandomCards(cards_data, n);
+  let pulled = pullCards(slots);
+  testRates();
   renderCards(pulled, render_location, true);
+}
+
+//Debug function to get the average rates for each rarity over a list of pulls.
+function calculateRates(pulls) {
+  let rates = {};
+  let total = 0;
+  for (let rarity in cards_by_rarity) {
+    rates[rarity] = 0;
+  }
+  for (let pull of pulls) {
+    for (let card of pull) {
+      rates[card["Rarity Folder"]]++;
+      total++;
+    }
+  }
+  for (let rarity in cards_by_rarity) {
+    rates[rarity] /= total;
+    rates[rarity] *= 100;
+  }
+  return rates;
+}
+
+function testRates() {
+  let pulls = pullCardsManyTimes(slots, 10000);
+  console.log(calculateRates(pulls));
 }
