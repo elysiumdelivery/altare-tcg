@@ -7,39 +7,45 @@ export const GACHA_BUTTON = document.getElementById("gacha-button");
 const slots = [
   {
     Common: 100,
-    Uncommon: 0,
-    Rare: 0,
-    HoloRare: 0,
-    UltraRare: 0,
-    SecretRare: 0,
+  },
+  {
+    Common: 100,
   },
   {
     Common: 80,
     Uncommon: 20,
-    Rare: 0,
-    HoloRare: 0,
-    UltraRare: 0,
-    SecretRare: 0,
   },
   {
-    Common: 0,
+    Common: 80,
+    Uncommon: 20,
+  },
+  {
     Uncommon: 100,
-    Rare: 0,
-    HoloRare: 0,
-    UltraRare: 0,
-    SecretRare: 0,
   },
   {
-    Common: 26,
+    Uncommon: 100,
+  },
+  {
     Uncommon: 26,
-    Rare: 0,
+    Rare: 26,
     HoloRare: 21,
-    UltraRare: 16,
-    SecretRare: 11,
+    UltraRare: 17,
+    SecretRare: 10,
   },
   {
-    Common: 0,
-    Uncommon: 0,
+    Uncommon: 26,
+    Rare: 26,
+    HoloRare: 21,
+    UltraRare: 17,
+    SecretRare: 10,
+  },
+  {
+    Rare: 40,
+    HoloRare: 20,
+    UltraRare: 20,
+    SecretRare: 20,
+  },
+  {
     Rare: 40,
     HoloRare: 20,
     UltraRare: 20,
@@ -50,9 +56,6 @@ const slots = [
 //This can be used to help collect all cards.
 const specialSlots = {
   69: {
-    Common: 0,
-    Uncommon: 0,
-    Rare: 0,
     HoloRare: 100 / 3,
     UltraRare: 100 / 3,
     SecretRare: 100 / 3,
@@ -67,7 +70,7 @@ function pullCards(slots) {
     if (dice in specialSlots) {
       slot = specialSlots[dice];
     }
-    for (let rarity in cards_by_rarity) {
+    for (let rarity in slot) {
       if (dice <= slot[rarity]) {
         cards.push(getRandomCards(cards_by_rarity[rarity], 1)[0]);
         break;
@@ -111,7 +114,6 @@ function getRandomCards(cards, n) {
 export function pullAndRenderCards(cards_data, render_location) {
   //let pulled = getRandomCards(cards_data, n);
   let pulled = pullCards(slots);
-  testRates();
   renderCards(pulled, render_location, true);
 }
 
