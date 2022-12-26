@@ -12,6 +12,7 @@ const COLLECTIONS_MAIN_CONTENT = document.getElementById("card-list");
 export const CARD_ART_HIDDEN_ON_LOAD =
   PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
 //Holds the data of all cards after parsing the CSV file.
+
 export let cards_data = [];
 
 function getCSVData(callback = undefined) {
