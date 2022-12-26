@@ -2,6 +2,7 @@ import { renderCards } from "./cards.js";
 import { cards_by_rarity } from "./main.js";
 
 export const GACHA_BUTTON = document.getElementById("gacha-button");
+
 //Card slots on each pull, representing the percent chance of getting a card of that rarity in each slot.
 //The sum of all rarities on a slot should be 100 or higher for proper function.
 const slots = [
@@ -52,6 +53,7 @@ const slots = [
     SecretRare: 20,
   },
 ];
+
 //Slots that replace one or more normal slots on special conditions.
 //This can be used to help collect all cards.
 const specialSlots = {
@@ -110,7 +112,7 @@ function getRandomCards(cards, n) {
   return samples.slice(0, n);
 }
 
-//Pulls cards from the cards_data array and renders them in CARD_LIST.
+//Pulls cards from the cards_data array and renders them in render_location.
 export function pullAndRenderCards(cards_data, render_location) {
   //let pulled = getRandomCards(cards_data, n);
   let pulled = pullCards(slots);
