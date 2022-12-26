@@ -67,6 +67,7 @@ const specialSlots = {
 //Pulls a set of cards guided by an array of "slots" passed to the function.
 function pullCards(slots) {
   let cards = [];
+  let card;
   for (let slot of slots) {
     let dice = Math.floor(Math.random() * 100) + 1;
     if (dice in specialSlots) {
@@ -74,7 +75,11 @@ function pullCards(slots) {
     }
     for (let rarity in slot) {
       if (dice <= slot[rarity]) {
-        cards.push(getRandomCards(cards_by_rarity[rarity], 1)[0]);
+        card = getRandomCards(cards_by_rarity[rarity], 1)[0];
+        cards.push(card);
+        //Saves the card's id to localStorage. This lets us know if the person
+        //got one of these already or if it is new.
+        localStorage.setItem(`card-${card["Collector Number"]}`, "true");
         break;
       } else {
         dice -= slot[rarity];

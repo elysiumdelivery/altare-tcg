@@ -27,6 +27,10 @@
   border-color: dodgerblue;
 }
 
+.card-not-owned {
+  filter: brightness(30%) grayscale(1);
+}
+
 .dialog-title {
   grid-area: head;
   text-align: center;
