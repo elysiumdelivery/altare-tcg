@@ -25,6 +25,7 @@ function getCSVData(callback = undefined) {
     header: true,
     complete: (result) => {
       cards_data = result.data;
+      getCardsByRarity();
       if (callback) {
         callback(cards_data);
       }
@@ -33,7 +34,14 @@ function getCSVData(callback = undefined) {
 }
 
 //Classifies all cards based on their rarity and saves them
-//in groups inside cards_by_rarity.
+//in groups inside cards_by_rarity with the following format:
+//{
+//  rarity1: [{"Rarity Folder": rarity1, "Filename": "Name of Card", ...}, card2, card3, ..., cardN],
+//  rarity2: [...],
+//  rarity3: [...],
+//  ...
+//  rarityN: [...]
+// }
 function getCardsByRarity() {
   cards_by_rarity = cards_data.reduce((result, card) => {
     result[card["Rarity Folder"]] = [
@@ -72,7 +80,6 @@ async function main() {
           FULL_COLLECTION_TOGGLE.textContent = "Hide Full Collection";
         }
     }
-    getCardsByRarity();
   });
 }
 

@@ -7,7 +7,7 @@ export const GACHA_BUTTON = document.getElementById("gacha-button");
 //The sum of all rarities on a slot should be 100 or higher for proper function.
 const slots = [
   {
-    Common: 100,
+    Element: 100,
   },
   {
     Common: 100,
@@ -21,7 +21,8 @@ const slots = [
     Uncommon: 20,
   },
   {
-    Uncommon: 100,
+    Common: 50,
+    Uncommon: 50,
   },
   {
     Uncommon: 100,
@@ -73,6 +74,13 @@ function pullCards(slots) {
     if (dice in specialSlots) {
       slot = specialSlots[dice];
     }
+    //This algorithm divides the range [1, 100] into rarity intervals, dictated by the slots.
+    //Example: A slot with the following definition:
+    //{Common: 60, Uncommon: 30, Rare: 10}
+    //In this case, if the dice value is 60 or less, the pulled card is common.
+    //Else, if it's in between 61 and 90, it is uncommon
+    //Else, if it's 91 or higher, it is rare.
+    //This applies to as many rarities as declared in the slot.
     for (let rarity in slot) {
       if (dice <= slot[rarity]) {
         card = getRandomCards(cards_by_rarity[rarity], 1)[0];
@@ -82,6 +90,13 @@ function pullCards(slots) {
         localStorage.setItem(`card-${card["Collector Number"]}`, "true");
         break;
       } else {
+        //Using this we can save on having to define each interval in absolute terms,
+        //doing it in relative terms instead.
+        //Example: Instead of writing {Common: [1, 80], Uncommon: [81, 100]},
+        //we write {Common: 80, Uncommon: 20}.
+        //Then, we check if the dice falls in the first rarity. If it isn't, we "jump"
+        //over the entire interval and check on the next one, simplifying comparisons
+        //and declarations.
         dice -= slot[rarity];
       }
     }
@@ -119,7 +134,6 @@ function getRandomCards(cards, n) {
 
 //Pulls cards from the cards_data array and renders them in render_location.
 export function pullAndRenderCards(cards_data, render_location) {
-  //let pulled = getRandomCards(cards_data, n);
   let pulled = pullCards(slots);
   renderCards(pulled, render_location, true);
 }
@@ -144,7 +158,10 @@ function calculateRates(pulls) {
   return rates;
 }
 
-function testRates() {
+//If you want to see the current rates, go to your browser console and do:
+//const m = await import('../js/gacha.js');
+//m.testRates()
+export function testRates() {
   let pulls = pullCardsManyTimes(slots, 10000);
   console.log(calculateRates(pulls));
 }
