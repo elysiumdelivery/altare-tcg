@@ -1,75 +1,29 @@
 //Happy Birthday Leader! 🎇💙
+import { defineCardComponent, renderCards } from "./cards.js";
+import { setupDetailsDialog } from "./dialog.js";
+import { GACHA_BUTTON, CARDS_PER_PULL, pullAndRenderCards } from "./gacha.js";
 
-const COLLECTIONS_MAIN_CONTENT = document.getElementById("card-list");
-const GACHA_BUTTON = document.getElementById("gacha-button");
-const CLOUD_NAME = "dazcxdgiy";
-const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
 const CSV_FILENAME = "../Test Card List CSV.csv";
-const CARDS_PER_PULL = 10;
-let pathname = window.location.pathname;
+const pathname = window.location.pathname;
 const CURRENT_PAGE = pathname.slice(pathname.lastIndexOf("/"), pathname.length);
 const PAGES_WHERE_CARD_HIDDEN = ["/gacha.html"];
-const CARD_ART_HIDDEN_ON_LOAD = PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
+const COLLECTIONS_MAIN_CONTENT = document.getElementById("card-list");
 
+export const CARD_ART_HIDDEN_ON_LOAD =
+  PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
 //Holds the data of all cards after parsing the CSV file.
-let cards_data = [];
 
-//Custom Card component. Use it like this:
-//<tcg-card card-id="[COLLECTOR_NUMBER]"></tcg-card>
-async function defineCardComponent() {
-  let html = await fetch("../card.html");
-  html = await html.text();
+export let cards_data = [];
 
-  class Card extends HTMLElement {
-    data = {};
-    front;
-    back;
-
-    constructor() {
-      super();
-      this.data = cards_data.find(
-        (card) => card["Collector Number"] == this.getAttribute("card-id")
-      );
-      this.innerHTML = html;
-      this.front = this.getElementsByClassName("card-front")[0];
-      this.back = this.getElementsByClassName("card-back")[0];
-      const image = this.getElementsByClassName("card-image")[0];
-      image.src = this.getImageURL();
-      this.setupOnClickEvents();
-      if (CARD_ART_HIDDEN_ON_LOAD) {
-        this.flipCard();
-      }
-    }
-
-    //Returns an url of the form:
-    //`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${RARITY}/${FILENAME}.png`
-    getImageURL() {
-      return `${CLOUDINARY_URL}${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
-    }
-
-    flipCard() {
-      this.front.classList.toggle("hidden");
-      this.back.classList.toggle("hidden");
-    }
-
-    //Binds the card's onclick events to flip and show the description popup.
-    setupOnClickEvents() {
-      this.back.onclick = (event) => this.flipCard();
-      this.front.onclick = (event) => alert("TODO: Description popup.");
-    }
-  }
-  customElements.define("tcg-card", Card);
-}
-
-function getCSVAndMaybeRenderCollection() {
+function getCSVData(callback = undefined) {
   Papa.parse(CSV_FILENAME, {
     download: true,
     //To treat the first row as column titles
     header: true,
     complete: (result) => {
       cards_data = result.data;
-      if (CURRENT_PAGE == "/collection.html") {
-        renderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
+      if (callback) {
+        callback(cards_data);
       }
     },
   });
@@ -166,9 +120,23 @@ async function defineNavComponent() {
 async function main() {
   await defineNavComponent();
   await defineCardComponent();
-  getCSVAndMaybeRenderCollection();
-  if (CURRENT_PAGE == "/gacha.html") {
-    GACHA_BUTTON.onclick = (event) => pullAndRenderCards(CARDS_PER_PULL);
+  getCSVData((cards_data) => {
+    if (CURRENT_PAGE == "/collection.html") {
+      renderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
+    }
+  });
+  switch (CURRENT_PAGE) {
+    case "/gacha.html":
+      GACHA_BUTTON.onclick = (event) =>
+        pullAndRenderCards(
+          cards_data,
+          CARDS_PER_PULL,
+          COLLECTIONS_MAIN_CONTENT
+        );
+      await setupDetailsDialog();
+      break;
+    case "/collection.html":
+      await setupDetailsDialog();
   }
 }
 

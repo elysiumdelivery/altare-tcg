@@ -1,7 +1,9 @@
 {
   "name": "altare-tcg",
   "version": "0.0.1",
-  "dependencies": {
-    "prettier": "2.7.1"
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "prettier": "^2.7.1"
   }
 }
