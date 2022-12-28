@@ -115,10 +115,11 @@ export function showCollection(cards_data, htmlLocation) {
   } else {
     let ownedCards = getOwnedCards(cards_data);
     if (ownedCards.length == 0) {
-      alert("TODO: No cards to show");
+      htmlLocation.innerHTML =
+        "You have no cards at the moment. Try pulling some at the gacha!";
     } else {
       ownedCards = sortCards(ownedCards, sort);
+      renderCards(ownedCards, htmlLocation, true);
     }
-    renderCards(ownedCards, htmlLocation, true);
   }
 }
