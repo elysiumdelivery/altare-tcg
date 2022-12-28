@@ -182,6 +182,7 @@
 }
 
 @media only screen and (max-width: 600px) {
+    /* mobile / portrait styling */
     main {
         position: absolute;
         top: 0;
@@ -231,6 +232,7 @@
 }
 
 @media only screen and (min-width: 600px) {
+    /* desktop / landscape styling */
 
     #welcome-nav a:hover, #welcome-nav a:focus-visible {
         transform: scale(1.1) rotate3d(0, 0, 0, 0deg) !important;

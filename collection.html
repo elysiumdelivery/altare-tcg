@@ -19,6 +19,11 @@
     <!-- Enables media queries on mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap" rel="stylesheet">
+    <style> @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap'); </style>
+    
+
     <!-- CSS-->
     <link type="text/css" rel="stylesheet" href="css/main.css" />
     <link type="text/css" rel="stylesheet" href="css/nav.css" />
@@ -30,10 +35,22 @@
     <main>
       <h1>The Regis Altare Birthday Project 2023</h1>
 
+      <svg width="0" height="0" aria-hidden="true">
+        <clipPath id="navClip" clipPathUnits="objectBoundingBox">
+          <path transform="scale(0.004388274530454626, 0.019230769230769232)" d="M173.88,0H54C38,0,45,21,0,52H227.88C182.88,21,189.88,0,173.88,0Z"/>
+        </clipPath>
+      </svg>
+      
       <nav>
-        <a class="active" href="pages/collection.html">Collection</a>
-        <a href="pages/gacha.html">Gacha</a>
-        <a href="pages/message-board.html">Birthday Message Board</a>
+        <a class="active" href="pages/collection.html">
+          <img class="icon icon-collection" aria-hidden="true" src="icons/Icons_Collection.svg"> 
+          Collection</a>
+        <a href="pages/gacha.html">
+          <img class="icon icon-gacha" aria-hidden="true" src="icons/Icons_Open-Packs.svg"/>
+          Gacha</a>
+        <a href="pages/message-board.html">
+          <img class="icon icon-message-board" aria-hidden="true" src="icons/Icons_Board.svg"/>
+          Message Board</a>
       </nav>
 
       <section id="card-list">

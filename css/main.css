@@ -4,11 +4,14 @@
 
 :root {
   --accent-color: #54acdc;
+  --bg-color: #1D346D;
 }
 
-body {
-background: var(--accent-color);
-font-family: 'Inter', sans-serif;
+html {
+  background-color: var(--bg-color);
+  background-image: url(../images/bg-web.png);
+  background-size: contain;
+  font-family: 'Montserrat', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -35,9 +38,14 @@ footer {
   padding: 30px;
 }
 
+footer a {
+  color: white;
+}
+
 footer svg {
   width: 1em;
 }
+
 
 #page-header {
   color: white;
@@ -52,4 +60,15 @@ footer svg {
   position: absolute;
   white-space: nowrap; 
   width: 1px;
+}
+
+@media only screen and (max-width: 600px) {
+  /* mobile / portrait styling */
+}
+
+@media only screen and (min-width: 600px) {
+  /* desktop / wide styling */
+  main {
+    margin: 1em;
+  }
 }

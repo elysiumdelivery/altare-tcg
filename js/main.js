@@ -116,7 +116,50 @@ function renderCards(cards, htmlLocation, replace = false) {
   }
 }
 
+async function defineNavComponent() {
+  let html = await fetch("../nav.html");
+  html = await html.text();
+
+  class Nav extends HTMLElement {
+
+    mobileButton;
+    closeButton;
+    navElement;
+
+    constructor() {
+      super();
+      this.innerHTML = html;
+      this.mobileButton = document.getElementById("nav-button");
+      this.closeButton = document.getElementById("close-nav-menu");
+      this.navElement = document.getElementsByTagName("nav")[0];
+      this.setupOnClickEvents();
+    }
+
+    openNavMenu () {
+      this.navElement.classList.add("active");
+      setTimeout(() => {
+        this.navElement.classList.add("open");
+      }, 250);
+    }
+    
+    closeNavMenu () {
+      this.navElement.classList.remove("open");
+      setTimeout(() => {
+        this.navElement.classList.remove("active");
+      }, 250);
+    }
+
+    //Binds the card's onclick events to flip and show the description popup.
+    setupOnClickEvents() {
+      this.mobileButton.onclick = (event) => this.navElement;
+      this.closeButton.onclick = (event) => this.closeNavMenu;
+    }
+  }
+  customElements.define("app-nav", Nav);
+}
+
 async function main() {
+  await defineNavComponent();
   await defineCardComponent();
   getCSVAndMaybeRenderCollection();
   if (CURRENT_PAGE == "/gacha.html") {
