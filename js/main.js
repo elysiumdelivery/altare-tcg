@@ -1,7 +1,7 @@
 //Happy Birthday Leader! 🎇💙
 import { defineCardComponent, renderCards } from "./cards.js";
 import { setupDetailsDialog } from "./dialog.js";
-import { GACHA_BUTTON, CARDS_PER_PULL, pullAndRenderCards } from "./gacha.js";
+import { GACHA_BUTTON, pullAndRenderCards } from "./gacha.js";
 
 const CSV_FILENAME = "../Test Card List CSV.csv";
 const pathname = window.location.pathname;
@@ -14,6 +14,7 @@ export const CARD_ART_HIDDEN_ON_LOAD =
 //Holds the data of all cards after parsing the CSV file.
 
 export let cards_data = [];
+export let cards_by_rarity = {};
 
 function getCSVData(callback = undefined) {
   Papa.parse(CSV_FILENAME, {
@@ -22,6 +23,7 @@ function getCSVData(callback = undefined) {
     header: true,
     complete: (result) => {
       cards_data = result.data;
+      getCardsByRarity();
       if (callback) {
         callback(cards_data);
       }
@@ -29,26 +31,40 @@ function getCSVData(callback = undefined) {
   });
 }
 
+//Classifies all cards based on their rarity and saves them
+//in groups inside cards_by_rarity with the following format:
+//{
+//  rarity1: [{"Rarity Folder": rarity1, "Filename": "Name of Card", ...}, card2, card3, ..., cardN],
+//  rarity2: [...],
+//  rarity3: [...],
+//  ...
+//  rarityN: [...]
+// }
+function getCardsByRarity() {
+  cards_by_rarity = cards_data.reduce((result, card) => {
+    result[card["Rarity Folder"]] = [
+      ...(result[card["Rarity Folder"]] || []),
+      card,
+    ];
+    return result;
+  }, {});
+}
+
 async function main() {
   await defineCardComponent();
-  getCSVData((cards_data) => {
-    if (CURRENT_PAGE == "/collection.html") {
-      renderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
+  getCSVData(async (cards_data) => {
+    switch (CURRENT_PAGE) {
+      case "/gacha.html":
+        GACHA_BUTTON.onclick = (event) =>
+          pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
+        await setupDetailsDialog();
+        break;
+
+      case "/collection.html":
+        await setupDetailsDialog();
+        renderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
     }
   });
-  switch (CURRENT_PAGE) {
-    case "/gacha.html":
-      GACHA_BUTTON.onclick = (event) =>
-        pullAndRenderCards(
-          cards_data,
-          CARDS_PER_PULL,
-          COLLECTIONS_MAIN_CONTENT
-        );
-      await setupDetailsDialog();
-      break;
-    case "/collection.html":
-      await setupDetailsDialog();
-  }
 }
 
 main();
