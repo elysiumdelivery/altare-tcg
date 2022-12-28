@@ -3,16 +3,31 @@ import { updateDetailsDialog, DETAILS_DIALOG_A11Y } from "./dialog.js";
 
 const CLOUD_NAME = "dazcxdgiy";
 const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
+const RARITIES = [
+  "Element",
+  "Common",
+  "Uncommon",
+  "Rare",
+  "HoloRare",
+  "UltraRare",
+  "SecretRare",
+];
+const CARDS_PER_PAGE = 10;
 
 //Object to store all supported sorting functions.
 //Can be used by calling:
 //array.sort(sort_functions[key])
+//TODO: Wrap them in closures to reverse them easily.
 const sort_functions = {
   "Collector Number": (a, b) => {
     return parseInt(a["Collector Number"]) > parseInt(b["Collector Number"])
       ? 1
       : -1;
   },
+  Rarity: (a, b) =>
+    RARITIES.indexOf(a["Rarity Folder"]) > RARITIES.indexOf(b["Rarity Folder"])
+      ? 1
+      : -1,
 };
 
 //Custom Card component. Use it like this:
@@ -105,21 +120,24 @@ function sortCards(cards, sortType) {
   return cards;
 }
 
-export function showCollection(cards_data, htmlLocation) {
+export function showCollection(cards_data, htmlLocation, page = 1) {
   let sort = localStorage.getItem("sort");
   let fullCollection = localStorage.getItem("fullCollection") === "true";
-
+  let cards;
   if (fullCollection) {
-    let sorted = sortCards(cards_data, sort);
-    renderCards(sorted, htmlLocation, true);
+    cards = sortCards(cards_data, sort);
   } else {
-    let ownedCards = getOwnedCards(cards_data);
-    if (ownedCards.length == 0) {
+    cards = getOwnedCards(cards_data);
+    if (cards.length == 0) {
       htmlLocation.innerHTML =
         "You have no cards at the moment. Try pulling some at the gacha!";
+      return;
     } else {
-      ownedCards = sortCards(ownedCards, sort);
-      renderCards(ownedCards, htmlLocation, true);
+      cards = sortCards(cards, sort);
     }
   }
+  if (cards.length > CARDS_PER_PAGE) {
+    cards = cards.slice(CARDS_PER_PAGE * (page - 1), CARDS_PER_PAGE * page);
+  }
+  renderCards(cards, htmlLocation, true);
 }
