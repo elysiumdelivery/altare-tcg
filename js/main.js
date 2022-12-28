@@ -132,17 +132,22 @@ async function defineNavComponent() {
       this.mobileButton = document.getElementById("nav-button");
       this.closeButton = document.getElementById("close-nav-menu");
       this.navElement = document.getElementsByTagName("nav")[0];
+      
       this.setupOnClickEvents();
+
+      // Set active state on the current nav tab
+      let pageName = CURRENT_PAGE.replace(/[\/]?(\.html)?/g, "");
+      document.getElementById(`nav-${pageName}`).classList.add("active");
     }
 
-    openNavMenu () {
+    openNavMenu (event) {
       this.navElement.classList.add("active");
       setTimeout(() => {
         this.navElement.classList.add("open");
       }, 250);
     }
     
-    closeNavMenu () {
+    closeNavMenu (event) {
       this.navElement.classList.remove("open");
       setTimeout(() => {
         this.navElement.classList.remove("active");
@@ -151,8 +156,8 @@ async function defineNavComponent() {
 
     //Binds the card's onclick events to flip and show the description popup.
     setupOnClickEvents() {
-      this.mobileButton.onclick = (event) => this.navElement;
-      this.closeButton.onclick = (event) => this.closeNavMenu;
+      this.mobileButton.onclick = this.openNavMenu.bind(this);
+      this.closeButton.onclick = this.closeNavMenu.bind(this);
     }
   }
   customElements.define("app-nav", Nav);
