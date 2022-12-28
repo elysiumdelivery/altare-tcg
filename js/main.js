@@ -29,47 +29,6 @@ function getCSVData(callback = undefined) {
   });
 }
 
-//Pulls n cards from the passed "cards" array using the Fisher-Yates Shuffle.
-function pullCards(cards, n) {
-  if (n <= 0) {
-    throw "n must be a positive integer bigger than 0";
-  }
-  let len = cards.length;
-  if (n > len) {
-    throw "Not enough elements in array";
-  }
-  let samples = [...cards];
-
-  while (len) {
-    let i = Math.floor(Math.random() * len--);
-    let j = samples[len];
-    samples[len] = samples[i];
-    samples[i] = j;
-  }
-  return samples.slice(0, n);
-}
-
-//Pulls "n" number of cards from the cards_data array and renders them in CARD_LIST.
-function pullAndRenderCards(n) {
-  let pulled = pullCards(cards_data, n);
-  renderCards(pulled, COLLECTIONS_MAIN_CONTENT, true);
-}
-
-//Renders a list of cards in the element specified in htmlLocation.
-//If replace is true, overwrites all elements inside htmlLocation.
-//else, adds the cards to the rest of the inner content.
-function renderCards(cards, htmlLocation, replace = false) {
-  if (replace) {
-    htmlLocation.innerHTML = "";
-  }
-  for (let i = 0; i < cards.length; i++) {
-    htmlLocation.insertAdjacentHTML(
-      "beforeend",
-      `<tcg-card card-id="${cards[i]["Collector Number"]}"></tcg-card>`
-    );
-  }
-}
-
 async function defineNavComponent() {
   let html = await fetch("../nav.html");
   html = await html.text();
