@@ -10,8 +10,11 @@
 html {
   background-color: var(--bg-color);
   background-image: url(../images/bg-web.png);
-  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   font-family: 'Montserrat', sans-serif;
+  height: 100%;
 }
 
 h1,

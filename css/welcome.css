@@ -17,6 +17,7 @@
 
     padding: 0;
     background-color: transparent;
+    transform: translateY(-10%);
 }
 
 .welcome-splash {
@@ -44,12 +45,21 @@
     pointer-events: auto;
     visibility: visible;
 }
+#altare-img-bg {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 25vw);
+    width: 50vw;
+}
 
-#altare-img {
+#altare-img-fg {
     position: absolute;
     top: 0;
     left: auto;
-    max-height: 100vh;
+    max-height: 95vh;
+
+    object-fit: contain;
+
     animation-name: alt-float;
     animation-duration: 5s;
     animation-iteration-count: infinite;
@@ -191,11 +201,17 @@
         overflow-x: hidden; 
     }
 
-    #altare-img {
-        top: calc(50% - 80vmin);
+    #altare-img-bg {
+        top: 0;
+        left: calc(50% - 40vw);
+        width: 80vw;
+    }
+
+    #altare-img-fg {
+        top: 0;
         right: 0;
         width: 100%;
-        max-height: 100vh;
+        max-height: 95vh;
     }
 
     #welcome-fancy-menu {
