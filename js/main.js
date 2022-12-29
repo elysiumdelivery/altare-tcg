@@ -29,55 +29,33 @@ function getCSVData(callback = undefined) {
   });
 }
 
-async function defineNavComponent() {
-  let html = await fetch("../nav.html");
-  html = await html.text();
-
-  class Nav extends HTMLElement {
-
-    mobileButton;
-    closeButton;
-    navElement;
-
-    constructor() {
-      super();
-      this.innerHTML = html;
-      this.mobileButton = document.getElementById("nav-button");
-      this.closeButton = document.getElementById("close-nav-menu");
-      this.navElement = document.getElementsByTagName("nav")[0];
-      
-      this.setupOnClickEvents();
-
-      // Set active state on the current nav tab
-      let pageName = CURRENT_PAGE.replace(/[\/]?(\.html)?/g, "");
-      document.getElementById(`nav-${pageName}`).classList.add("active");
-    }
-
-    openNavMenu (event) {
-      this.navElement.classList.add("active");
-      setTimeout(() => {
-        this.navElement.classList.add("open");
-      }, 250);
-    }
-    
-    closeNavMenu (event) {
-      this.navElement.classList.remove("open");
-      setTimeout(() => {
-        this.navElement.classList.remove("active");
-      }, 250);
-    }
-
-    //Binds the card's onclick events to flip and show the description popup.
-    setupOnClickEvents() {
-      this.mobileButton.onclick = this.openNavMenu.bind(this);
-      this.closeButton.onclick = this.closeNavMenu.bind(this);
-    }
+/**
+ * Setup click events for hamburger nav
+ */
+function setupNavClickEvents () {
+  let mobileButton = document.getElementById("nav-button");
+  let closeButton = document.getElementById("close-nav-menu");
+  let navElement = document.getElementsByTagName("nav")[0];
+  function openNavMenu (event) {
+    this.classList.add("active");
+    setTimeout(() => {
+      this.classList.add("open");
+    }, 250);
   }
-  customElements.define("app-nav", Nav);
+  
+  function closeNavMenu (event) {
+    this.classList.remove("open");
+    setTimeout(() => {
+      this.classList.remove("active");
+    }, 250);
+  }
+
+  mobileButton.onclick = openNavMenu.bind(navElement);
+  closeButton.onclick = closeNavMenu.bind(navElement);
 }
 
 async function main() {
-  await defineNavComponent();
+  setupNavClickEvents();
   await defineCardComponent();
   getCSVData((cards_data) => {
     if (CURRENT_PAGE == "/collection.html") {
