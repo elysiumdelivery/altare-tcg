@@ -1,10 +1,114 @@
 import { renderCards } from "./cards.js";
+import { cards_by_rarity } from "./main.js";
 
 export const GACHA_BUTTON = document.getElementById("gacha-button");
-export const CARDS_PER_PULL = 10;
 
-//Pulls n cards from the passed "cards" array using the Fisher-Yates Shuffle.
-function pullCards(cards, n) {
+//Card slots on each pull, representing the percent chance of getting a card of that rarity in each slot.
+//The sum of all rarities on a slot should be 100 or higher for proper function.
+const slots = [
+  {
+    Element: 100,
+  },
+  {
+    Common: 100,
+  },
+  {
+    Common: 80,
+    Uncommon: 20,
+  },
+  {
+    Common: 80,
+    Uncommon: 20,
+  },
+  {
+    Common: 50,
+    Uncommon: 50,
+  },
+  {
+    Uncommon: 100,
+  },
+  {
+    Uncommon: 26,
+    Rare: 26,
+    HoloRare: 21,
+    UltraRare: 17,
+    SecretRare: 10,
+  },
+  {
+    Uncommon: 26,
+    Rare: 26,
+    HoloRare: 21,
+    UltraRare: 17,
+    SecretRare: 10,
+  },
+  {
+    Rare: 40,
+    HoloRare: 20,
+    UltraRare: 20,
+    SecretRare: 20,
+  },
+  {
+    Rare: 40,
+    HoloRare: 20,
+    UltraRare: 20,
+    SecretRare: 20,
+  },
+];
+
+//Slots that replace one or more normal slots on special conditions.
+//This can be used to help collect all cards.
+const specialSlots = {
+  69: {
+    HoloRare: 100 / 3,
+    UltraRare: 100 / 3,
+    SecretRare: 100 / 3,
+  },
+};
+
+//Pulls a set of cards guided by an array of "slots" passed to the function.
+function pullCards(slots) {
+  let cards = [];
+  for (let slot of slots) {
+    let dice = Math.floor(Math.random() * 100) + 1;
+    if (dice in specialSlots) {
+      slot = specialSlots[dice];
+    }
+    //This algorithm divides the range [1, 100] into rarity intervals, dictated by the slots.
+    //Example: A slot with the following definition:
+    //{Common: 60, Uncommon: 30, Rare: 10}
+    //In this case, if the dice value is 60 or less, the pulled card is common.
+    //Else, if it's in between 61 and 90, it is uncommon
+    //Else, if it's 91 or higher, it is rare.
+    //This applies to as many rarities as declared in the slot.
+    for (let rarity in slot) {
+      if (dice <= slot[rarity]) {
+        cards.push(getRandomCards(cards_by_rarity[rarity], 1)[0]);
+        break;
+      } else {
+        //Using this we can save on having to define each interval in absolute terms,
+        //doing it in relative terms instead.
+        //Example: Instead of writing {Common: [1, 80], Uncommon: [81, 100]},
+        //we write {Common: 80, Uncommon: 20}.
+        //Then, we check if the dice falls in the first rarity. If it isn't, we "jump"
+        //over the entire interval and check on the next one, simplifying comparisons
+        //and declarations.
+        dice -= slot[rarity];
+      }
+    }
+  }
+  return cards;
+}
+
+function pullCardsManyTimes(slots, times) {
+  let pulls = [];
+  for (let n = 0; n < times; n++) {
+    pulls.push(pullCards(slots));
+  }
+  return pulls;
+}
+
+//Gets n cards from the passed "cards" array using the Fisher-Yates Shuffle.
+function getRandomCards(cards, n) {
   if (n <= 0) {
     throw "n must be a positive integer bigger than 0";
   }
@@ -23,8 +127,36 @@ function pullCards(cards, n) {
   return samples.slice(0, n);
 }
 
-//Pulls "n" number of cards from the cards_data array and renders them in CARD_LIST.
-export function pullAndRenderCards(cards_data, n, render_location) {
-  let pulled = pullCards(cards_data, n);
+//Pulls cards from the cards_data array and renders them in render_location.
+export function pullAndRenderCards(cards_data, render_location) {
+  let pulled = pullCards(slots);
   renderCards(pulled, render_location, true);
+}
+
+//Debug function to get the average rates for each rarity over a list of pulls.
+function calculateRates(pulls) {
+  let rates = {};
+  let total = 0;
+  for (let rarity in cards_by_rarity) {
+    rates[rarity] = 0;
+  }
+  for (let pull of pulls) {
+    for (let card of pull) {
+      rates[card["Rarity Folder"]]++;
+      total++;
+    }
+  }
+  for (let rarity in cards_by_rarity) {
+    rates[rarity] /= total;
+    rates[rarity] *= 100;
+  }
+  return rates;
+}
+
+//If you want to see the current rates, go to your browser console and do:
+//const m = await import('../js/gacha.js');
+//m.testRates()
+export function testRates() {
+  let pulls = pullCardsManyTimes(slots, 10000);
+  console.log(calculateRates(pulls));
 }
