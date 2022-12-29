@@ -49,8 +49,8 @@
     position: absolute;
     top: 0;
     left: auto;
-    width: 50vw;
-    max-width: 500px;
+    height: 60vh;
+    object-fit: contain;
 }
 
 #altare-img-fg {
@@ -253,8 +253,9 @@
 
     #altare-img-bg {
         top: 0;
-        left: calc(50% - 40vw);
-        width: 80vw;
+        left: 0;
+        height: auto;
+        width: 100%;
     }
 
     #altare-img-fg {
