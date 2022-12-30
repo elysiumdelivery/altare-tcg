@@ -15,8 +15,8 @@ const RESET_COLLECTION = document.getElementById("reset-collection");
 
 export const CARD_ART_HIDDEN_ON_LOAD =
   PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
-//Holds the data of all cards after parsing the CSV file.
 
+//Holds the data of all cards after parsing the CSV file.
 export let cards_data = [];
 export let cards_by_rarity = {};
 

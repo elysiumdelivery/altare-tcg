@@ -6,6 +6,12 @@ const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
 const COLLECTED_CARDS_NUMBER = document.getElementById(
   "collected-cards-number"
 );
+const PAGINATION = {
+  container: document.getElementById("collection-pagination"),
+  previous: document.getElementById("pagination-previous"),
+  current: document.getElementById("pagination-current"),
+  next: document.getElementById("pagination-next"),
+};
 const RARITIES = [
   "Element",
   "Common",
@@ -27,10 +33,16 @@ const sort_functions = {
       ? 1
       : -1;
   },
-  Rarity: (a, b) =>
-    RARITIES.indexOf(a["Rarity Folder"]) > RARITIES.indexOf(b["Rarity Folder"])
-      ? 1
-      : -1,
+  Rarity: (a, b) => {
+    if (a["Rarity Folder"] === b["Rarity Folder"]) {
+      return sort_functions["Collector Number"](a, b);
+    } else {
+      return RARITIES.indexOf(a["Rarity Folder"]) >
+        RARITIES.indexOf(b["Rarity Folder"])
+        ? 1
+        : -1;
+    }
+  },
 };
 
 //Custom Card component. Use it like this:
@@ -142,7 +154,26 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
     }
   }
   if (cards.length > CARDS_PER_PAGE) {
+    PAGINATION.container.classList.remove("hidden");
+    let lastCard = cards[cards.length - 1]["Collector Number"];
     cards = cards.slice(CARDS_PER_PAGE * (page - 1), CARDS_PER_PAGE * page);
+    PAGINATION.current.textContent = page;
+    if (page == 1) {
+      PAGINATION.previous.classList.add("hidden");
+    } else {
+      PAGINATION.previous.classList.remove("hidden");
+      PAGINATION.previous.onclick = (event) =>
+        showCollection(cards_data, htmlLocation, page - 1);
+    }
+    if (cards[cards.length - 1]["Collector Number"] === lastCard) {
+      PAGINATION.next.classList.add("hidden");
+    } else {
+      PAGINATION.next.classList.remove("hidden");
+      PAGINATION.next.onclick = (event) =>
+        showCollection(cards_data, htmlLocation, page + 1);
+    }
+  } else {
+    PAGINATION.container.classList.add("hidden");
   }
   renderCards(cards, htmlLocation, true);
 }
