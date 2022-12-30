@@ -63,7 +63,7 @@ export function renderCards(cards, htmlLocation, replace = false) {
   if (replace) {
     htmlLocation.innerHTML = "";
   }
-  for (let i = 0; i < cards.length; i++) {
+  for (let i = 0; i < 1; i++) {
     htmlLocation.insertAdjacentHTML(
       "beforeend",
       `<tcg-card card-id="${cards[i]["Collector Number"]}"></tcg-card>`
