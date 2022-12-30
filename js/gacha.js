@@ -67,6 +67,8 @@ const specialSlots = {
 
 //Pulls a set of cards guided by an array of "slots" passed to the function.
 function pullCards(slots) {
+  let pullCount = parseInt(localStorage.getItem("pull-count") ?? "0") + 1;
+  let pulledIDs = [];
   let cards = [];
   let card;
   for (let slot of slots) {
@@ -85,9 +87,17 @@ function pullCards(slots) {
       if (dice <= slot[rarity]) {
         card = getRandomCards(cards_by_rarity[rarity], 1)[0];
         cards.push(card);
-        //Saves the card's id to localStorage. This lets us know if the person
-        //got one of these already or if it is new.
-        localStorage.setItem(`card-${card["Collector Number"]}`, "true");
+        pulledIDs.push(card["Collector Number"]);
+        //Saves the card's id to localStorage if it's new,, to keep track of owned cards.
+        //Also saves the count of owned cards per rarity.
+        if (!localStorage.getItem(`card-${card["Collector Number"]}`)) {
+          localStorage.setItem(`card-${card["Collector Number"]}`, "true");
+          let count =
+            localStorage.getItem(`count-${card["Rarity Folder"]}`) ?? "0";
+          count = parseInt(count) + 1;
+          localStorage.setItem(`count-${card["Rarity Folder"]}`, count);
+        }
+
         break;
       } else {
         //Using this we can save on having to define each interval in absolute terms,
@@ -101,6 +111,8 @@ function pullCards(slots) {
       }
     }
   }
+  localStorage.setItem("pull-count", pullCount);
+  localStorage.setItem(`pull-${pullCount}`, JSON.stringify(pulledIDs));
   return cards;
 }
 
