@@ -3,6 +3,18 @@ import { updateDetailsDialog, DETAILS_DIALOG_A11Y } from "./dialog.js";
 
 const CLOUD_NAME = "dazcxdgiy";
 const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
+const COLLECTED_CARDS_NUMBER = document.getElementById(
+  "collected-cards-number"
+);
+const RARITIES = [
+  "Element",
+  "Common",
+  "Uncommon",
+  "Rare",
+  "HoloRare",
+  "UltraRare",
+  "SecretRare",
+];
 
 //Object to store all supported sorting functions.
 //Can be used by calling:
@@ -39,9 +51,6 @@ export async function defineCardComponent() {
       this.setupOnClickEvents();
       if (CARD_ART_HIDDEN_ON_LOAD) {
         this.flipCard();
-      }
-      if (!localStorage.getItem(`card-${this.data["Collector Number"]}`)) {
-        this.front.classList.add("card-not-owned");
       }
     }
 
@@ -87,8 +96,7 @@ export function renderCards(cards, htmlLocation, replace = false) {
 
 function getOwnedCards(cards_data) {
   let ownedCards = [];
-  let storage = { ...localStorage };
-  for (let item in storage) {
+  for (let item in localStorage) {
     if (item.slice(0, 4) === "card") {
       let card_id = item.split("-")[1];
       ownedCards.push(
@@ -108,6 +116,11 @@ function sortCards(cards, sortType) {
 export function showCollection(cards_data, htmlLocation) {
   let sort = localStorage.getItem("sort");
   let fullCollection = localStorage.getItem("fullCollection") === "true";
+  let ownedCount = 0;
+  for (let rarity of RARITIES) {
+    ownedCount += parseInt(localStorage.getItem(`count-${rarity}`) ?? "0");
+  }
+  COLLECTED_CARDS_NUMBER.textContent = `Collected cards: ${ownedCount}/${cards_data.length}`;
 
   if (fullCollection) {
     let sorted = sortCards(cards_data, sort);
