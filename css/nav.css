@@ -12,6 +12,8 @@ nav hr {
 }
 
 nav a {
+    position: relative;
+
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -23,7 +25,7 @@ nav a {
     color: white;
 }
 
-nav a:not(#nav-home):hover:not(.active) {
+nav a:not(#nav-home):hover:not(.active)::before {
     background: grey;
 }
 
@@ -39,27 +41,27 @@ nav a .icon {
     margin-right: 0.5em;
 }
 
-nav a#nav-gacha,
+nav a#nav-gacha::before,
 section#gacha-controls {
     background-color: #3B47B3;
 }
 
-nav a#nav-collection,
+nav a#nav-collection::before,
 section#card-list {
     background-color: #5F7BC5;
 }
 
-nav a#nav-artist-writer-board,
+nav a#nav-artist-writer-board::before,
 section#artist-writer-board {
     background-color: #4C5678;
 }
 
-nav a#nav-message-board,
+nav a#nav-message-board::before,
 section#message-board {
     background-color: #485EB3;
 }
 
-nav a#nav-credits,
+nav a#nav-credits::before,
 section#credits {
     background-color: #2852B3;
 }
@@ -197,19 +199,31 @@ section#credits {
 
     nav a:not(#nav-home) {
         padding: 0.55rem 2.7rem;
-        clip-path: url(#navClip);
         transform-origin: 50% 100%;
         font-size: 0.6em;
     }
+
     nav a:not(#nav-home).active {
         font-size: 0.75em;
+    }
+
+    /* Setting tab styling to ::before so we can display tab outline w/ keyboard */
+    nav a:not(#nav-home)::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        clip-path: url(#navClip);
+
+        z-index: -1; /* render underneath text */
     }
 
     nav a:first-of-type {
         transform-origin: 0 100%;
     }
 
-    nav a:last-of-type {
+    /* specifying #nav-credits here since the last element in the nav is not a tab */
+    nav a#nav-credits {
         transform-origin: 100% 100%;
     }
     

@@ -157,7 +157,6 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    /* background-color: var(--accent-color); */
     z-index: 999;
 
     display: flex;

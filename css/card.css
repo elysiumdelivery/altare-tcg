@@ -59,7 +59,7 @@
   background-color: #fff;
   height: 90%;
   width: 90%;
-  z-index: 10;
+  z-index: 10; /* set to 10 so that it's greater than nav a.active's z-index and #dialog-overlay */
   display: grid;
   grid-template-areas:
     ".     x"
@@ -95,7 +95,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 5;
+  z-index: 5; /* set to 10 so that it's greater than nav a.active's z-index */
 }
 
 .dialog-overlay {
