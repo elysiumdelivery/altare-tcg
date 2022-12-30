@@ -34,8 +34,6 @@ video {
 section {
   padding: 30px;
   background: white;
-  border-radius: 20px;
-  border-top-left-radius: 0;
 
   min-height: 50vh;
 }

@@ -3,7 +3,7 @@ nav {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    justify-content: flex-start;
+    justify-content: flex-end;
 }
 
 nav hr {
@@ -23,11 +23,7 @@ nav a {
     color: white;
 }
 
-nav a:not(.active) {
-    background: blue;
-}
-
-nav a:hover:not(.active) {
+nav a:not(#nav-home):hover:not(.active) {
     background: grey;
 }
 
@@ -43,27 +39,27 @@ nav a .icon {
     margin-right: 0.5em;
 }
 
-nav a:nth-of-type(1),
+nav a#nav-gacha,
 section#gacha-controls {
     background-color: #3B47B3;
 }
 
-nav a:nth-of-type(2),
+nav a#nav-collection,
 section#card-list {
     background-color: #5F7BC5;
 }
 
-nav a:nth-of-type(3),
+nav a#nav-artist-writer-board,
 section#artist-writer-board {
     background-color: #4C5678;
 }
 
-nav a:nth-of-type(4),
+nav a#nav-message-board,
 section#message-board {
     background-color: #485EB3;
 }
 
-nav a:nth-of-type(5),
+nav a#nav-credits,
 section#credits {
     background-color: #2852B3;
 }
@@ -184,11 +180,29 @@ section#credits {
 
 @media only screen and (min-width: 1000px) {
     /* wide styling, for when the tabs are all visible on screen */
-    nav a {
-        padding: 0.55rem 3.5rem;
-        background: var(--accent-color);
+    nav a#nav-home {
+        flex-grow: 1;
+    }
+    
+    nav a#nav-home span {
+        visibility: hidden;
+        width: 0;
+    }
+
+    nav a#nav-home img {
+        width: 5em;
+        height: 5em;
+        margin-bottom: 0.5em;
+    }
+
+    nav a:not(#nav-home) {
+        padding: 0.55rem 2.7rem;
         clip-path: url(#navClip);
         transform-origin: 50% 100%;
+        font-size: 0.6em;
+    }
+    nav a:not(#nav-home).active {
+        font-size: 0.75em;
     }
 
     nav a:first-of-type {
