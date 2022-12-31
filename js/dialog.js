@@ -16,6 +16,7 @@ export async function setupDetailsDialog() {
 }
 
 export function updateDetailsDialog(data, cardUrl) {
+
   // Header
   DETAILS_DIALOG_EL.getElementsByClassName("dialog-title")[0].innerHTML = "";
   DETAILS_DIALOG_EL.getElementsByClassName(
@@ -29,8 +30,41 @@ export function updateDetailsDialog(data, cardUrl) {
   `
   );
   // Card
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].src =
-    cardUrl;
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].style.backgroundImage = 'url("' +
+    cardUrl + '")';
+
+  let cardRarity;
+  switch(data["Rarity Folder"]){
+    case "HoloRare":
+      cardRarity = "holo";
+      break;
+    case "UltraRare":
+      cardRarity = "ultra";
+      break;
+    case "SecretRare":
+      cardRarity = "secret";
+      break;
+    default:
+      cardRarity = "basic";
+      break;
+  }
+
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add(cardRarity, "animated");
+
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].addEventListener("mouseover", function(){
+
+    DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("animated");
+
+    setTimeout(function(){
+      DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated");
+      setTimeout(function(){
+        DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("animated");
+      }, 12000);
+    }, 100);
+  });
+
+
+  
   // Clear + set card metadata
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
     "";

@@ -66,13 +66,14 @@ export async function defineCardComponent() {
         (card) => card["Collector Number"] == this.getAttribute("card-id")
       );
       this.innerHTML = html;
+      this.holder = this.getElementsByClassName("card-component")[0];
       this.front = this.getElementsByClassName("card-front")[0];
       this.back = this.getElementsByClassName("card-back")[0];
       const image = this.getElementsByClassName("card-image")[0];
-      image.src = this.getImageURL();
+      image.style.backgroundImage = 'url("' + this.getImageURL() + '")';
       this.setupOnClickEvents();
       if (CARD_ART_HIDDEN_ON_LOAD) {
-        this.flipCard();
+        this.resetCard();
       }
       if (this.getAttribute("show_title") === "true") {
         this.showSubtitle();
@@ -85,9 +86,12 @@ export async function defineCardComponent() {
       return `${CLOUDINARY_URL}/q_auto/${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
     }
 
+    resetCard() {
+      this.back.classList.remove("hidden");
+    }
+
     flipCard() {
-      this.front.classList.toggle("hidden");
-      this.back.classList.toggle("hidden");
+      this.holder.classList.add("flip");
     }
 
     //Binds the card's onclick events to flip and show the description popup.

@@ -1,30 +1,98 @@
-.card,
-.card-front,
+:root {
+  --card-width: 200px;
+  --card-height: 279px;
+  --border-radius: 5%/3.5%;
+}
+
+#gacha-button {
+  color: var(--accent-color);
+  padding: 1em;
+  border-radius: 5px;
+  border: 5px solid var(--accent-color);
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: 700;
+  min-width: 250px; min-height:60px;
+  margin: 0px auto 20px auto;
+  display: block;
+  transition: color 0.3s, border 0.3s;
+}
+#gacha-button:hover {
+  border: 5px solid var(--bg-color);
+  color: var(--bg-color);
+}
+
+tcg-card, .card-component, .card-front,
 .card-back {
-  display: inline;
+  width:var(--card-width);
+  height:var(--card-height);
+}
+tcg-card, .card-component, .card-front,
+.card-back {
+  display: inline-block;
+}
+tcg-card {
+  margin: 3%;
+  perspective: 600px;
+  /* position: absolute; */
 }
 
 /* Override default button styling */
 .card-front,
 .card-back {
-  display: inline;
-  width: 200px;
-  margin: 3%;
+  display: inline-block;
   border: 0;
   padding: 0;
   background: none;
   cursor: pointer;
+  position:absolute;
+}
+
+.card-component {
+  will-change: transform;
+  transform-style: preserve-3d;
+  transition: box-shadow .4s ease;
+  transform-origin: center;
+  box-shadow: 0 10px 20px -5px #000;
+  border-radius: var(--border-radius);
+}
+
+#gacha-controls .card-front {
+  backface-visibility: visible;
+  will-change: transform;
+  transform: rotateY(180deg) translateZ(1px);
+}
+#gacha-controls .card-back {
+  backface-visibility: hidden;
 }
 
 .card-image,
 .card-cover {
   width: 100%;
+  height:100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .card-cover {
-  margin: 3%;
   border: solid;
   border-color: dodgerblue;
+  box-sizing:border-box;
+  border-radius: var(--border-radius);
+  background-image:url("../images/elysium_delivery_services.jpg");
+  background-color: white;
+}
+
+.card-component.flip {
+  animation: flip 0.5s ease 0s 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes flip {
+  100% {
+    transform: rotate3d(0, 1, 0, 180deg);
+  }
 }
 
 .dialog-title {
@@ -76,6 +144,10 @@
   display: none;
 }
 
+[role="dialog"][aria-hidden="noshow"] {
+  opacity: 0;
+}
+
 @media screen and (max-width: 1000px) {
   #card-details-dialog {
     grid-template-areas:
@@ -105,3 +177,287 @@
 .dialog-overlay {
   background-color: rgba(43, 46, 56, 0.7);
 }
+
+/* card animation code */
+
+:root {
+  /* BASE */
+  --color1: #b8b8b890;
+  --color2: #6b6b6b90;
+  /* --color1: #58abda;
+  --color2: #495173; */
+  --posx: 50%;
+  --posy: 50%;
+}
+
+.details-dialog-card {
+  /* width:200px; height:279px; */
+  width:300px; height:419px;
+  position: relative;
+  margin: 20px;
+  overflow: hidden;
+  z-index: 10;
+  touch-action: none;
+  border-radius: 5%/3.5%;
+  box-shadow: -7px -7px 10px -5px transparent, 7px 7px 10px -5px transparent, 0 0 5px 0px rgba(255, 255, 255, 0), 0 55px 35px -20px rgba(0, 0, 0, 0.5);
+  /* box-shadow: -5px -5px 5px -5px var(--color1), 5px 5px 5px -5px var(--color2), -7px -7px 10px -5px transparent, 7px 7px 10px -5px transparent, 0 0 5px 0px rgba(255, 255, 255, 0), 0 55px 35px -20px rgba(0, 0, 0, 0.5); */
+  /* box-shadow: 0 10px 20px -5px #000; */
+  transition: transform 0.5s ease, box-shadow 0.2s ease;
+  will-change: transform, filter;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  transform-origin: center;
+  display: inline-block;
+  transform: translate3d(0.1px, 0.1px, 0.1px);
+}
+
+.details-dialog-card.holo {
+  --color1: #ec9bb6;
+  --color2: #ccac6f;
+  --color3: #69e4a5;
+  --color4: #8ec5d6;
+  --color5: #b98cce;
+}
+.details-dialog-card.ultra {
+  --color1: #ff7773;
+  --color2: #ffed5f;
+  --color3: #a8ff5f;
+  --color4: #83fff7;
+  --color5: #7894ff;
+}
+.details-dialog-card.secret {
+  --color5: #fd4741;
+  --color4: #fff397;
+  --color3: #5fffb4;
+  --color2: #83fff7;
+  --color1: #4bc6ff;
+}
+
+.details-dialog-card:before,
+.details-dialog-card:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-repeat: no-repeat;
+  opacity: 0;
+  mix-blend-mode: color-dodge;
+  transition: all 0.33s ease;
+}
+
+.details-dialog-card:before {
+  background-position: 50% 50%;
+  background-size: 300% 300%;
+  background-image: linear-gradient(115deg, transparent 0%, var(--color1) 25%, transparent 47%, transparent 53%, var(--color2) 75%, transparent 100%);
+  filter: brightness(0.5) contrast(1);
+  z-index: 1;
+}
+
+.details-dialog-card.basic:before {
+  filter: brightness(0) contrast(0);
+}
+
+.details-dialog-card.holo:before, .details-dialog-card.ultra:before, .details-dialog-card.secret:before {
+  background-image: linear-gradient(115deg, transparent 20%, var(--color1) 36%, var(--color2) 43%, var(--color3) 50%, var(--color4) 57%, var(--color5) 64%, transparent 80%);
+}
+
+.details-dialog-card:after {
+  background-blend-mode: overlay;
+  z-index: 2;
+  filter: brightness(1) contrast(1);
+  transition: all 0.33s ease;
+  mix-blend-mode: color-dodge;
+}
+
+.details-dialog-card.basic:after {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCI+CjxmaWx0ZXIgaWQ9Im4iPgo8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjciIG51bU9jdGF2ZXM9IjEwIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIj48L2ZlVHVyYnVsZW5jZT4KPC9maWx0ZXI+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWxsPSIjMDAwIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjAuMyI+PC9yZWN0Pgo8L3N2Zz4=);
+  background-position: center;
+  background-size: 200%;
+  background-blend-mode: overlay;
+  mix-blend-mode: screen;
+}
+
+.details-dialog-card.holo:after {
+  --space: 4%;
+  --galaxybg: center 521px;
+  background-image: url(../images/galaxy.jpg), url(../images/galaxy.jpg), url(../images/galaxy.jpg), repeating-linear-gradient( 82deg, rgb(219, 204, 86) calc(var(--space)*1), rgb(121, 199, 58) calc(var(--space)*2), rgb(58, 192, 183) calc(var(--space)*3), rgb(71, 98, 207) calc(var(--space)*4), rgb(170, 69, 209) calc(var(--space)*5), rgb(255, 90, 180) calc(var(--space)*6), rgb(255, 90, 180) calc(var(--space)*7), rgb(170, 69, 209) calc(var(--space)*8), rgb(71, 98, 207) calc(var(--space)*9), rgb(58, 192, 183) calc(var(--space)*10), rgb(121, 199, 58) calc(var(--space)*11), rgb(219, 204, 86) calc(var(--space)*12) );
+  background-blend-mode: color-dodge, color-burn, saturation;
+  background-position: var(--galaxybg, cover), var(--galaxybg, cover), var(--galaxybg, cover), calc(((50% - var(--posx)) * 2.5) + 50%) calc(((50% - var(--posy)) * 2.5) + 50%);
+  background-size: cover, cover, cover, 400% 900%;
+  filter: brightness(.75) contrast(1.2) saturate(1.5);
+  mix-blend-mode: color-dodge;
+}
+
+.details-dialog-card.ultra:after {
+  --space: 5%;
+  --angle: 133deg;
+  --imgsize: 50% 42%;
+  background-image: url(../images/illusion.png), repeating-linear-gradient( 0deg, rgb(255, 119, 115) calc(var(--space)*1), rgba(255,237,95,1) calc(var(--space)*2), rgba(168,255,95,1) calc(var(--space)*3), rgba(131,255,247,1) calc(var(--space)*4), rgba(120,148,255,1) calc(var(--space)*5), rgb(216, 117, 255) calc(var(--space)*6), rgb(255, 119, 115) calc(var(--space)*7) ), repeating-linear-gradient( var(--angle), #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 66%) 4.5%, hsl(180, 10%, 60%) 5.2%, #0e152e 10% , #0e152e 12% );
+  background-blend-mode: exclusion, hue;
+  background-size: var(--imgsize), 200% 400%, 195% 100%;
+  background-position: center center, 0% var(--posy), calc( var(--posx) * -1) calc( var(--posy) * -1);
+  filter: brightness(1.2) contrast(1.6) saturate(1.4);
+  mix-blend-mode: overlay;
+  background-repeat: repeat;
+}
+
+.details-dialog-card.secret:after {
+  --rainbowspace: 9%;
+  --overlayspace: 12%;
+  --angle: -20deg;
+  --angle2: 130deg;
+  --imgsize: 130% 180%;
+  background-image: url(../images/glitter.png), repeating-linear-gradient( var(--angle), rgb(253, 71, 65) calc(var(--rainbowspace)*1), rgb(255, 243, 151) calc(var(--rainbowspace)*2), rgb(95, 255, 180) calc(var(--rainbowspace)*3), rgba(131,255,247,1) calc(var(--rainbowspace)*4), rgb(75, 198, 255) calc(var(--rainbowspace)*5), rgb(255, 73, 246) calc(var(--rainbowspace)*6), rgb(255, 56, 49) calc(var(--rainbowspace)*7) ), repeating-linear-gradient( var(--angle2), rgba(89, 46, 80, 0.5) calc(var(--overlayspace)*1), hsl(263, 43%, 76%) calc(var(--overlayspace)*2), rgb(223, 96, 202) calc(var(--overlayspace)*3), hsl(180, 57%, 56%) calc(var(--overlayspace)*4), rgba(14, 21, 46, 0.5) calc(var(--overlayspace)*5) , rgba(14, 21, 46, 0.5) calc(var(--overlayspace)*6) ), url(../images/illusion2.png);
+  background-size: 20% 15%, 500% 500%, 1000% 1000%, var(--imgsize);
+  background-blend-mode: color-burn, soft-light, normal;
+  background-position: center, 0% calc( var(--posy) * -1.75 ), calc( var(--posx) * -1.75 ) calc( var(--posy) * -1 ) , bottom left;
+  mix-blend-mode: exclusion;
+  filter: brightness(0.6) contrast(2.2) saturate(.9);
+  background-repeat: repeat;
+}
+
+.details-dialog-card.animated {
+  transition: none;
+  animation: holoCard 12s ease 0s 1;
+}
+.details-dialog-card.animated:before {
+  transition: none;
+  animation: holoGradient 12s ease 0s 1;
+}
+.details-dialog-card.secret.animated:before {
+  transition: none;
+  animation: holoSecretGradient 12s ease 0s 1;
+}
+.details-dialog-card.animated:after {
+  transition: none;
+  animation: holoSparkle 12s ease 0s 1;
+}
+
+.details-dialog-card.secret.animated:after {
+  transition: none;
+  animation: holoSecretSparkle 12s ease 0s 1;
+}
+
+/* HoloSparkle ----------------------------------- */
+@keyframes holoSparkle {
+  0%, 100% {
+    opacity: 0;
+    background-position: 50% 50%;
+    filter: brightness(1.2) contrast(1.25);
+  }
+  6%, 11%  {
+    opacity: 0.6;
+  }
+  13%, 16% {
+    opacity: 0.5;
+    background-position: 50% 50%;
+    filter: brightness(1.2) contrast(0.8);
+  }
+  35%, 38% {
+    opacity: 1;
+    background-position: 60% 60%;
+    filter: brightness(1) contrast(1);
+  }
+  55% {
+    opacity: 0.33;
+    background-position: 45% 45%;
+    filter: brightness(1.2) contrast(1.25);
+  }
+}
+
+@keyframes holoSecretSparkle {
+  0%, 100% {
+    opacity: 0;
+    background-position: 20% 15%;
+    filter: brightness(0.8) contrast(2.2);
+  }
+  6%, 11%  {
+    opacity: 0.6;
+  }
+  13%, 16% {
+    opacity: 0.5;
+    background-position: 20% 15%;
+    filter: brightness(0.8) contrast(1.8);
+  }
+  35%, 38% {
+    opacity: 1;
+    background-position: 30% 25%;
+    filter: brightness(0.7) contrast(2);
+  }
+  55% {
+    opacity: 0.33;
+    background-position: 15% 10%;
+    filter: brightness(0.8) contrast(2.2);
+  }
+}
+
+/* HoloGradient ----------------------------------- */
+@keyframes holoGradient {
+  0%, 100% {
+    opacity: 0;
+    background-position: 50% 50%;
+    filter: brightness(0.5) contrast(1);
+  }
+  3%, 6% {
+    opacity:0.5;
+  }
+  13%, 17% {
+    background-position: 0% 0%;
+    opacity: 0.88;
+  }
+  35%, 39% {
+    background-position: 100% 100%;
+    opacity: 1;
+    filter: brightness(0.5) contrast(1);
+  }
+  55% {
+    background-position: 0% 0%;
+    opacity: 1;
+    filter: brightness(0.75) contrast(1.25);
+  }
+}
+
+@keyframes holoSecretGradient {
+  0%, 100% {
+    opacity: 0;
+    background-position: 50% 50%;
+    filter: brightness(0.5) contrast(0.6);
+  }
+  3%, 6% {
+    opacity:0.5;
+  }
+  13%, 17% {
+    background-position: 0% 0%;
+    opacity: 0.88;
+  }
+  35%, 39% {
+    background-position: 100% 100%;
+    opacity: 1;
+    filter: brightness(0.5) contrast(0.6);
+  }
+  55% {
+    background-position: 0% 0%;
+    opacity: 1;
+    filter: brightness(0.75) contrast(1.4);
+  }
+}
+
+/* HoloCard ----------------------------------- */
+@keyframes holoCard {
+  0%, 100% {
+    transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+  }
+  13%, 16% {
+    transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
+  }
+  35%, 38% {
+    transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
+  }
+  55% {
+    transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
+  }
+}
+
