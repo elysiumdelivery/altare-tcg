@@ -66,7 +66,7 @@ section#credits {
     background-color: #2852B3;
 }
 
-#nav-button {
+#nav-hamburger {
     position: relative;
     top: 0;
     right: 0;
@@ -81,7 +81,7 @@ section#credits {
     display: none;
 }
 
-#nav-button img {
+#nav-hamburger img {
     position: absolute;
     top: 25%;
     left: 25%;
@@ -112,7 +112,7 @@ section#credits {
 
 @media only screen and (max-width: 1000px) {
     /* portrait / small width styling, show burger menu */
-    #nav-button {
+    #nav-hamburger {
         display: block;
     }
 
