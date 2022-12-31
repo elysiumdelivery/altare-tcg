@@ -76,7 +76,11 @@
           </button>
       </nav>
 
-      <section id="artist-writer-board">
+      <section id="artist-writer-board" role="feed" aria-busy="false" aria-labelledby="Artist & Writer Messages">
+        <article class="header-message" tabindex="0" aria-posinset="0" aria-setsize="100">
+          <h3>Happy Birthday, Leader!</h3>
+          <p>header message here?</p>
+        </article>
       </section>
 
       <footer>
@@ -98,6 +102,8 @@
 
     <!-- Javascript must be at end so it can access the loaded DOM -->
     <script type="text/javascript" src="../js/a11y-dialog.min.js"></script>
+    <script type="text/javascript" src="../js/papaparse.min.js"></script>
+    <script type="module" src="../js/main.js"></script>
     <script src="../js/nav.js"></script>
   </body>
 </html>

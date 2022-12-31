@@ -50,6 +50,23 @@ function getCardsByRarity() {
   }, {});
 }
 
+function renderMessages () {
+  let messageContainer = document.getElementById("artist-writer-board");
+  for (var i = 1; i < 100; i++) {
+    let messageNode = document.createElement("article");
+    messageNode.ariaPosInSet = i;
+    messageNode.ariaSetSize = 100;
+    messageNode.tabIndex = 0;
+    messageNode.classList.add("artist-writer-message");
+    messageNode.innerHTML = `
+      <h4>user_name_${i}</h4>
+      <h5>user_social_${i}</h5>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus cras adipiscing enim eu turpis egestas. Blandit massa enim nec dui nunc mattis enim ut tellus. Cursus euismod quis viverra nibh cras. Porttitor massa id neque aliquam vestibulum morbi blandit cursus.</p>
+    `;
+    messageContainer.appendChild(messageNode);
+  }
+}
+
 async function main() {
   await defineCardComponent();
   getCSVData(async (cards_data) => {
@@ -63,6 +80,10 @@ async function main() {
       case "/collection.html":
         await setupDetailsDialog();
         renderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
+        break;
+      case "/artist-writer-board.html":
+        renderMessages();
+        break;
     }
   });
 }

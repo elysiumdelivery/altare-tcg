@@ -71,8 +71,40 @@ footer svg {
   display: none;
 }
 
+section#artist-writer-board {
+  column-count: 2;
+  column-rule: 1px solid white;
+  column-gap: 1em;
+}
+
+article.header-message {
+  column-span: all;
+  text-align: center;
+  margin-bottom: 1em;
+}
+article.artist-writer-message {
+  padding: 1.5em;
+  background: white;
+  border-top-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  margin: 1.5em 0.5em;
+  text-align: center;
+  /* avoid breaking the message box between columns */
+  break-inside: avoid;
+}
+
+article.artist-writer-message h4,
+article.artist-writer-message h5 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
 @media only screen and (max-width: 600px) {
   /* mobile / portrait styling */
+
+  section#artist-writer-board {
+    column-count: 1;
+  }
 }
 
 @media only screen and (min-width: 600px) {
