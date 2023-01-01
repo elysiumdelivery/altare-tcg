@@ -3,6 +3,29 @@ import { updateDetailsDialog, DETAILS_DIALOG_A11Y } from "./dialog.js";
 
 const CLOUD_NAME = "dazcxdgiy";
 const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
+const COLLECTED_CARDS_NUMBER = document.getElementById(
+  "collected-cards-number"
+);
+const RARITIES = [
+  "Element",
+  "Common",
+  "Uncommon",
+  "Rare",
+  "HoloRare",
+  "UltraRare",
+  "SecretRare",
+];
+
+//Object to store all supported sorting functions.
+//Can be used by calling:
+//array.sort(sort_functions[key])
+const sort_functions = {
+  "Collector Number": (a, b) => {
+    return parseInt(a["Collector Number"]) > parseInt(b["Collector Number"])
+      ? 1
+      : -1;
+  },
+};
 
 //Custom Card component. Use it like this:
 //<tcg-card card-id="[COLLECTOR_NUMBER]"></tcg-card>
@@ -68,5 +91,48 @@ export function renderCards(cards, htmlLocation, replace = false) {
       "beforeend",
       `<tcg-card card-id="${cards[i]["Collector Number"]}"></tcg-card>`
     );
+  }
+}
+
+function getOwnedCards(cards_data) {
+  let ownedCards = [];
+  for (let item in localStorage) {
+    if (item.slice(0, 4) === "card") {
+      let card_id = item.split("-")[1];
+      ownedCards.push(
+        cards_data.find((card) => card["Collector Number"] === card_id)
+      );
+    }
+  }
+  return ownedCards;
+}
+
+function sortCards(cards, sortType) {
+  sortType = sortType ?? "Collector Number";
+  cards.sort(sort_functions[sortType]);
+  return cards;
+}
+
+export function showCollection(cards_data, htmlLocation) {
+  let sort = localStorage.getItem("sort");
+  let fullCollection = localStorage.getItem("fullCollection") === "true";
+  let ownedCount = 0;
+  for (let rarity of RARITIES) {
+    ownedCount += parseInt(localStorage.getItem(`count-${rarity}`) ?? "0");
+  }
+  COLLECTED_CARDS_NUMBER.textContent = `Collected cards: ${ownedCount}/${cards_data.length}`;
+
+  if (fullCollection) {
+    let sorted = sortCards(cards_data, sort);
+    renderCards(sorted, htmlLocation, true);
+  } else {
+    let ownedCards = getOwnedCards(cards_data);
+    if (ownedCards.length == 0) {
+      htmlLocation.innerHTML =
+        "You have no cards at the moment. Try pulling some at the gacha!";
+    } else {
+      ownedCards = sortCards(ownedCards, sort);
+      renderCards(ownedCards, htmlLocation, true);
+    }
   }
 }
