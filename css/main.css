@@ -4,11 +4,17 @@
 
 :root {
   --accent-color: #54acdc;
+  --bg-color: #1D346D;
 }
 
-body {
-  background: var(--accent-color);
-  font-family: "Inter", sans-serif;
+html {
+  background-color: var(--bg-color);
+  background-image: url(../images/bg-web.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: 'Montserrat', sans-serif;
+  height: 100%;
 }
 
 h1,
@@ -28,8 +34,6 @@ video {
 section {
   padding: 30px;
   background: white;
-  border-radius: 20px;
-  border-top-left-radius: 0;
 
   min-height: 50vh;
 }
@@ -38,6 +42,10 @@ footer {
   display: flex;
   justify-content: center;
   padding: 30px;
+}
+
+footer a {
+  color: white;
 }
 
 footer svg {
@@ -61,4 +69,15 @@ footer svg {
 
 .hidden {
   display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  /* mobile / portrait styling */
+}
+
+@media only screen and (min-width: 600px) {
+  /* desktop / wide styling */
+  main {
+    margin: 1em;
+  }
 }

@@ -19,13 +19,13 @@
     <!-- Enables media queries on mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap" rel="stylesheet">
-  <style> @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap'); </style>
-
-  <!-- CSS-->
-  <link type="text/css" rel="stylesheet" href="../css/main.css" />
-  <link type="text/css" rel="stylesheet" href="../css/nav.css" />
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap" rel="stylesheet">
+    <style> @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap'); </style>
+    
+    <!-- CSS-->
+    <link type="text/css" rel="stylesheet" href="../css/main.css" />
+    <link type="text/css" rel="stylesheet" href="../css/nav.css" />
 
     <title>Regis Altare Booster Pack Simulator</title>
   </head>
@@ -34,7 +34,7 @@
     <main>
       <h1>The Regis Altare Birthday Project 2023</h1>
 
-      <a href="#gacha-controls" class="visually-hidden">Skip to content</a>
+      <a href="#credits" class="visually-hidden">Skip to content</a>
 
       <!-- Inverted border radius for clip-path -->
       <svg width="0" height="0" aria-hidden="true">
@@ -50,11 +50,11 @@
 
       <!-- Navigation -->
       <nav>
-          <a id="nav-home" href="../index.html">
-              <img class="icon icon-logo" aria-hidden="true" src="../icons/Icons_Open-Packs.svg"/>
-              <span>Home</span>
+        <a id="nav-home" href="../index.html">
+                <img class="icon icon-logo" aria-hidden="true" src="../icons/Icons_Open-Packs.svg"/>
+                <span>Home</span>
           </a>
-          <a id="nav-gacha" class="active" href="../pages/gacha.html">
+          <a id="nav-gacha" href="../pages/gacha.html">
               <img class="icon icon-gacha" aria-hidden="true" src="../icons/Icons_Open-Packs.svg"/>
               Gacha</a>
           <a id="nav-collection" href="../pages/collection.html">
@@ -66,7 +66,7 @@
           <a id="nav-message-board" href="../pages/message-board.html">
               <img class="icon icon-message-board" aria-hidden="true" src="../icons/Icons_Board.svg"/>
               Message Board</a>
-          <a id="nav-credits" href="../pages/credits.html">
+          <a id="nav-credits" class="active" href="../pages/credits.html">
               <img class="icon icon-credits" aria-hidden="true" src="../icons/Icons_Credits.svg"/>
               Credits</a>
           <!-- Menu-only elements -->
@@ -76,9 +76,7 @@
           </button>
       </nav>
 
-      <section id="gacha-controls">
-        <button id="gacha-button">Pull Gacha</button>
-        <section id="card-list"></section>
+      <section id="credits">
       </section>
 
       <footer>
@@ -99,9 +97,7 @@
     </main>
 
     <!-- Javascript must be at end so it can access the loaded DOM -->
-    <script type="text/javascript" src="../js/papaparse.min.js"></script>
     <script type="text/javascript" src="../js/a11y-dialog.min.js"></script>
-    <script type="module" src="../js/main.js"></script>
     <script src="../js/nav.js"></script>
   </body>
 </html>

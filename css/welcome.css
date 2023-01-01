@@ -17,6 +17,7 @@
 
     padding: 0;
     background-color: transparent;
+    transform: translateY(-10%);
 }
 
 .welcome-splash {
@@ -44,12 +45,22 @@
     pointer-events: auto;
     visibility: visible;
 }
-
-#altare-img {
+#altare-img-bg {
     position: absolute;
     top: 0;
     left: auto;
-    max-height: 100vh;
+    height: 60vh;
+    object-fit: contain;
+}
+
+#altare-img-fg {
+    position: absolute;
+    top: 0;
+    left: auto;
+    max-height: 95vh;
+
+    object-fit: contain;
+
     animation-name: alt-float;
     animation-duration: 5s;
     animation-iteration-count: infinite;
@@ -72,11 +83,11 @@
 
 #welcome-nav a {
     position: absolute;
-    width: 16vmin;
-    height: 20vmin;
+    width: 13vmin;
+    height: 17vmin;
     background: white;
     border-radius: 5px;
-    border: 5px solid gray;
+    border: 0.5vmin solid gray;
 
     box-sizing: border-box;
     padding: 1em;
@@ -91,6 +102,8 @@
     align-items: center;
     justify-content: center;
 
+    filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
+
     transition: 0.25s transform ease, 0.25s box-shadow ease;
     transform: scale(1);
 }
@@ -100,6 +113,38 @@
     border-color: transparent;
     background: linear-gradient(45deg, #a7daf5, #ffffff, #a7daf5) padding-box,
                 linear-gradient(45deg, gold, #ffffff, gold) border-box;
+}
+
+#welcome-nav a.special-nav-card .special-nav-card-sparkle {
+    position: absolute;
+    background: rgb(255, 214, 25);
+    clip-path: polygon(50% 0%, 40% 40%, 0% 50%, 40% 60%, 50% 100%, 60% 60%, 100% 50%, 60% 40%);
+
+    animation: anim-special-nav-sparkle 2s linear 0s infinite alternate forwards;
+}
+
+#welcome-nav a.special-nav-card .special-nav-card-sparkle:nth-of-type(1) {
+    width: 2em;
+    height: 2em;
+    top: -10%;
+    left: -10%;
+}
+
+#welcome-nav a.special-nav-card .special-nav-card-sparkle:nth-of-type(2) {
+    width: 1em;
+    height: 1em;
+    top: 35%;
+    right: -0.75em;
+    animation-delay: 0.25s;
+    animation-direction: alternate-reverse;
+}
+
+#welcome-nav a.special-nav-card .special-nav-card-sparkle:nth-of-type(3) {
+    width: 1.5em;
+    height: 1.5em;
+    bottom: -1em;
+    left: 60%;
+    animation-delay: 1s;
 }
 
 #welcome-nav a:hover, #welcome-nav a:focus-visible {
@@ -112,7 +157,6 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: var(--accent-color);
     z-index: 999;
 
     display: flex;
@@ -181,7 +225,23 @@
     }
 }
 
+@keyframes anim-special-nav-sparkle {
+    0% {
+        transform: scale(0.5) rotate(5deg);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.5) rotate(-5deg);
+        opacity: 1;
+    }
+}
+
 @media only screen and (max-width: 600px) {
+    /* mobile / portrait styling */
     main {
         position: absolute;
         top: 0;
@@ -190,11 +250,18 @@
         overflow-x: hidden; 
     }
 
-    #altare-img {
-        top: calc(50% - 80vmin);
+    #altare-img-bg {
+        top: 0;
+        left: 0;
+        height: auto;
+        width: 100%;
+    }
+
+    #altare-img-fg {
+        top: 0;
         right: 0;
         width: 100%;
-        max-height: 100vh;
+        max-height: 95vh;
     }
 
     #welcome-fancy-menu {
@@ -231,34 +298,39 @@
 }
 
 @media only screen and (min-width: 600px) {
+    /* desktop / landscape styling */
+
+    #welcome-nav a {
+        font-size: 1.8vmin;
+    }
 
     #welcome-nav a:hover, #welcome-nav a:focus-visible {
         transform: scale(1.1) rotate3d(0, 0, 0, 0deg) !important;
     }
     
     #welcome-nav a:nth-child(1) {
-        bottom: 0%;
-        left: 42%;
+        bottom: calc(50% - 20em);
+        left: calc(50% - 3em);
         transform: scale(1.15) rotate3d(0.5, 0.25, -0.5, 30deg);
     }
     #welcome-nav a:nth-child(2) {
-        top: 37%;
-        left: 10%;
+        top: calc(50% - 5em);
+        left: calc(50% - 22em);
         transform: scale(1) rotate3d(-0.5, 1, 0, 30deg);
     }
     #welcome-nav a:nth-child(3) {
-        right: 14%;
-        bottom: 15%;
+        right: calc(50% - 18em);
+        bottom: calc(50% - 14em);
         transform: scale(1) rotate3d(0.85, -1, 0, 30deg);
     }
     #welcome-nav a:nth-child(4) {
         top: 25%;
-        right: 5%;
+        right: calc(50% - 25em);
         transform: scale(1) rotate3d(0.25, -1, 0.25, 30deg);
     }
     #welcome-nav a:nth-child(5) {
-        top: 5%;
-        left: 7%;
+        top: calc(50% - 18em);
+        left: calc(50% - 23em);
         transform: scale(1) rotate3d(0.5, 1, 0, 30deg);
     }
 }
