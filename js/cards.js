@@ -1,5 +1,5 @@
 import { cards_data, CARD_ART_HIDDEN_ON_LOAD } from "./main.js";
-import { updateDetailsDialog, DETAILS_DIALOG_A11Y } from "./dialog.js";
+import { updateDetailsDialog, DETAILS_DIALOG_A11Y, cardRarity } from "./dialog.js";
 
 const CLOUD_NAME = "dazcxdgiy";
 const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
@@ -69,8 +69,10 @@ export async function defineCardComponent() {
       this.holder = this.getElementsByClassName("card-component")[0];
       this.front = this.getElementsByClassName("card-front")[0];
       this.back = this.getElementsByClassName("card-back")[0];
-      const image = this.getElementsByClassName("card-image")[0];
-      image.style.backgroundImage = 'url("' + this.getImageURL() + '")';
+      this.image = this.getElementsByClassName("card-image")[0];
+      // const image = this.getElementsByClassName("card-image")[0];
+      this.image.style.backgroundImage = 'url("' + this.getImageURL() + '")';
+      this.image.classList.add(cardRarity(this.data["Rarity Folder"]));
       this.setupOnClickEvents();
       if (CARD_ART_HIDDEN_ON_LOAD) {
         this.resetCard();
@@ -92,12 +94,17 @@ export async function defineCardComponent() {
 
     flipCard() {
       this.holder.classList.add("flip");
+      this.image.classList.add("animated");
     }
 
     //Binds the card's onclick events to flip and show the description popup.
     setupOnClickEvents() {
       this.back.onclick = (event) => this.flipCard();
-      this.front.onclick = (event) => this.showDetails();
+      if(CARD_ART_HIDDEN_ON_LOAD){
+
+      } else {
+        this.front.onclick = (event) => this.showDetails();
+      }
     }
 
     showDetails() {

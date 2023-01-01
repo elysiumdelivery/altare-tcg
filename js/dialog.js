@@ -33,37 +33,11 @@ export function updateDetailsDialog(data, cardUrl) {
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].style.backgroundImage = 'url("' +
     cardUrl + '")';
 
-  let cardRarity;
-  switch(data["Rarity Folder"]){
-    case "HoloRare":
-      cardRarity = "holo";
-      break;
-    case "UltraRare":
-      cardRarity = "ultra";
-      break;
-    case "SecretRare":
-      cardRarity = "secret";
-      break;
-    default:
-      cardRarity = "basic";
-      break;
-  }
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add(cardRarity(data["Rarity Folder"]), "animated");
 
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add(cardRarity, "animated");
-
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].addEventListener("mouseover", function(){
-
-    DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("animated");
-
-    setTimeout(function(){
-      DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated");
-      setTimeout(function(){
-        DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("animated");
-      }, 12000);
-    }, 100);
-  });
-
-
+  DETAILS_DIALOG_EL.getElementsByClassName("card-details-dialog-close")[0].addEventListener("click", cardReset);
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].addEventListener("mouseover", cardAnimate);
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].addEventListener("click", cardAnimate);
   
   // Clear + set card metadata
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
@@ -81,4 +55,39 @@ export function updateDetailsDialog(data, cardUrl) {
     <p><i>${data["Attack 2 Extended Lore"]}</i></p>
   `
   );
+}
+
+export function cardAnimate(){
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("animated");
+
+  setTimeout(function(){
+    DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated");
+    setTimeout(function(){
+      DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("animated");
+    }, 12000);
+  }, 100);
+}
+
+export function cardReset(){
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("holo", "basic", "secret", "rare", "animated");
+}
+
+export function cardRarity(folder){
+  let rarity;
+  switch(folder){
+    case "HoloRare":
+      rarity = "holo";
+      break;
+    case "UltraRare":
+      rarity = "ultra";
+      break;
+    case "SecretRare":
+      rarity = "secret";
+      break;
+    default:
+      rarity = "basic";
+      break;
+  }
+
+  return rarity;
 }

@@ -34,7 +34,34 @@ tcg-card, .card-component, .card-front,
 tcg-card {
   margin: 3%;
   perspective: 600px;
-  /* position: absolute; */
+}
+
+#gacha-controls section {
+  min-height:60vh;
+}
+#gacha-controls tcg-card {
+  --card-width: 300px;
+  --card-height: 419px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+#gacha-controls tcg-card:nth-child(3n+1){
+  transform: rotate(0deg);
+}
+#gacha-controls tcg-card:nth-child(3n+2){
+  transform: rotate(-5deg);
+}
+#gacha-controls tcg-card:nth-child(3n+3){
+  transform: rotate(3deg);
+}
+
+#gacha-controls #card-list {
+  position: relative;
+  top: calc(-60vh - 60px);
 }
 
 /* Override default button styling */
@@ -53,8 +80,12 @@ tcg-card {
   transform-style: preserve-3d;
   transition: box-shadow .4s ease;
   transform-origin: center;
-  box-shadow: 0 10px 20px -5px #000;
+  /* box-shadow: 0 10px 20px -5px #000; */
+  box-shadow: 0px 10px 20px -5px rgba(0, 0, 0, 0.3);
   border-radius: var(--border-radius);
+}
+#gacha-controls .card-component {
+  box-shadow:none;
 }
 
 #gacha-controls .card-front {
@@ -111,8 +142,38 @@ tcg-card {
   grid-area: text;
 }
 
+.details-dialog-text, #card-details-dialog {
+  /* firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-color) var(--accent-color);
+}
+
+
+.details-dialog-text::-webkit-scrollbar, #card-details-dialog::-webkit-scrollbar {
+  width: 12px;
+}
+.details-dialog-text::-webkit-scrollbar-track, #card-details-dialog::-webkit-scrollbar-track {
+  background: var(--accent-color);
+  border-radius:10px;
+}
+#card-details-dialog::-webkit-scrollbar-track {
+  border-radius:0px 10px 10px 0px;
+}
+.details-dialog-text::-webkit-scrollbar-thumb, #card-details-dialog::-webkit-scrollbar-thumb {
+  background-color: var(--bg-color);
+  border: 3px solid var(--accent-color);
+  border-radius:10px;
+}
+
 .card-details-dialog-close {
   grid-area: x;
+  background-color: var(--accent-color);
+  border: 8px solid transparent;
+  width: 200px;
+  max-height:37px;
+  justify-self: end;
+  border-radius: 5px;
+  font-size: 1em;
 }
 
 .card-subtitle {
@@ -156,11 +217,13 @@ tcg-card {
       "text  text"
       "card  card";
     overflow: auto;
+    justify-items: center;
   }
 
   .details-dialog-text {
     /* Override overflow: auto for small screens, and let whole dialog scroll instead of just the text section */
     overflow: visible;
+    min-height: auto;
   }
 }
 
@@ -182,15 +245,15 @@ tcg-card {
 
 :root {
   /* BASE */
-  --color1: #b8b8b890;
-  --color2: #6b6b6b90;
+  --color1: #b8b8b8;
+  --color2: #6b6b6b;
   /* --color1: #58abda;
   --color2: #495173; */
   --posx: 50%;
   --posy: 50%;
 }
 
-.details-dialog-card {
+.details-dialog-card, #gacha-controls .card-image {
   /* width:200px; height:279px; */
   width:300px; height:419px;
   position: relative;
@@ -211,22 +274,25 @@ tcg-card {
   display: inline-block;
   transform: translate3d(0.1px, 0.1px, 0.1px);
 }
+#gacha-controls .card-image {
+  margin:auto;
+}
 
-.details-dialog-card.holo {
+.details-dialog-card.holo, #gacha-controls .card-image.holo {
   --color1: #ec9bb6;
   --color2: #ccac6f;
   --color3: #69e4a5;
   --color4: #8ec5d6;
   --color5: #b98cce;
 }
-.details-dialog-card.ultra {
+.details-dialog-card.ultra, #gacha-controls .card-image.ultra {
   --color1: #ff7773;
   --color2: #ffed5f;
   --color3: #a8ff5f;
   --color4: #83fff7;
   --color5: #7894ff;
 }
-.details-dialog-card.secret {
+.details-dialog-card.secret, #gacha-controls .card-image.secret {
   --color5: #fd4741;
   --color4: #fff397;
   --color3: #5fffb4;
@@ -235,7 +301,9 @@ tcg-card {
 }
 
 .details-dialog-card:before,
-.details-dialog-card:after {
+.details-dialog-card:after, 
+#gacha-controls .card-image:before,
+#gacha-controls .card-image:after {
   content: "";
   position: absolute;
   left: 0;
@@ -248,7 +316,7 @@ tcg-card {
   transition: all 0.33s ease;
 }
 
-.details-dialog-card:before {
+.details-dialog-card:before, #gacha-controls .card-image:before {
   background-position: 50% 50%;
   background-size: 300% 300%;
   background-image: linear-gradient(115deg, transparent 0%, var(--color1) 25%, transparent 47%, transparent 53%, var(--color2) 75%, transparent 100%);
@@ -256,15 +324,16 @@ tcg-card {
   z-index: 1;
 }
 
-.details-dialog-card.basic:before {
+.details-dialog-card.basic:before, #gacha-controls .card-image.basic:before {
   filter: brightness(0) contrast(0);
 }
 
-.details-dialog-card.holo:before, .details-dialog-card.ultra:before, .details-dialog-card.secret:before {
+.details-dialog-card.holo:before, .details-dialog-card.ultra:before, .details-dialog-card.secret:before,
+#gacha-controls .card-image.holo:before, #gacha-controls .card-image.ultra:before, #gacha-controls .card-image.secret:before {
   background-image: linear-gradient(115deg, transparent 20%, var(--color1) 36%, var(--color2) 43%, var(--color3) 50%, var(--color4) 57%, var(--color5) 64%, transparent 80%);
 }
 
-.details-dialog-card:after {
+.details-dialog-card:after, #gacha-controls .card-image:after {
   background-blend-mode: overlay;
   z-index: 2;
   filter: brightness(1) contrast(1);
@@ -272,7 +341,7 @@ tcg-card {
   mix-blend-mode: color-dodge;
 }
 
-.details-dialog-card.basic:after {
+.details-dialog-card.basic:after, #gacha-controls .card-image.basic:after {
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCI+CjxmaWx0ZXIgaWQ9Im4iPgo8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjciIG51bU9jdGF2ZXM9IjEwIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIj48L2ZlVHVyYnVsZW5jZT4KPC9maWx0ZXI+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWxsPSIjMDAwIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjAuMyI+PC9yZWN0Pgo8L3N2Zz4=);
   background-position: center;
   background-size: 200%;
@@ -280,7 +349,7 @@ tcg-card {
   mix-blend-mode: screen;
 }
 
-.details-dialog-card.holo:after {
+.details-dialog-card.holo:after, #gacha-controls .card-image.holo:after {
   --space: 4%;
   --galaxybg: center 521px;
   background-image: url(../images/galaxy.jpg), url(../images/galaxy.jpg), url(../images/galaxy.jpg), repeating-linear-gradient( 82deg, rgb(219, 204, 86) calc(var(--space)*1), rgb(121, 199, 58) calc(var(--space)*2), rgb(58, 192, 183) calc(var(--space)*3), rgb(71, 98, 207) calc(var(--space)*4), rgb(170, 69, 209) calc(var(--space)*5), rgb(255, 90, 180) calc(var(--space)*6), rgb(255, 90, 180) calc(var(--space)*7), rgb(170, 69, 209) calc(var(--space)*8), rgb(71, 98, 207) calc(var(--space)*9), rgb(58, 192, 183) calc(var(--space)*10), rgb(121, 199, 58) calc(var(--space)*11), rgb(219, 204, 86) calc(var(--space)*12) );
@@ -291,7 +360,7 @@ tcg-card {
   mix-blend-mode: color-dodge;
 }
 
-.details-dialog-card.ultra:after {
+.details-dialog-card.ultra:after, #gacha-controls .card-image.ultra:after {
   --space: 5%;
   --angle: 133deg;
   --imgsize: 50% 42%;
@@ -304,7 +373,7 @@ tcg-card {
   background-repeat: repeat;
 }
 
-.details-dialog-card.secret:after {
+.details-dialog-card.secret:after, #gacha-controls .card-image.secret:after {
   --rainbowspace: 9%;
   --overlayspace: 12%;
   --angle: -20deg;
@@ -319,24 +388,24 @@ tcg-card {
   background-repeat: repeat;
 }
 
-.details-dialog-card.animated {
+.details-dialog-card.animated, #gacha-controls .card-image.animated {
   transition: none;
   animation: holoCard 12s ease 0s 1;
 }
-.details-dialog-card.animated:before {
+.details-dialog-card.animated:before, #gacha-controls .card-image.animated:before {
   transition: none;
   animation: holoGradient 12s ease 0s 1;
 }
-.details-dialog-card.secret.animated:before {
+.details-dialog-card.secret.animated:before, #gacha-controls .card-image.secret.animated:before {
   transition: none;
   animation: holoSecretGradient 12s ease 0s 1;
 }
-.details-dialog-card.animated:after {
+.details-dialog-card.animated:after, #gacha-controls .card-image.animated:after {
   transition: none;
   animation: holoSparkle 12s ease 0s 1;
 }
 
-.details-dialog-card.secret.animated:after {
+.details-dialog-card.secret.animated:after, #gacha-controls .card-image.secret.animated:after {
   transition: none;
   animation: holoSecretSparkle 12s ease 0s 1;
 }
