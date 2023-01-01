@@ -29,15 +29,28 @@ export function updateDetailsDialog(data, cardUrl) {
     <p>Artist: ${data["Artist Credit"]} | Writer: ${data["Writer Credit"]}</p>
   `
   );
-  // Card
+  // Card art is applied
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].style.backgroundImage = 'url("' +
     cardUrl + '")';
 
+  // Add animation start
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add(cardRarity(data["Rarity Folder"]), "animated");
-
+  
+  // Animation reset
   DETAILS_DIALOG_EL.getElementsByClassName("card-details-dialog-close")[0].addEventListener("click", cardReset);
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].addEventListener("mouseover", cardAnimate);
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].addEventListener("click", cardAnimate);
+  document.getElementsByClassName("dialog-overlay")[0].addEventListener("click", cardReset);
+
+  // animation events
+  let dialogCard = DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0];
+  dialogCard.addEventListener("animationstart", function() {
+    dialogCard.removeEventListener("mouseover", cardAnimate);
+    dialogCard.removeEventListener("click", cardAnimate);
+  }, false);
+  dialogCard.addEventListener("animationend", function() {
+    dialogCard.classList.remove("animated");
+    dialogCard.addEventListener("mouseover", cardAnimate);
+    dialogCard.addEventListener("click", cardAnimate);
+  }, false);
   
   // Clear + set card metadata
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
@@ -57,19 +70,11 @@ export function updateDetailsDialog(data, cardUrl) {
   );
 }
 
-export function cardAnimate(){
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("animated");
-
-  setTimeout(function(){
-    DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated");
-    setTimeout(function(){
-      DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("animated");
-    }, 12000);
-  }, 100);
+function cardAnimate(dialogCard){
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated");
 }
-
-export function cardReset(){
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("holo", "basic", "secret", "rare", "animated");
+function cardReset(){
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("holo", "basic", "secret", "rare", "ultra", "animated");
 }
 
 export function cardRarity(folder){

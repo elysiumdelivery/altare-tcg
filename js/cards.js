@@ -49,6 +49,8 @@ const sort_functions = {
     },
 };
 
+let cardCount = 0;
+let previousCard;
 //Custom Card component. Use it like this:
 //<tcg-card card-id="[COLLECTOR_NUMBER]"></tcg-card>
 export async function defineCardComponent() {
@@ -93,8 +95,24 @@ export async function defineCardComponent() {
     }
 
     flipCard() {
+
+      if(previousCard !== undefined){
+        previousCard.classList.remove("animated");
+        previousCard.removeEventListener("click", function(){})
+        previousCard.removeEventListener("mouseover", function(){})
+      }
+
+      this.classList.add("clicked");
+      this.style.zIndex = cardCount;
+      cardCount++;
       this.holder.classList.add("flip");
       this.image.classList.add("animated");
+      previousCard = this.image;
+      this.image.addEventListener("animationend", function(){
+        previousCard.classList.remove("animated");
+        previousCard.addEventListener("click", function(){ previousCard.classList.add("animated"); })
+        previousCard.addEventListener("mouseover", function(){ previousCard.classList.add("animated"); })
+      }, false);
     }
 
     //Binds the card's onclick events to flip and show the description popup.
