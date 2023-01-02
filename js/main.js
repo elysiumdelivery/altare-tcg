@@ -12,6 +12,7 @@ const FULL_COLLECTION_TOGGLE = document.getElementById(
   "full-collection-toggle"
 );
 const RESET_COLLECTION = document.getElementById("reset-collection");
+const SORT_DROPDOWN = document.getElementById("sort-dropdown")
 
 export const CARD_ART_HIDDEN_ON_LOAD =
   PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
@@ -84,8 +85,14 @@ async function main() {
         RESET_COLLECTION.onclick = (event) => {
           localStorage.clear();
           localStorage.setItem("fullCollection", "true");
+          localStorage.setItem("sort", SORT_DROPDOWN.value)
           toggleCollection();
         };
+        SORT_DROPDOWN.onchange = (event) => {
+          localStorage.setItem("sort", event.target.value)
+          showCollection(cards_data, COLLECTIONS_MAIN_CONTENT)
+        }
+        SORT_DROPDOWN.value = localStorage.getItem("sort") ?? "Collector Number"
     }
   });
 }

@@ -24,23 +24,25 @@ const RARITIES = [
 const CARDS_PER_PAGE = 10;
 
 //Object to store all supported sorting functions.
+//These are stored as closures to support reverse order without declaring new functions.
 //Can be used by calling:
-//array.sort(sort_functions[key])
-//TODO: Wrap them in closures to reverse them easily.
+//array.sort(sort_functions[key](1, -1))
+//If you want to reverse order, swap the 1 and -1 when calling the function.
 const sort_functions = {
-  "Collector Number": (a, b) => {
-    return parseInt(a["Collector Number"]) > parseInt(b["Collector Number"])
-      ? 1
-      : -1;
-  },
-  Rarity: (a, b) => {
+  "Collector Number": (before=1, after=-1) =>
+    (a, b) => {
+      return parseInt(a["Collector Number"]) > parseInt(b["Collector Number"])
+          ? before
+          : after;
+    },
+  Rarity: (before=1, after=-1) => (a, b) => {
     if (a["Rarity Folder"] === b["Rarity Folder"]) {
-      return sort_functions["Collector Number"](a, b);
+      return sort_functions["Collector Number"]()(a, b);
     } else {
       return RARITIES.indexOf(a["Rarity Folder"]) >
         RARITIES.indexOf(b["Rarity Folder"])
-        ? 1
-        : -1;
+        ? before
+        : after;
     }
   },
 };
@@ -125,9 +127,11 @@ function getOwnedCards(cards_data) {
   return ownedCards;
 }
 
-function sortCards(cards, sortType) {
+function sortCards(cards, sortType, reverse=false) {
   sortType = sortType ?? "Collector Number";
-  cards.sort(sort_functions[sortType]);
+  let before = reverse ? -1 : 1
+  let after = reverse ? 1 : -1
+  cards.sort(sort_functions[sortType](before, after));
   return cards;
 }
 
@@ -135,24 +139,32 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
   let sort = localStorage.getItem("sort");
   let fullCollection = localStorage.getItem("fullCollection") === "true";
   let cards;
+  let reverse = false;
   let ownedCount = 0;
   for (let rarity of RARITIES) {
     ownedCount += parseInt(localStorage.getItem(`count-${rarity}`) ?? "0");
   }
   COLLECTED_CARDS_NUMBER.textContent = `Collected cards: ${ownedCount}/${cards_data.length}`;
 
+  if (sort[sort.length - 1] === "-") {
+    sort = sort.slice(0, -1)
+    reverse = true;
+  }
+
   if (fullCollection) {
-    cards = sortCards(cards_data, sort);
+    cards = sortCards(cards_data, sort, reverse);
   } else {
     cards = getOwnedCards(cards_data);
     if (cards.length == 0) {
       htmlLocation.innerHTML =
         "You have no cards at the moment. Try pulling some at the gacha!";
+      PAGINATION.container.classList.add("hidden");
       return;
     } else {
-      cards = sortCards(cards, sort);
+      cards = sortCards(cards, sort, reverse);
     }
   }
+
   if (cards.length > CARDS_PER_PAGE) {
     PAGINATION.container.classList.remove("hidden");
     let lastCard = cards[cards.length - 1]["Collector Number"];

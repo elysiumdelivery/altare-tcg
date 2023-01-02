@@ -78,13 +78,22 @@
       <section>
         <button id="full-collection-toggle">Show Full Collection</button>
         <button id="reset-collection">Reset Card Collection</button>
+        <label>
+            Sort by:
+            <select id="sort-dropdown">
+                <option value="Collector Number" selected>Collector Number</option>
+                <option value="Rarity">Rarity</option>
+                <option value="Rarity-">Rarity (Reverse)</option>
+            </select>
+        </label>
+
         <p id="collected-cards-number">Collected cards:</p>
         <section id="card-list"></section>
-        <nav id="collection-pagination">
+        <div id="collection-pagination">
           <a id="pagination-previous" href="javascript:void(0)" class="hidden"><</a>
           <a id="pagination-current" href="javascript:void(0)">1</a>
           <a id="pagination-next" href="javascript:void(0)">></a>
-        </nav>
+        </div>
       </section>
 
       <footer>
