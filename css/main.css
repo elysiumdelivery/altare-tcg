@@ -73,7 +73,7 @@ footer svg {
 
 section#artist-writer-board {
   column-count: 2;
-  column-rule: 1px solid white;
+  column-gap: 0.5em;
   column-gap: 1em;
 }
 
