@@ -1,4 +1,4 @@
-import { cards_data, CARD_ART_HIDDEN_ON_LOAD } from "./main.js";
+import { cards_data, gacha_display_selection, CARD_ART_HIDDEN_ON_LOAD } from "./main.js";
 import { updateDetailsDialog, DETAILS_DIALOG_A11Y, cardRarity } from "./dialog.js";
 
 const CLOUD_NAME = "dazcxdgiy";
@@ -49,8 +49,12 @@ const sort_functions = {
     },
 };
 
-let cardCount = 0;
-let previousCard;
+let card_count = 0;
+let previous_card;
+let previous_card_front;
+export const GACHA_DISPLAY = document.querySelectorAll('input[name="gacha-display"]');
+export const GACHA_SECTION = document.getElementById("gacha-controls");
+
 //Custom Card component. Use it like this:
 //<tcg-card card-id="[COLLECTOR_NUMBER]"></tcg-card>
 export async function defineCardComponent() {
@@ -92,27 +96,48 @@ export async function defineCardComponent() {
 
     resetCard() {
       this.back.classList.remove("hidden");
+      this.front.tabIndex = "-1";
+
+      // if(gacha_display_selection == "gacha-grid"){
+        let cardList = document.getElementsByClassName("card-image");
+        for (let i = 0; i < cardList.length; i++) {
+          cardList[i].addEventListener("animationend", function(){
+            cardList[i].classList.remove("animated");
+          })
+          cardList[i].addEventListener("mouseover", addAnimation);
+          cardList[i].addEventListener("click", addAnimation);
+        }
+      // }
     }
 
     flipCard() {
 
-      if(previousCard !== undefined){
-        previousCard.classList.remove("animated");
-        previousCard.removeEventListener("click", function(){})
-        previousCard.removeEventListener("mouseover", function(){})
-      }
+      if(gacha_display_selection == "gacha-grid"){
 
-      this.classList.add("clicked");
-      this.style.zIndex = cardCount;
-      cardCount++;
-      this.holder.classList.add("flip");
-      this.image.classList.add("animated");
-      previousCard = this.image;
-      this.image.addEventListener("animationend", function(){
-        previousCard.classList.remove("animated");
-        previousCard.addEventListener("click", function(){ previousCard.classList.add("animated"); })
-        previousCard.addEventListener("mouseover", function(){ previousCard.classList.add("animated"); })
-      }, false);
+        this.holder.classList.add("flip");
+        this.image.classList.add("animated");
+
+      } else {
+
+        if(previous_card_front !== undefined){
+          previous_card_front.classList.remove("animated");
+          previous_card_front.removeEventListener("mouseover", addAnimation);
+          previous_card_front.removeEventListener("click", addAnimation);
+        }
+
+        this.classList.add("clicked");
+        this.holder.classList.add("flip");
+        previous_card = this;
+        previous_card_front = this.image;
+        card_count++;
+
+        this.addEventListener("animationend", function(){
+          previous_card.style.zIndex = card_count;
+        }, false);
+
+        previous_card_front.classList.add("animated");
+
+      }
     }
 
     //Binds the card's onclick events to flip and show the description popup.
@@ -141,6 +166,10 @@ export async function defineCardComponent() {
     }
   }
   customElements.define("tcg-card", Card);
+}
+
+function addAnimation(e){
+  e.target.classList.add("animated");
 }
 
 //Renders a list of cards in the element specified in htmlLocation.

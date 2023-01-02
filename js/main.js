@@ -1,5 +1,5 @@
 //Happy Birthday Leader! 🎇💙
-import { defineCardComponent, showCollection } from "./cards.js";
+import { GACHA_DISPLAY, GACHA_SECTION, defineCardComponent, showCollection } from "./cards.js";
 import { setupDetailsDialog } from "./dialog.js";
 import { GACHA_BUTTON, pullAndRenderCards } from "./gacha.js";
 
@@ -21,6 +21,8 @@ export const CARD_ART_HIDDEN_ON_LOAD =
 //Holds the data of all cards after parsing the CSV file.
 export let cards_data = [];
 export let cards_by_rarity = {};
+export let gacha_display_selection;
+let local_display_selection;
 
 function getCSVData(callback = undefined) {
   Papa.parse(CSV_FILENAME, {
@@ -71,8 +73,20 @@ async function main() {
   getCSVData(async (cards_data) => {
     switch (CURRENT_PAGE) {
       case "/gacha.html":
-        GACHA_BUTTON.onclick = (event) =>
+        GACHA_DISPLAY.forEach((elem) => {
+          elem.addEventListener("change", function(e) {
+            local_display_selection = e.target.value;
+          });
+        });
+        GACHA_BUTTON.onclick = (event) => {
+          gacha_display_selection = local_display_selection;
+          if(gacha_display_selection == "gacha-grid"){
+            GACHA_SECTION.classList.add("grid-display");
+          } else {
+            GACHA_SECTION.classList.remove("grid-display");
+          }
           pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
+        }
         await setupDetailsDialog();
         break;
 
