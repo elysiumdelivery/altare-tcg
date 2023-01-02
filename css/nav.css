@@ -47,7 +47,7 @@ section#gacha-controls {
 }
 
 nav a#nav-collection::before,
-section#card-list {
+section#collection {
     background-color: #5F7BC5;
 }
 
