@@ -136,7 +136,7 @@ function sortCards(cards, sortType, reverse=false) {
 }
 
 export function showCollection(cards_data, htmlLocation, page = 1) {
-  let sort = localStorage.getItem("sort");
+  let sort = localStorage.getItem("sort") ?? "Collector Number";
   let fullCollection = localStorage.getItem("fullCollection") === "true";
   let cards;
   let reverse = false;
