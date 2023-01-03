@@ -29,12 +29,19 @@
 
 .dialog-title {
   grid-area: head;
+  /* center contents in grid cell */
   text-align: center;
+  align-self: center;
 }
 
 .details-dialog-card {
-  width: 300px;
   grid-area: card;
+  /* center contents in grid cell */
+  justify-self: center;
+  align-self: center;
+  /* max width should be 300px but if the screen width is smaller, fill in container */
+  width: 100%;
+  max-width: 300px;
 }
 
 .details-dialog-text {
@@ -45,6 +52,9 @@
 
 .card-details-dialog-close {
   grid-area: x;
+  position: absolute;
+  top: 0;
+  right: 1em;
 }
 
 #card-details-dialog {
@@ -53,7 +63,7 @@
   transform: translateX(-50%); /* move backwards 50% of this element's width */
   position: fixed;
   box-sizing: border-box;
-  padding: 15px;
+  padding: 2em;
   border: 1px solid #000;
   border-radius: 10px;
   background-color: #fff;
@@ -61,11 +71,15 @@
   width: 90%;
   z-index: 10; /* set to 10 so that it's greater than nav a.active's z-index and #dialog-overlay */
   display: grid;
+  grid-column-gap: 0.5em;
   grid-template-areas:
-    ".     x"
-    "head  head"
+    "x     x"
+    "card  head"
     "card  text"
     "card  text";
+  /* 0.2fr for close button */
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 0.2fr 0.5fr 1fr 1fr;
 }
 
 [role="dialog"][aria-hidden="true"] {
@@ -75,16 +89,21 @@
 @media screen and (max-width: 1000px) {
   #card-details-dialog {
     grid-template-areas:
-      ".     x"
-      "head  head"
-      "text  text"
-      "card  card";
+      "x"
+      "head"
+      "text"
+      "card";
     overflow: auto;
+    grid-template-columns: 1fr;
+    /* 3em for close button. fr unit doesn't seem to work when column is 1 */
+    grid-template-rows: 3em 0.5fr 1fr 1fr;
   }
 
   .details-dialog-text {
     /* Override overflow: auto for small screens, and let whole dialog scroll instead of just the text section */
     overflow: visible;
+    /* ignore min-height */
+    min-height: auto;
   }
 }
 
