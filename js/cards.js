@@ -74,6 +74,15 @@ export async function defineCardComponent() {
       if (CARD_ART_HIDDEN_ON_LOAD) {
         this.flipCard();
       }
+      if (this.getAttribute("show_title") === "true") {
+        this.front.insertAdjacentHTML(
+          "beforeend",
+          `<p class="card-subtitle">${this.data["Collector Number"].padStart(
+            3,
+            "0"
+          )} ${this.data["Card Display Name"]}</p>`
+        );
+      }
     }
 
     //Returns an url of the form:
@@ -104,14 +113,19 @@ export async function defineCardComponent() {
 //Renders a list of cards in the element specified in htmlLocation.
 //If replace is true, overwrites all elements inside htmlLocation.
 //else, adds the cards to the rest of the inner content.
-export function renderCards(cards, htmlLocation, replace = false) {
+export function renderCards(
+  cards,
+  htmlLocation,
+  replace = false,
+  show_title = false
+) {
   if (replace) {
     htmlLocation.innerHTML = "";
   }
   for (let i = 0; i < cards.length; i++) {
     htmlLocation.insertAdjacentHTML(
       "beforeend",
-      `<tcg-card card-id="${cards[i]["Collector Number"]}"></tcg-card>`
+      `<tcg-card card-id="${cards[i]["Collector Number"]}" show_title="${show_title}"></tcg-card>`
     );
   }
 }
@@ -200,5 +214,5 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
     //If we don't need pagination, we hide the controls.
     PAGINATION_BTNS.container.classList.add("hidden");
   }
-  renderCards(cards, htmlLocation, true);
+  renderCards(cards, htmlLocation, true, true);
 }
