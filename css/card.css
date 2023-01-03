@@ -237,6 +237,10 @@ section#gacha-controls label {
 section#gacha-controls input {
   margin-left:15px;
 }
+section#gacha-controls label,
+section#gacha-controls input {
+  cursor:pointer;
+}
 
 #collection-pagination {
   margin-top: 10px;
