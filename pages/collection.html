@@ -75,11 +75,26 @@
               <img class="icon icon-close" aria-hidden="true" src="../icons/Icons_Close.svg"/>
           </button>
       </nav>
-      <section>
+      <section id="collection-border">
         <button id="full-collection-toggle">Show Full Collection</button>
         <button id="reset-collection">Reset Card Collection</button>
+        <label>
+            Sort by:
+            <select id="sort-dropdown">
+                <option value="Collector Number" selected>Collector Number</option>
+                <option value="Rarity">Rarity</option>
+                <option value="Rarity-">Rarity (Reverse)</option>
+            </select>
+        </label>
+
         <p id="collected-cards-number">Collected cards:</p>
         <section id="card-list"></section>
+        <div id="collection-pagination">
+          <p id="pagination-total"></p>
+          <a id="pagination-previous" href="javascript:void(0)" class="hidden">Previous</a>
+          <a id="pagination-current" href="javascript:void(0)">1</a>
+          <a id="pagination-next" href="javascript:void(0)">Next</a>
+        </div>
       </section>
 
       <footer>
