@@ -8,7 +8,6 @@ const COLLECTED_CARDS_NUMBER = document.getElementById(
 );
 const PAGINATION_BTNS = {
   container: document.getElementById("collection-pagination"),
-  total: document.getElementById("pagination-total"),
   previous: document.getElementById("pagination-previous"),
   current: document.getElementById("pagination-current"),
   next: document.getElementById("pagination-next"),
@@ -22,7 +21,6 @@ const RARITIES = [
   "UltraRare",
   "SecretRare",
 ];
-const CARDS_PER_PAGE = 10;
 
 //Object to store all supported sorting functions.
 //These are stored as closures to support reverse order without declaring new functions.
@@ -30,22 +28,25 @@ const CARDS_PER_PAGE = 10;
 //array.sort(sort_functions[key](1, -1))
 //If you want to reverse order, swap the 1 and -1 when calling the function.
 const sort_functions = {
-  "Collector Number": (before=1, after=-1) =>
+  "Collector Number":
+    (before = 1, after = -1) =>
     (a, b) => {
       return parseInt(a["Collector Number"]) > parseInt(b["Collector Number"])
-          ? before
-          : after;
-    },
-  Rarity: (before=1, after=-1) => (a, b) => {
-    if (a["Rarity Folder"] === b["Rarity Folder"]) {
-      return sort_functions["Collector Number"]()(a, b);
-    } else {
-      return RARITIES.indexOf(a["Rarity Folder"]) >
-        RARITIES.indexOf(b["Rarity Folder"])
         ? before
         : after;
-    }
-  },
+    },
+  Rarity:
+    (before = 1, after = -1) =>
+    (a, b) => {
+      if (a["Rarity Folder"] === b["Rarity Folder"]) {
+        return sort_functions["Collector Number"]()(a, b);
+      } else {
+        return RARITIES.indexOf(a["Rarity Folder"]) <
+          RARITIES.indexOf(b["Rarity Folder"])
+          ? before
+          : after;
+      }
+    },
 };
 
 //Custom Card component. Use it like this:
@@ -128,16 +129,17 @@ function getOwnedCards(cards_data) {
   return ownedCards;
 }
 
-function sortCards(cards, sortType, reverse=false) {
+function sortCards(cards, sortType, reverse = false) {
   sortType = sortType ?? "Collector Number";
-  let before = reverse ? -1 : 1
-  let after = reverse ? 1 : -1
+  let before = reverse ? -1 : 1;
+  let after = reverse ? 1 : -1;
   cards.sort(sort_functions[sortType](before, after));
   return cards;
 }
 
 export function showCollection(cards_data, htmlLocation, page = 1) {
   let sort = localStorage.getItem("sort") ?? "Collector Number";
+  let cards_per_page = localStorage.getItem("page-size") ?? 10;
   let fullCollection = localStorage.getItem("fullCollection") === "true";
   let cards;
   let reverse = false;
@@ -150,7 +152,7 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
   //If the chosen sort type has a "-" at the end, it means that it's in reverse order.
   //So we ignore that last character and take the rest of the string.
   if (sort[sort.length - 1] === "-") {
-    sort = sort.slice(0, -1)
+    sort = sort.slice(0, -1);
     reverse = true;
   }
 
@@ -168,15 +170,16 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
     }
   }
 
-  //If we will show more cards than the amount specified in CARDS_PER_PAGE,
+  //If we will show more cards than the amount specified in cards_per_page,
   //then we split them into parts and show the pagination controls.
-  if (cards.length > CARDS_PER_PAGE) {
+  //Note: If cards_per_page is set to "all", the comparison casts it to NaN, and as such it will always return false.
+  if (cards.length > cards_per_page) {
     PAGINATION_BTNS.container.classList.remove("hidden");
-    PAGINATION_BTNS.total.textContent = `${page} of ${Math.ceil(cards.length / CARDS_PER_PAGE)}`
+    PAGINATION_BTNS.current.textContent = `${page} of ${Math.ceil(
+      cards.length / cards_per_page
+    )}`;
     let lastCard = cards[cards.length - 1]["Collector Number"];
-    cards = cards.slice(CARDS_PER_PAGE * (page - 1), CARDS_PER_PAGE * page);
-    //Set middle button as current page number.
-    PAGINATION_BTNS.current.textContent = page;
+    cards = cards.slice(cards_per_page * (page - 1), cards_per_page * page);
     if (page == 1) {
       //If we're on first page, hide controls to go to previous page.
       PAGINATION_BTNS.previous.classList.add("hidden");

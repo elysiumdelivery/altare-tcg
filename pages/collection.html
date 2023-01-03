@@ -82,18 +82,27 @@
             Sort by:
             <select id="sort-dropdown">
                 <option value="Collector Number" selected>Collector Number</option>
+                <option value="Collector Number-">Collector Number (Reverse)</option>
                 <option value="Rarity">Rarity</option>
                 <option value="Rarity-">Rarity (Reverse)</option>
             </select>
         </label>
+        <label>
+          Page size:
+          <select id="size-dropdown">
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="all">All</option>
+          </select>
+        </label>
 
         <p id="collected-cards-number">Collected cards:</p>
         <section id="card-list"></section>
-        <div id="collection-pagination">
-          <p id="pagination-total"></p>
-          <a id="pagination-previous" href="javascript:void(0)" class="hidden">Previous</a>
-          <a id="pagination-current" href="javascript:void(0)">1</a>
-          <a id="pagination-next" href="javascript:void(0)">Next</a>
+        <div id="collection-pagination" class="hidden">
+          <button id="pagination-previous" class="hidden">Previous</button>
+          <button id="pagination-current">1</button>
+          <button id="pagination-next">Next</button>
         </div>
       </section>
 
