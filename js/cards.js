@@ -48,8 +48,7 @@ const sort_functions = {
       }
     },
 };
-
-let card_count = 0;
+let card_count = CARDS_PER_PAGE;
 let previous_card;
 let previous_card_front;
 export const GACHA_DISPLAY = document.querySelectorAll('input[name="gacha-display"]');
@@ -95,49 +94,30 @@ export async function defineCardComponent() {
     }
 
     resetCard() {
+      card_count = CARDS_PER_PAGE;
       this.back.classList.remove("hidden");
       this.front.tabIndex = "-1";
 
-      // if(gacha_display_selection == "gacha-grid"){
-        let cardList = document.getElementsByClassName("card-image");
-        for (let i = 0; i < cardList.length; i++) {
-          cardList[i].addEventListener("animationend", function(){
-            cardList[i].classList.remove("animated");
-          })
-          cardList[i].addEventListener("mouseover", addAnimation);
-          cardList[i].addEventListener("click", addAnimation);
-        }
-      // }
+      addHover();
     }
 
     flipCard() {
 
-      if(gacha_display_selection == "gacha-grid"){
-
-        this.holder.classList.add("flip");
-        this.image.classList.add("animated");
-
-      } else {
-
-        if(previous_card_front !== undefined){
-          previous_card_front.classList.remove("animated");
-          previous_card_front.removeEventListener("mouseover", addAnimation);
-          previous_card_front.removeEventListener("click", addAnimation);
-        }
-
-        this.classList.add("clicked");
-        this.holder.classList.add("flip");
-        previous_card = this;
-        previous_card_front = this.image;
-        card_count++;
-
-        this.addEventListener("animationend", function(){
-          previous_card.style.zIndex = card_count;
-        }, false);
-
-        previous_card_front.classList.add("animated");
-
+      if(gacha_display_selection !== "gacha-grid" && previous_card_front !== undefined){
+        previous_card_front.removeEventListener("mouseover", addAnimation);
+        previous_card_front.removeEventListener("click", addAnimation);
       }
+
+      this.classList.add("clicked");
+      this.holder.classList.add("flip");
+      previous_card = this;
+      previous_card_front = this.image;
+      card_count++;
+
+      this.addEventListener("animationstart", updateZIndex);
+
+      this.image.classList.add("animated");
+
     }
 
     //Binds the card's onclick events to flip and show the description popup.
@@ -170,6 +150,37 @@ export async function defineCardComponent() {
 
 function addAnimation(e){
   e.target.classList.add("animated");
+}
+function updateZIndex(e){
+    e.target.style.zIndex = card_count;
+    e.target.removeEventListener("animationstart", updateZIndex);
+}
+
+export function addHover(){
+  let cardList = document.getElementsByClassName("card-image");
+  for (let i = 0; i < cardList.length; i++) {
+    cardList[i].addEventListener("animationend", function(){
+      cardList[i].classList.remove("animated");
+    })
+    cardList[i].addEventListener("mouseover", addAnimation);
+    cardList[i].addEventListener("click", addAnimation);
+  }
+}
+export function removeHover(){
+  let cardList = document.getElementsByClassName("clicked");
+  let el;
+  for (let i = 0; i < cardList.length; i++) {
+    let z = window.getComputedStyle(cardList[i]).zIndex;
+    el = cardList[i].children[0].children[0].children[0];
+    if(parseInt(z) !== card_count){
+      el.removeEventListener("mouseover", addAnimation);
+      el.removeEventListener("click", addAnimation);
+    } else {
+      console.log(el);
+      el.addEventListener("mouseover", addAnimation);
+      el.addEventListener("click", addAnimation);
+    }
+  }
 }
 
 //Renders a list of cards in the element specified in htmlLocation.

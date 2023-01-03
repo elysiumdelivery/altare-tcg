@@ -1,5 +1,5 @@
 //Happy Birthday Leader! 🎇💙
-import { GACHA_DISPLAY, GACHA_SECTION, defineCardComponent, showCollection } from "./cards.js";
+import { GACHA_DISPLAY, GACHA_SECTION, defineCardComponent, showCollection, addHover, removeHover } from "./cards.js";
 import { setupDetailsDialog } from "./dialog.js";
 import { GACHA_BUTTON, pullAndRenderCards } from "./gacha.js";
 
@@ -75,18 +75,26 @@ async function main() {
       case "/gacha.html":
         GACHA_DISPLAY.forEach((elem) => {
           elem.addEventListener("change", function(e) {
-            local_display_selection = e.target.value;
+            // local_display_selection = e.target.value;
+            gacha_display_selection = e.target.value;
+            if(gacha_display_selection == "gacha-grid"){
+              GACHA_SECTION.classList.add("grid-display");
+              GACHA_SECTION.classList.remove("pile-display");
+              addHover();
+            } else {
+              GACHA_SECTION.classList.remove("grid-display");
+              GACHA_SECTION.classList.add("pile-display");
+              removeHover();
+            }
           });
         });
-        GACHA_BUTTON.onclick = (event) => {
-          gacha_display_selection = local_display_selection;
-          if(gacha_display_selection == "gacha-grid"){
-            GACHA_SECTION.classList.add("grid-display");
-          } else {
-            GACHA_SECTION.classList.remove("grid-display");
-          }
-          pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
+        if(window.innerWidth <= 800){
+          document.getElementById("gacha-grid").click();
+        } else {
+          document.getElementById("gacha-pile").click();
         }
+        GACHA_BUTTON.onclick = (event) => 
+          pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
         await setupDetailsDialog();
         break;
 

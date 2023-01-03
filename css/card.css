@@ -19,12 +19,11 @@ tcg-card {
 }
 
 #gacha-controls #card-list {
-  /* height:0px !important; */
-  min-height:60vh;
+  min-height:52vh;
 }
 #gacha-controls tcg-card {
-  --card-width: 300px;
-  --card-height: 419px;
+  --card-width: 400px;
+  --card-height: 559px;
   position: absolute;
   /* margin-left: auto;
   margin-right: auto;
@@ -65,7 +64,6 @@ tcg-card {
 #gacha-controls tcg-card:nth-child(9){ z-index:2; }
 #gacha-controls tcg-card:nth-child(10){ z-index:1; }
 
-
 #gacha-controls.grid-display tcg-card {
   position:initial;
 }
@@ -73,7 +71,6 @@ tcg-card {
 #gacha-controls.grid-display tcg-card.clicked {
   transform: rotate(0deg)
 }
-
 
 #gacha-controls #card-list tcg-card.clicked {
   /* left:10%; */
@@ -210,9 +207,10 @@ tcg-card {
   font-size: 1em;
   transition: background-color 0.3s ease;
   width: 200px;
+  cursor: pointer;
 }
 #gacha-button {
-  margin:1em 0;
+  margin-top:1em;
   background-color: var(--accent-color);
 }
 #sort-dropdown {
@@ -277,6 +275,7 @@ section#gacha-controls input {
     "head  head"
     "card  text"
     "card  text";
+  overflow-y: auto;
 }
 
 [role="dialog"][aria-hidden="true"] {
@@ -285,6 +284,18 @@ section#gacha-controls input {
 
 [role="dialog"][aria-hidden="noshow"] {
   opacity: 0;
+}
+
+@media screen and (max-width: 1400px) {
+  #gacha-controls tcg-card {
+    --card-width: 300px;
+    --card-height: 419px;
+  }
+
+  .details-dialog-card {
+    width: 25vw;
+    height: calc(25vw*1.395);
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -300,7 +311,8 @@ section#gacha-controls input {
       "head  head"
       "text  text"
       "card  card";
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     justify-items: center;
   }
 
@@ -328,6 +340,29 @@ section#gacha-controls input {
       padding-left:0px
   }
 
+}
+
+@media screen and (max-width: 800px) {
+  #gacha-controls #card-list {
+    min-height:55vh;
+  }
+  #gacha-controls.pile-display tcg-card {
+    left: 0;
+    right: 0;
+    margin: 3% auto 0 auto;
+  }
+  #gacha-controls.pile-display #card-list tcg-card.clicked {
+    animation: bottom 1s ease 0s 1;
+    animation-fill-mode: forwards;
+  }
+  @keyframes bottom {
+    0% {
+      margin-top: 3%;
+    }
+    100% {
+      margin-top: calc(var(--card-height) + 3% + 100px);
+    }
+  }
 }
 
 @media screen and (max-width: 550px) {
@@ -384,12 +419,16 @@ section#gacha-controls input {
   display: inline-block;
   transform: translate3d(0.1px, 0.1px, 0.1px);
 }
+#gacha-controls .card-image {
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
+}
 #gacha-controls .card-image, #gacha-controls .card-image:before, #gacha-controls .card-image:after {
   transition: all 0.5s ease;
 }
 
 .details-dialog-card {
-  width:calc(var(--card-width)*2); height:calc(var(--card-height)*2);
+  width:calc(var(--card-width)*2);
+  height:calc(var(--card-height)*2);
 }
 
 #gacha-controls .card-image {
@@ -700,7 +739,7 @@ section#gacha-controls input {
 #gacha-notes {
   color:white;
   background-color:transparent;
-  margin-top:1.5em;
+  margin:1em 0;
   font-size:0.9em;
 }
 #gacha-notes p {
