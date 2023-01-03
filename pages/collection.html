@@ -75,7 +75,7 @@
               <img class="icon icon-close" aria-hidden="true" src="../icons/Icons_Close.svg"/>
           </button>
       </nav>
-      <section>
+      <section id="collection-border">
         <button id="full-collection-toggle">Show Full Collection</button>
         <button id="reset-collection">Reset Card Collection</button>
         <label>
@@ -90,9 +90,10 @@
         <p id="collected-cards-number">Collected cards:</p>
         <section id="card-list"></section>
         <div id="collection-pagination">
-          <a id="pagination-previous" href="javascript:void(0)" class="hidden"><</a>
+          <p id="pagination-total"></p>
+          <a id="pagination-previous" href="javascript:void(0)" class="hidden">Previous</a>
           <a id="pagination-current" href="javascript:void(0)">1</a>
-          <a id="pagination-next" href="javascript:void(0)">></a>
+          <a id="pagination-next" href="javascript:void(0)">Next</a>
         </div>
       </section>
 

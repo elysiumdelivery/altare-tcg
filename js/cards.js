@@ -6,8 +6,9 @@ const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
 const COLLECTED_CARDS_NUMBER = document.getElementById(
   "collected-cards-number"
 );
-const PAGINATION = {
+const PAGINATION_BTNS = {
   container: document.getElementById("collection-pagination"),
+  total: document.getElementById("pagination-total"),
   previous: document.getElementById("pagination-previous"),
   current: document.getElementById("pagination-current"),
   next: document.getElementById("pagination-next"),
@@ -146,6 +147,8 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
   }
   COLLECTED_CARDS_NUMBER.textContent = `Collected cards: ${ownedCount}/${cards_data.length}`;
 
+  //If the chosen sort type has a "-" at the end, it means that it's in reverse order.
+  //So we ignore that last character and take the rest of the string.
   if (sort[sort.length - 1] === "-") {
     sort = sort.slice(0, -1)
     reverse = true;
@@ -158,34 +161,41 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
     if (cards.length == 0) {
       htmlLocation.innerHTML =
         "You have no cards at the moment. Try pulling some at the gacha!";
-      PAGINATION.container.classList.add("hidden");
+      PAGINATION_BTNS.container.classList.add("hidden");
       return;
     } else {
       cards = sortCards(cards, sort, reverse);
     }
   }
 
+  //If we will show more cards than the amount specified in CARDS_PER_PAGE,
+  //then we split them into parts and show the pagination controls.
   if (cards.length > CARDS_PER_PAGE) {
-    PAGINATION.container.classList.remove("hidden");
+    PAGINATION_BTNS.container.classList.remove("hidden");
+    PAGINATION_BTNS.total.textContent = `${page} of ${Math.ceil(cards.length / CARDS_PER_PAGE)}`
     let lastCard = cards[cards.length - 1]["Collector Number"];
     cards = cards.slice(CARDS_PER_PAGE * (page - 1), CARDS_PER_PAGE * page);
-    PAGINATION.current.textContent = page;
+    //Set middle button as current page number.
+    PAGINATION_BTNS.current.textContent = page;
     if (page == 1) {
-      PAGINATION.previous.classList.add("hidden");
+      //If we're on first page, hide controls to go to previous page.
+      PAGINATION_BTNS.previous.classList.add("hidden");
     } else {
-      PAGINATION.previous.classList.remove("hidden");
-      PAGINATION.previous.onclick = (event) =>
+      PAGINATION_BTNS.previous.classList.remove("hidden");
+      PAGINATION_BTNS.previous.onclick = (event) =>
         showCollection(cards_data, htmlLocation, page - 1);
     }
     if (cards[cards.length - 1]["Collector Number"] === lastCard) {
-      PAGINATION.next.classList.add("hidden");
+      //If we're on last page, hide controls to go to next page.
+      PAGINATION_BTNS.next.classList.add("hidden");
     } else {
-      PAGINATION.next.classList.remove("hidden");
-      PAGINATION.next.onclick = (event) =>
+      PAGINATION_BTNS.next.classList.remove("hidden");
+      PAGINATION_BTNS.next.onclick = (event) =>
         showCollection(cards_data, htmlLocation, page + 1);
     }
   } else {
-    PAGINATION.container.classList.add("hidden");
+    //If we don't need pagination, we hide the controls.
+    PAGINATION_BTNS.container.classList.add("hidden");
   }
   renderCards(cards, htmlLocation, true);
 }
