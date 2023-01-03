@@ -75,13 +75,7 @@ export async function defineCardComponent() {
         this.flipCard();
       }
       if (this.getAttribute("show_title") === "true") {
-        this.front.insertAdjacentHTML(
-          "beforeend",
-          `<p class="card-subtitle">${this.data["Collector Number"].padStart(
-            3,
-            "0"
-          )} ${this.data["Card Display Name"]}</p>`
-        );
+        this.showSubtitle();
       }
     }
 
@@ -105,6 +99,16 @@ export async function defineCardComponent() {
     showDetails() {
       updateDetailsDialog(this.data, this.getImageURL());
       DETAILS_DIALOG_A11Y.show();
+    }
+
+    showSubtitle() {
+      this.front.insertAdjacentHTML(
+        "beforeend",
+        `<p class="card-subtitle">${this.data["Collector Number"].padStart(
+          3,
+          "0"
+        )} ${this.data["Card Display Name"]}</p>`
+      );
     }
   }
   customElements.define("tcg-card", Card);
