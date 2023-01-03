@@ -48,7 +48,7 @@ const sort_functions = {
       }
     },
 };
-let card_count = CARDS_PER_PAGE;
+let card_count = 10;
 let previous_card;
 let previous_card_front;
 export const GACHA_DISPLAY = document.querySelectorAll('input[name="gacha-display"]');
@@ -74,6 +74,7 @@ export async function defineCardComponent() {
       this.holder = this.getElementsByClassName("card-component")[0];
       this.front = this.getElementsByClassName("card-front")[0];
       this.back = this.getElementsByClassName("card-back")[0];
+      this.info = this.getElementsByClassName("card-info")[0];
       this.image = this.getElementsByClassName("card-image")[0];
       // const image = this.getElementsByClassName("card-image")[0];
       this.image.style.backgroundImage = 'url("' + this.getImageURL() + '")';
@@ -81,6 +82,8 @@ export async function defineCardComponent() {
       this.setupOnClickEvents();
       if (CARD_ART_HIDDEN_ON_LOAD) {
         this.resetCard();
+      } else {
+        this.info.textContent = "#" + pad(this.data["Collector Number"], 3) + " - " + this.data["Card Display Name"];
       }
       if (this.getAttribute("show_title") === "true") {
         this.showSubtitle();
@@ -94,7 +97,7 @@ export async function defineCardComponent() {
     }
 
     resetCard() {
-      card_count = CARDS_PER_PAGE;
+      card_count = 10;
       this.back.classList.remove("hidden");
       this.front.tabIndex = "-1";
 
@@ -146,6 +149,12 @@ export async function defineCardComponent() {
     }
   }
   customElements.define("tcg-card", Card);
+}
+
+function pad(num, size){
+  num = num.toString();
+  while (num.length < size) num = "0" + num;
+  return num;
 }
 
 function addAnimation(e){

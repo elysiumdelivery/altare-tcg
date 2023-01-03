@@ -33,6 +33,14 @@ tcg-card {
   right:10%;
   transition: all 0.3s ease;
 }
+tcg-card .card-info {
+  font-size:0.75em;
+  color:white;
+  margin-top:2%;
+}
+#gacha-controls tcg-card .card-info {
+  display:none;
+}
 
 #gacha-controls tcg-card:nth-child(3n+1){
   transform: rotate(0deg);
@@ -481,6 +489,7 @@ section#gacha-controls input {
   opacity: 0;
   mix-blend-mode: color-dodge;
   transition: all 0.33s ease;
+  border-radius: 5%/3.5%;
 }
 
 .details-dialog-card:before, #gacha-controls .card-image:before {
@@ -551,28 +560,6 @@ section#gacha-controls input {
   filter: brightness(0.75) contrast(2.5) saturate(.75);
   background-repeat: repeat;
 }
-
-/* .details-dialog-card.animated, #gacha-controls .card-image.animated {
-  transition: none;
-  animation: holoCard 12s ease 0s 1;
-}
-.details-dialog-card.animated:before, #gacha-controls .card-image.animated:before {
-  transition: none;
-  animation: holoGradient 12s ease 0s 1;
-}
-.details-dialog-card.secret.animated:before, #gacha-controls .card-image.secret.animated:before {
-  transition: none;
-  animation: holoSecretGradient 12s ease 0s 1;
-}
-.details-dialog-card.animated:after, #gacha-controls .card-image.animated:after {
-  transition: none;
-  animation: holoSparkle 12s ease 0s 1;
-}
-
-.details-dialog-card.secret.animated:after, #gacha-controls .card-image.secret.animated:after {
-  transition: none;
-  animation: holoSecretSparkle 12s ease 0s 1;
-} */
 
 .details-dialog-card.animated {
   transition: none;
