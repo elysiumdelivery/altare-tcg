@@ -39,9 +39,7 @@
   /* center contents in grid cell */
   justify-self: center;
   align-self: center;
-  /* max width should be 300px but if the screen width is smaller, fill in container */
-  width: 100%;
-  max-width: 300px;
+  width: 85%;
 }
 
 .details-dialog-text {
@@ -73,7 +71,7 @@
   display: grid;
   grid-column-gap: 0.5em;
   grid-template-areas:
-    "x     x"
+    "card     x"
     "card  head"
     "card  text"
     "card  text";
@@ -91,12 +89,18 @@
     grid-template-areas:
       "x"
       "head"
-      "text"
-      "card";
+      "card"
+      "text";
     overflow: auto;
     grid-template-columns: 1fr;
     /* 3em for close button. fr unit doesn't seem to work when column is 1 */
     grid-template-rows: 3em 0.5fr 1fr 1fr;
+  }
+
+  .details-dialog-card {
+    /* max width should be 300px but if the screen width is smaller, fill in container */
+    width: 100%;
+    max-width: 300px;
   }
 
   .details-dialog-text {
@@ -104,6 +108,7 @@
     overflow: visible;
     /* ignore min-height */
     min-height: auto;
+    padding: 1em 2vmin;
   }
 }
 
