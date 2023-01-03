@@ -39,7 +39,7 @@
   /* center contents in grid cell */
   justify-self: center;
   align-self: center;
-  width: 85%;
+  height: 95%;
 }
 
 .details-dialog-text {
@@ -99,6 +99,7 @@
 
   .details-dialog-card {
     /* max width should be 300px but if the screen width is smaller, fill in container */
+    height: auto;
     width: 100%;
     max-width: 300px;
   }
