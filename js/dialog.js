@@ -21,6 +21,12 @@ export async function setupDetailsDialog() {
   }, false);
   dialogCard.addEventListener("mouseover", animateCard);
   dialogCard.addEventListener("click", animateCard);
+
+  // animation reset
+  DETAILS_DIALOG_A11Y.on('hide', function (element, event) {
+    console.log("ayo?");
+    resetCardEffects();
+  })
 }
 
 export function updateDetailsDialog(data, cardUrl) {
@@ -37,16 +43,12 @@ export function updateDetailsDialog(data, cardUrl) {
     <p>Artist: ${data["Artist Credit"]} | Writer: ${data["Writer Credit"]}</p>
   `
   );
-  // Card art is applied
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].style.backgroundImage = 'url("' +
-    cardUrl + '")';
 
+  const card_art = DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0];
+  // Card art is applied
+  card_art.style.backgroundImage = 'url("' + cardUrl + '")';
   // Add animation start
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add(setCardRarity(data["Rarity Folder"]), "animated");
-  
-  // Animation reset
-  DETAILS_DIALOG_EL.getElementsByClassName("card-details-dialog-close")[0].addEventListener("click", resetCardEffects);
-  document.getElementsByClassName("dialog-overlay")[0].addEventListener("click", resetCardEffects);
+  card_art.classList.add(setCardRarity(data["Rarity Folder"]), "animated");
   
   // Clear + set card metadata
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
@@ -70,7 +72,7 @@ function animateCard(dialogCard){
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated", "unclickable");
 }
 function resetCardEffects(){
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("holo", "basic", "secret", "rare", "ultra", "animated");
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("holo", "basic", "secret", "rare", "ultra", "animated", "unclickable");
 }
 
 export function setCardRarity(folder){

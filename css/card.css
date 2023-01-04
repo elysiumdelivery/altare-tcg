@@ -18,12 +18,14 @@ tcg-card {
   perspective: 600px; /* for the card animation */
 }
 
-#gacha-controls #card-list {
-  min-height:52vh;
-}
-#gacha-controls tcg-card {
+#gacha-controls {
   --card-width: 400px; /* adjust the card size for the gacha page */
   --card-height: 559px; /* adjust the card size for the gacha page */
+}
+#gacha-controls #card-list {
+  min-height: calc(var(--card-height) + 100px);
+}
+#gacha-controls tcg-card {
   position: absolute;
   right:10%;
   transition: all 0.3s ease; /* make any changes to this card flow, so it doesn't snap */
@@ -36,9 +38,6 @@ tcg-card .card-subtitle {
 #gacha-controls tcg-card:nth-child(3n+1){ transform: rotate(0deg); }
 #gacha-controls tcg-card:nth-child(3n+2){ transform: rotate(-5deg); }
 #gacha-controls tcg-card:nth-child(3n+3){ transform: rotate(3deg); }
-#gacha-controls tcg-card.clicked:nth-child(3n+1){ transform: rotate(-3deg); }
-#gacha-controls tcg-card.clicked:nth-child(3n+2){ transform: rotate(5deg); }
-#gacha-controls tcg-card.clicked:nth-child(3n+3){ transform: rotate(0deg); }
 
 /* set a default z-index for the gacha, so the cards are reversed if they sit in a pile */
 #gacha-controls tcg-card:nth-child(1){ z-index:10; }
@@ -52,6 +51,36 @@ tcg-card .card-subtitle {
 #gacha-controls tcg-card:nth-child(9){ z-index:2; }
 #gacha-controls tcg-card:nth-child(10){ z-index:1; }
 
+
+#gacha-controls, #gacha-controls.pile-display {
+  --distance:calc(-1 * (73vw - var(--card-width)));
+}
+#gacha-controls.grid-display {
+  --distance: 0;
+  --rotation: 0;
+}
+/* when the card is clicked, it first one level down from tcg-card and the whole parent container moves across.
+  This is kept separately as it's not used in the grid layout */
+#gacha-controls #card-list tcg-card.clicked {
+  animation: left 1s ease 0s 1;
+  animation-fill-mode: forwards;
+}
+#gacha-controls tcg-card.clicked:nth-child(3n+1){
+  --rotation:-3deg;
+}
+#gacha-controls tcg-card.clicked:nth-child(3n+2){
+  --rotation:5deg;
+}
+#gacha-controls tcg-card.clicked:nth-child(3n+3){
+  --rotation:0deg;
+}
+
+@keyframes left {
+  100% {
+    transform:translateX(var(--distance)) rotate(var(--rotation));
+  }
+}
+
 /* when it is in a grid display, we no longer need any of the absolute styling */
 #gacha-controls.grid-display tcg-card {
   position:initial;
@@ -59,20 +88,9 @@ tcg-card .card-subtitle {
 #gacha-controls.grid-display tcg-card,
 #gacha-controls.grid-display tcg-card.clicked {
   transform: rotate(0deg); /* reset all the cards back to straight when the class is applied */
+  animation-fill-mode: initial !important;
 }
 
-#gacha-controls #card-list tcg-card.clicked {
-  /* when the card is clicked, it first one level down from tcg-card and the whole parent container moves across.
-  This is kept separately as it's not used in the grid layout */
-  animation: left 1s ease 0s 1;
-  animation-fill-mode: forwards;
-}
-
-@keyframes left {
-  100% {
-    right:calc(84% - var(--card-width));
-  }
-}
 
 /* Override default button styling */
 .card-front,
@@ -98,7 +116,6 @@ tcg-card .card-subtitle {
 
 #gacha-controls .card-front {
   backface-visibility: visible; /* to see the reverse of the card */
-  will-change: transform;
   transform: rotateY(180deg) translateZ(1px); /* flip on its face so it can be opened */
 }
 #gacha-controls .card-back {
@@ -254,7 +271,7 @@ section#gacha-controls input {
 }
 
 @media screen and (max-width: 1400px) {
-  #gacha-controls tcg-card {
+  #gacha-controls {
     /* make the card smaller when the screen is resized */
     --card-width: 300px;
     --card-height: 419px;
@@ -267,7 +284,7 @@ section#gacha-controls input {
 }
 
 @media screen and (max-width: 1000px) {
-  #gacha-controls tcg-card {
+  #gacha-controls {
     /* make the card even smaller whtn the screen is resized further */
     --card-width: 200px;
     --card-height: 279px;
@@ -524,24 +541,25 @@ section#gacha-controls input {
 /* animations specific to the dialog will take 12 seconds and be slower */
 
 .details-dialog-card.animated {
+  will-change: transform;
   transition: none;
   animation: holoCard 12s ease 0s 1;
 }
 .details-dialog-card.animated:before {
+  will-change: opacity, background-position, filter;
   transition: none;
   animation: holoGradient 12s ease 0s 1;
 }
 .details-dialog-card.secret.animated:before {
-  transition: none;
   animation: holoSecretGradient 12s ease 0s 1;
 }
 .details-dialog-card.animated:after {
+  will-change: opacity, background-position, filter;
   transition: none;
   animation: holoSparkle 12s ease 0s 1;
 }
 
 .details-dialog-card.secret.animated:after {
-  transition: none;
   animation: holoSecretSparkle 12s ease 0s 1;
 }
 
