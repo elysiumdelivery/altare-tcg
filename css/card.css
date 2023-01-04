@@ -55,6 +55,10 @@
   right: 1em;
 }
 
+.card-subtitle {
+  user-select: text;
+}
+
 #card-details-dialog {
   top: 2rem;
   left: 50vw; /* move to the middle of the screen (assumes relative parent is the body/viewport) */
