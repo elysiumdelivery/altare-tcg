@@ -1,5 +1,5 @@
 //Happy Birthday Leader! 🎇💙
-import { GACHA_DISPLAY, GACHA_SECTION, defineCardComponent, showCollection, addHover, removeHover } from "./cards.js";
+import { GACHA_VIEW_SETTING, GACHA_SECTION, defineCardComponent, showCollection, addHover, removeHover } from "./cards.js";
 import { setupDetailsDialog } from "./dialog.js";
 import { GACHA_BUTTON, pullAndRenderCards } from "./gacha.js";
 
@@ -67,30 +67,36 @@ function toggleCollection(event) {
     toggle === "true" ? "Hide Full Collection" : "Show Full Collection";
 }
 
+function updateGachaView(e){
+  gacha_display_selection = e.target.value;
+  if(gacha_display_selection == "gacha-grid"){
+    // make this a grid
+    GACHA_SECTION.classList.add("grid-display");
+    GACHA_SECTION.classList.remove("pile-display");
+    addHover();
+  } else {
+    // make this a pile
+    GACHA_SECTION.classList.remove("grid-display");
+    GACHA_SECTION.classList.add("pile-display");
+    removeHover();
+  }
+}
+
 async function main() {
   await defineCardComponent();
   getCSVData(async (cards_data) => {
     switch (CURRENT_PAGE) {
       case "/gacha.html":
-        GACHA_DISPLAY.forEach((elem) => {
-          elem.addEventListener("change", function(e) {
-            gacha_display_selection = e.target.value;
-            if(gacha_display_selection == "gacha-grid"){
-              GACHA_SECTION.classList.add("grid-display");
-              GACHA_SECTION.classList.remove("pile-display");
-              addHover();
-            } else {
-              GACHA_SECTION.classList.remove("grid-display");
-              GACHA_SECTION.classList.add("pile-display");
-              removeHover();
-            }
-          });
-        });
+
+        GACHA_VIEW_SETTING[0].addEventListener("change", updateGachaView);
+        GACHA_VIEW_SETTING[1].addEventListener("change", updateGachaView);
+
         if(window.innerWidth <= 800){
-          document.getElementById("gacha-grid").click();
-        } else {
-          document.getElementById("gacha-pile").click();
+          const gridInput = document.getElementById("gacha-grid");
+          gridInput.checked = true;
+          gridInput.dispatchEvent(new Event('change'));
         }
+
         GACHA_BUTTON.onclick = (event) => 
           pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
         await setupDetailsDialog();

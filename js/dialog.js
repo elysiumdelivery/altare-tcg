@@ -1,6 +1,5 @@
 export let DETAILS_DIALOG_A11Y = null;
 let DETAILS_DIALOG_EL = null;
-let first_open = true;
 
 export async function setupDetailsDialog() {
   // Don't make another dialog container if a previous page already set it up
@@ -14,6 +13,14 @@ export async function setupDetailsDialog() {
   // A11yDialog handles toggling accessibility properties when the dialog shows/ hides,
   // as well as closing on esc, clicking outside of the dialog, etc.
   DETAILS_DIALOG_A11Y = new A11yDialog(document.getElementById("card-details"));
+
+  // animation events
+  let dialogCard = DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0];
+  dialogCard.addEventListener("animationend", function() {
+    dialogCard.classList.remove("animated", "unclickable");
+  }, false);
+  dialogCard.addEventListener("mouseover", animateCard);
+  dialogCard.addEventListener("click", animateCard);
 }
 
 export function updateDetailsDialog(data, cardUrl) {
@@ -40,17 +47,6 @@ export function updateDetailsDialog(data, cardUrl) {
   // Animation reset
   DETAILS_DIALOG_EL.getElementsByClassName("card-details-dialog-close")[0].addEventListener("click", resetCardEffects);
   document.getElementsByClassName("dialog-overlay")[0].addEventListener("click", resetCardEffects);
-
-  // animation events
-  let dialogCard = DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0];
-  dialogCard.addEventListener("animationend", function() {
-    dialogCard.classList.remove("animated");
-    if(first_open){
-      dialogCard.addEventListener("mouseover", animateCard);
-      dialogCard.addEventListener("click", animateCard);
-      first_open = false;
-    }
-  }, false);
   
   // Clear + set card metadata
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
@@ -71,7 +67,7 @@ export function updateDetailsDialog(data, cardUrl) {
 }
 
 function animateCard(dialogCard){
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated");
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated", "unclickable");
 }
 function resetCardEffects(){
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("holo", "basic", "secret", "rare", "ultra", "animated");

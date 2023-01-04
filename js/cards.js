@@ -48,10 +48,10 @@ const sort_functions = {
       }
     },
 };
-let card_count = 10;
-let previous_card;
+const HIGHEST_Z_INDEX = 10;
+let card_z_index = HIGHEST_Z_INDEX;
 let previous_card_front;
-export const GACHA_DISPLAY = document.querySelectorAll('input[name="gacha-display"]');
+export const GACHA_VIEW_SETTING = document.querySelectorAll('input[name="gacha-display"]');
 export const GACHA_SECTION = document.getElementById("gacha-controls");
 
 //Custom Card component. Use it like this:
@@ -76,14 +76,11 @@ export async function defineCardComponent() {
       this.back = this.getElementsByClassName("card-back")[0];
       this.info = this.getElementsByClassName("card-info")[0];
       this.image = this.getElementsByClassName("card-image")[0];
-      // const image = this.getElementsByClassName("card-image")[0];
       this.image.style.backgroundImage = 'url("' + this.getImageURL() + '")';
       this.image.classList.add(setCardRarity(this.data["Rarity Folder"]));
       this.setupOnClickEvents();
       if (CARD_ART_HIDDEN_ON_LOAD) {
-        this.resetCard();
-      } else {
-        this.info.textContent = "#" + pad(this.data["Collector Number"], 3) + " - " + this.data["Card Display Name"];
+        this.setupCardGacha();
       }
       if (this.getAttribute("show_title") === "true") {
         this.showSubtitle();
@@ -96,39 +93,43 @@ export async function defineCardComponent() {
       return `${CLOUDINARY_URL}/q_auto/${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
     }
 
-    resetCard() {
-      card_count = 10;
+    setupCardGacha() {
+      // Reset the initial z-index back to max pull
+      card_z_index = HIGHEST_Z_INDEX;
+      // Show the back of the card - unsophisticated style
+      // This is automatically hidden for the collections page, so we have to reset it for the gacha
       this.back.classList.remove("hidden");
+      // For the gacha page only
+      // Prevent the front from being tabbed on, so that you don't need to tab twice per card
       this.front.tabIndex = "-1";
-
-      addHover();
+      // Add the event listener to every card
+      setupHover();
     }
 
     flipCard() {
+      // update the next value for the zIndex
+      card_z_index++;
 
-      if(gacha_display_selection !== "gacha-grid" && previous_card_front !== undefined){
-        previous_card_front.removeEventListener("mouseover", addAnimation);
-        previous_card_front.removeEventListener("click", addAnimation);
-      }
-
+      // register this as a clicked card, and add the class to animate to flip over
       this.classList.add("clicked");
       this.holder.classList.add("flip");
-      previous_card = this;
-      previous_card_front = this.image;
-      card_count++;
 
+      // Start the animation and update the z-index when the animation starts
+      // This is to stack any opened cards in the reverse order
       this.addEventListener("animationstart", updateZIndex);
-
+      this.image.classList.add("opened");
       this.image.classList.add("animated");
 
+      // remove the previous hover effects only if the gacha is not displayed as a grid
+      if(gacha_display_selection !== "gacha-grid"){
+        this.addEventListener("animationend", removeHover);
+      }
     }
 
     //Binds the card's onclick events to flip and show the description popup.
     setupOnClickEvents() {
       this.back.onclick = (event) => this.flipCard();
-      if(CARD_ART_HIDDEN_ON_LOAD){
-
-      } else {
+      if(!CARD_ART_HIDDEN_ON_LOAD){
         this.front.onclick = (event) => this.showDetails();
       }
     }
@@ -151,21 +152,18 @@ export async function defineCardComponent() {
   customElements.define("tcg-card", Card);
 }
 
-function pad(num, size){
-  num = num.toString();
-  while (num.length < size) num = "0" + num;
-  return num;
-}
-
 function addAnimation(e){
+  // apply the animated class to start the CSS animation
   e.target.classList.add("animated");
 }
 function updateZIndex(e){
-    e.target.style.zIndex = card_count;
+    e.target.style.zIndex = card_z_index;
+    // we don't want this to update again when reanimating later
     e.target.removeEventListener("animationstart", updateZIndex);
 }
 
-export function addHover(){
+function setupHover(){
+  // setup the initial event listeners for all cards
   let cardList = document.getElementsByClassName("card-image");
   for (let i = 0; i < cardList.length; i++) {
     cardList[i].addEventListener("animationend", function(){
@@ -175,20 +173,32 @@ export function addHover(){
     cardList[i].addEventListener("click", addAnimation);
   }
 }
+export function addHover(){
+  // remove any unclickable classes from all the opened cards, so all can be interacted with
+  let clickedCard = document.getElementsByClassName("opened");
+  for (let i = 0; i < clickedCard.length; i++) {
+    clickedCard[i].classList.remove("unclickable");
+  }
+}
 export function removeHover(){
-  let cardList = document.getElementsByClassName("clicked");
-  let el;
-  for (let i = 0; i < cardList.length; i++) {
-    let z = window.getComputedStyle(cardList[i]).zIndex;
-    el = cardList[i].children[0].children[0].children[0];
-    if(parseInt(z) !== card_count){
-      el.removeEventListener("mouseover", addAnimation);
-      el.removeEventListener("click", addAnimation);
-    } else {
-      console.log(el);
-      el.addEventListener("mouseover", addAnimation);
-      el.addEventListener("click", addAnimation);
+  // check the current format is not grid
+  if(gacha_display_selection !== "gacha-grid"){
+
+    // this is the parent card container
+    let tcgCard = document.getElementsByClassName("clicked");
+    // this is the specific child the animation is applied to
+    let clickedCard = document.getElementsByClassName("opened");
+    // apply this to all the clicked cards, except the one with the z-index matching the current recorded z-index value
+    for (let i = 0; i < tcgCard.length; i++) {
+      let z = window.getComputedStyle(tcgCard[i]).zIndex;
+      // if the z-index of this card matches the last assigned z-index, then remove any unclickable class
+      if(parseInt(z) !== card_z_index){
+        clickedCard[i].classList.add("unclickable");
+      } else {
+        clickedCard[i].classList.remove("unclickable");
+      }
     }
+    
   }
 }
 
