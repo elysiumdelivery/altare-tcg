@@ -67,6 +67,30 @@ function toggleCollection(event) {
     toggle === "true" ? "Hide Full Collection" : "Show Full Collection";
 }
 
+function setupDropdown(dropdown, storage_key, default_value) {
+  dropdown.onchange = (event) => {
+    localStorage.setItem(storage_key, event.target.value);
+    showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
+  };
+  dropdown.value = localStorage.getItem(storage_key) ?? default_value;
+}
+
+function setupCollectionControls() {
+  FULL_COLLECTION_TOGGLE.onclick = toggleCollection;
+  if (localStorage.getItem("fullCollection") === "true") {
+    FULL_COLLECTION_TOGGLE.textContent = "Hide Full Collection";
+  }
+  RESET_COLLECTION.onclick = (event) => {
+    localStorage.clear();
+    localStorage.setItem("fullCollection", "true");
+    localStorage.setItem("sort", SORT_DROPDOWN.value);
+    localStorage.setItem("page-size", CARDS_PER_PAGE_DROPDOWN.value);
+    toggleCollection();
+  };
+  setupDropdown(SORT_DROPDOWN, "sort", "Collector Number");
+  setupDropdown(CARDS_PER_PAGE_DROPDOWN, "page-size", "10");
+}
+
 async function main() {
   await defineCardComponent();
   getCSVData(async (cards_data) => {
@@ -80,29 +104,7 @@ async function main() {
       case "/collection.html":
         await setupDetailsDialog();
         showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
-        FULL_COLLECTION_TOGGLE.onclick = toggleCollection;
-        if (localStorage.getItem("fullCollection") === "true") {
-          FULL_COLLECTION_TOGGLE.textContent = "Hide Full Collection";
-        }
-        RESET_COLLECTION.onclick = (event) => {
-          localStorage.clear();
-          localStorage.setItem("fullCollection", "true");
-          localStorage.setItem("sort", SORT_DROPDOWN.value);
-          localStorage.setItem("page-size", CARDS_PER_PAGE_DROPDOWN.value);
-          toggleCollection();
-        };
-        SORT_DROPDOWN.onchange = (event) => {
-          localStorage.setItem("sort", event.target.value);
-          showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
-        };
-        SORT_DROPDOWN.value =
-          localStorage.getItem("sort") ?? "Collector Number";
-        CARDS_PER_PAGE_DROPDOWN.onchange = (event) => {
-          localStorage.setItem("page-size", event.target.value);
-          showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
-        };
-        CARDS_PER_PAGE_DROPDOWN.value =
-          localStorage.getItem("page-size") ?? "10";
+        setupCollectionControls();
     }
   });
 }

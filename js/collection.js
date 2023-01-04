@@ -80,9 +80,10 @@ function sortAndFilterCards(cards_data, sort, reverse, fullCollection) {
   }
 }
 
+//The hide parameter is boolean, so you can call it with an expression to use the function
+//in the same way you would use an if statement.
 function showOrHidePaginationControl(control, onclick, hide = false) {
   if (hide) {
-    //If we're on first page, hide controls to go to previous page.
     control.classList.add("hidden");
   } else {
     control.classList.remove("hidden");
@@ -104,12 +105,12 @@ function paginateCards(cards, cards_per_page, page, navigationFunction) {
 
     showOrHidePaginationControl(
       PAGINATION_BTNS.previous,
-      navigationFunction(true),
+      navigationFunction(page - 1),
       page == 1
     );
     showOrHidePaginationControl(
       PAGINATION_BTNS.next,
-      navigationFunction(false),
+      navigationFunction(page + 1),
       cards[cards.length - 1]["Collector Number"] === lastCard
     );
     return cards;
@@ -146,8 +147,10 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
     return;
   }
 
-  const navigateToPage = (isNext) => (event) =>
-    showCollection(cards_data, htmlLocation, isNext ? page - 1 : page + 1);
+  //This is a closure to let us reuse it in many pagination controls.
+  //call navigateToPage(targetPage) and attach the result to an onclick method.
+  const navigateToPage = (targetPage) => (event) =>
+    showCollection(cards_data, htmlLocation, targetPage);
 
   cards = paginateCards(cards, cards_per_page, page, navigateToPage);
 
