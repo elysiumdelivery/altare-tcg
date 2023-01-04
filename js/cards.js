@@ -1,5 +1,5 @@
 import { cards_data, gacha_display_selection, CARD_ART_HIDDEN_ON_LOAD } from "./main.js";
-import { updateDetailsDialog, DETAILS_DIALOG_A11Y, cardRarity } from "./dialog.js";
+import { updateDetailsDialog, DETAILS_DIALOG_A11Y, setCardRarity } from "./dialog.js";
 
 const CLOUD_NAME = "dazcxdgiy";
 const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
@@ -78,7 +78,7 @@ export async function defineCardComponent() {
       this.image = this.getElementsByClassName("card-image")[0];
       // const image = this.getElementsByClassName("card-image")[0];
       this.image.style.backgroundImage = 'url("' + this.getImageURL() + '")';
-      this.image.classList.add(cardRarity(this.data["Rarity Folder"]));
+      this.image.classList.add(setCardRarity(this.data["Rarity Folder"]));
       this.setupOnClickEvents();
       if (CARD_ART_HIDDEN_ON_LOAD) {
         this.resetCard();

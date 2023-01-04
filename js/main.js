@@ -22,7 +22,6 @@ export const CARD_ART_HIDDEN_ON_LOAD =
 export let cards_data = [];
 export let cards_by_rarity = {};
 export let gacha_display_selection;
-let local_display_selection;
 
 function getCSVData(callback = undefined) {
   Papa.parse(CSV_FILENAME, {
@@ -75,7 +74,6 @@ async function main() {
       case "/gacha.html":
         GACHA_DISPLAY.forEach((elem) => {
           elem.addEventListener("change", function(e) {
-            // local_display_selection = e.target.value;
             gacha_display_selection = e.target.value;
             if(gacha_display_selection == "gacha-grid"){
               GACHA_SECTION.classList.add("grid-display");

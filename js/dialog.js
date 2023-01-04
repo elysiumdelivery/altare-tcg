@@ -1,5 +1,6 @@
 export let DETAILS_DIALOG_A11Y = null;
 let DETAILS_DIALOG_EL = null;
+let first_open = true;
 
 export async function setupDetailsDialog() {
   // Don't make another dialog container if a previous page already set it up
@@ -34,22 +35,21 @@ export function updateDetailsDialog(data, cardUrl) {
     cardUrl + '")';
 
   // Add animation start
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add(cardRarity(data["Rarity Folder"]), "animated");
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add(setCardRarity(data["Rarity Folder"]), "animated");
   
   // Animation reset
-  DETAILS_DIALOG_EL.getElementsByClassName("card-details-dialog-close")[0].addEventListener("click", cardReset);
-  document.getElementsByClassName("dialog-overlay")[0].addEventListener("click", cardReset);
+  DETAILS_DIALOG_EL.getElementsByClassName("card-details-dialog-close")[0].addEventListener("click", resetCardEffects);
+  document.getElementsByClassName("dialog-overlay")[0].addEventListener("click", resetCardEffects);
 
   // animation events
   let dialogCard = DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0];
-  dialogCard.addEventListener("animationstart", function() {
-    dialogCard.removeEventListener("mouseover", cardAnimate);
-    dialogCard.removeEventListener("click", cardAnimate);
-  }, false);
   dialogCard.addEventListener("animationend", function() {
     dialogCard.classList.remove("animated");
-    dialogCard.addEventListener("mouseover", cardAnimate);
-    dialogCard.addEventListener("click", cardAnimate);
+    if(first_open){
+      dialogCard.addEventListener("mouseover", animateCard);
+      dialogCard.addEventListener("click", animateCard);
+      first_open = false;
+    }
   }, false);
   
   // Clear + set card metadata
@@ -70,14 +70,14 @@ export function updateDetailsDialog(data, cardUrl) {
   );
 }
 
-function cardAnimate(dialogCard){
+function animateCard(dialogCard){
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated");
 }
-function cardReset(){
+function resetCardEffects(){
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("holo", "basic", "secret", "rare", "ultra", "animated");
 }
 
-export function cardRarity(folder){
+export function setCardRarity(folder){
   let rarity;
   switch(folder){
     case "HoloRare":
