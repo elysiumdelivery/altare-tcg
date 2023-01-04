@@ -1,7 +1,8 @@
 //Happy Birthday Leader! 🎇💙
-import { defineCardComponent, showCollection } from "./cards.js";
+import { defineCardComponent } from "./cards.js";
 import { setupDetailsDialog } from "./dialog.js";
 import { GACHA_BUTTON, pullAndRenderCards } from "./gacha.js";
+import { showCollection } from "./collection.js";
 
 const CSV_FILENAME = "../Test Card List CSV.csv";
 const pathname = window.location.pathname;
