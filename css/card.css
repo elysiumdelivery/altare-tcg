@@ -194,18 +194,6 @@ tcg-card .card-subtitle {
   user-select: text;
 }
 
-.card-details-dialog-close, #full-collection-toggle, #reset-collection, #sort-dropdown, #gacha-button {
-  background-color: var(--bg-color);
-  color: white;
-  border: 8px solid transparent;
-  max-height: 37px;
-  border-radius: 5px;
-  font-size: 1em;
-  transition: background-color 0.3s ease;
-  width: 200px;
-  cursor: pointer;
-}
-
 #sort-dropdown {
   text-align: center;
   margin-left: 4px;

@@ -292,7 +292,7 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
     if (cards.length == 0) {
       htmlLocation.innerHTML =
         "You have no cards at the moment. Try pulling some at the gacha!";
-      PAGINATION_BTNS.container.classList.add("hidden");
+      PAGINATION_BTNS.container.classList.add("invisible");
       return;
     } else {
       cards = sortCards(cards, sort, reverse);
@@ -303,7 +303,7 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
   //then we split them into parts and show the pagination controls.
   //Note: If cards_per_page is set to "all", the comparison casts it to NaN, and as such it will always return false.
   if (cards.length > cards_per_page) {
-    PAGINATION_BTNS.container.classList.remove("hidden");
+    PAGINATION_BTNS.container.classList.remove("invisible");
     PAGINATION_BTNS.current.textContent = `${page} of ${Math.ceil(
       cards.length / cards_per_page
     )}`;
@@ -311,23 +311,23 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
     cards = cards.slice(cards_per_page * (page - 1), cards_per_page * page);
     if (page == 1) {
       //If we're on first page, hide controls to go to previous page.
-      PAGINATION_BTNS.previous.classList.add("hidden");
+      PAGINATION_BTNS.previous.classList.add("invisible");
     } else {
-      PAGINATION_BTNS.previous.classList.remove("hidden");
+      PAGINATION_BTNS.previous.classList.remove("invisible");
       PAGINATION_BTNS.previous.onclick = (event) =>
         showCollection(cards_data, htmlLocation, page - 1);
     }
     if (cards[cards.length - 1]["Collector Number"] === lastCard) {
       //If we're on last page, hide controls to go to next page.
-      PAGINATION_BTNS.next.classList.add("hidden");
+      PAGINATION_BTNS.next.classList.add("invisible");
     } else {
-      PAGINATION_BTNS.next.classList.remove("hidden");
+      PAGINATION_BTNS.next.classList.remove("invisible");
       PAGINATION_BTNS.next.onclick = (event) =>
         showCollection(cards_data, htmlLocation, page + 1);
     }
   } else {
     //If we don't need pagination, we hide the controls.
-    PAGINATION_BTNS.container.classList.add("hidden");
+    PAGINATION_BTNS.container.classList.add("invisible");
   }
   renderCards(cards, htmlLocation, true, true);
 }
