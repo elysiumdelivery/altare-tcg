@@ -32,7 +32,7 @@
 
   <body>
     <main>
-      <h1>The Regis Altare Birthday Project 2023</h1>
+      <h1 id="title-header">The Regis Altare Birthday Project 2023</h1>
 
       <a href="#card-list" class="visually-hidden">Skip to content</a>
 
@@ -75,11 +75,35 @@
               <img class="icon icon-close" aria-hidden="true" src="../icons/Icons_Close.svg"/>
           </button>
       </nav>
-      <section id="collection">
+      <section id="collection-border">
         <button id="full-collection-toggle">Show Full Collection</button>
         <button id="reset-collection">Reset Card Collection</button>
+        <label>
+            Sort by:
+            <select id="sort-dropdown">
+                <option value="Collector Number" selected>Collector Number</option>
+                <option value="Collector Number-">Collector Number (Reverse)</option>
+                <option value="Rarity">Rarity</option>
+                <option value="Rarity-">Rarity (Reverse)</option>
+            </select>
+        </label>
+        <label>
+          Page size:
+          <select id="size-dropdown">
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="all">All</option>
+          </select>
+        </label>
+
         <p id="collected-cards-number">Collected cards:</p>
         <section id="card-list"></section>
+        <div id="collection-pagination" class="hidden">
+          <button id="pagination-previous" class="invisible">Previous</button>
+          <span id="pagination-current">1</span>
+          <button id="pagination-next">Next</button>
+        </div>
       </section>
 
       <footer>

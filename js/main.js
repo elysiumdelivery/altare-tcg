@@ -1,5 +1,5 @@
 //Happy Birthday Leader! 🎇💙
-import { defineCardComponent, showCollection } from "./cards.js";
+import { GACHA_VIEW_SETTING, defineCardComponent, showCollection, updateGachaView } from "./cards.js";
 import { setupDetailsDialog } from "./dialog.js";
 import { GACHA_BUTTON, pullAndRenderCards } from "./gacha.js";
 
@@ -12,11 +12,13 @@ const FULL_COLLECTION_TOGGLE = document.getElementById(
   "full-collection-toggle"
 );
 const RESET_COLLECTION = document.getElementById("reset-collection");
+const SORT_DROPDOWN = document.getElementById("sort-dropdown");
+const CARDS_PER_PAGE_DROPDOWN = document.getElementById("size-dropdown");
 
 export const CARD_ART_HIDDEN_ON_LOAD =
   PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
-//Holds the data of all cards after parsing the CSV file.
 
+//Holds the data of all cards after parsing the CSV file.
 export let cards_data = [];
 export let cards_by_rarity = {};
 
@@ -90,9 +92,26 @@ async function main() {
   getCSVData(async (cards_data) => {
     switch (CURRENT_PAGE) {
       case "/gacha.html":
-        GACHA_BUTTON.onclick = (event) =>
+        // watch for any selection changes - either grid or pile card display
+        GACHA_VIEW_SETTING[0].addEventListener("change", updateGachaView);
+        GACHA_VIEW_SETTING[1].addEventListener("change", updateGachaView);
+
+        // if the window is less than 800, default to a grid layout
+        // this checks the box and dispatches a change event
+        if(window.innerWidth <= 800){
+          const gridInput = document.getElementById("gacha-grid");
+          gridInput.checked = true;
+          gridInput.dispatchEvent(new Event('change'));
+        }
+        // Otherwise, default to pile and assign pile-display class by default
+        else {
+          const pileInput = document.getElementById("gacha-pile");
+          pileInput.checked = true;
+          pileInput.dispatchEvent(new Event('change'));
+        }
+        
+        GACHA_BUTTON.onclick = (event) => 
           pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
-        await setupDetailsDialog();
         break;
 
       case "/collection.html":
@@ -105,8 +124,22 @@ async function main() {
         RESET_COLLECTION.onclick = (event) => {
           localStorage.clear();
           localStorage.setItem("fullCollection", "true");
+          localStorage.setItem("sort", SORT_DROPDOWN.value);
+          localStorage.setItem("page-size", CARDS_PER_PAGE_DROPDOWN.value);
           toggleCollection();
         };
+        SORT_DROPDOWN.onchange = (event) => {
+          localStorage.setItem("sort", event.target.value);
+          showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
+        };
+        SORT_DROPDOWN.value =
+          localStorage.getItem("sort") ?? "Collector Number";
+        CARDS_PER_PAGE_DROPDOWN.onchange = (event) => {
+          localStorage.setItem("page-size", event.target.value);
+          showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
+        };
+        CARDS_PER_PAGE_DROPDOWN.value =
+          localStorage.getItem("page-size") ?? "10";
         break;
       case "/artist-writer-board.html":
         renderMessages();
