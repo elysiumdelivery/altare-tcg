@@ -57,6 +57,21 @@ footer svg {
   text-shadow: 4px 4px 1px rgb(13 66 163), -3px -3px 1px rgb(148 186 255);
 }
 
+#welcome-splash-button {
+  background-color: var(--bg-color);
+  color:white;
+  border: 8px solid transparent;
+  max-height:37px;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+  width: 200px;
+  cursor: pointer;
+}
+#welcome-splash-button:hover {
+  background-color: var(--accent-color);
+}
+
 .visually-hidden:not(:focus):not(:active) {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);

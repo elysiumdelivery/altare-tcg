@@ -1,5 +1,5 @@
 //Happy Birthday Leader! 🎇💙
-import { defineCardComponent, showCollection } from "./cards.js";
+import { GACHA_VIEW_SETTING, defineCardComponent, showCollection, updateGachaView } from "./cards.js";
 import { setupDetailsDialog } from "./dialog.js";
 import { GACHA_BUTTON, pullAndRenderCards } from "./gacha.js";
 
@@ -71,9 +71,20 @@ async function main() {
   getCSVData(async (cards_data) => {
     switch (CURRENT_PAGE) {
       case "/gacha.html":
-        GACHA_BUTTON.onclick = (event) =>
+        // watch for any selection changes - either grid or pile card display
+        GACHA_VIEW_SETTING[0].addEventListener("change", updateGachaView);
+        GACHA_VIEW_SETTING[1].addEventListener("change", updateGachaView);
+
+        // if the window is less than 800, default to a grid layout
+        // this checks the box and dispatches a change event
+        if(window.innerWidth <= 800){
+          const gridInput = document.getElementById("gacha-grid");
+          gridInput.checked = true;
+          gridInput.dispatchEvent(new Event('change'));
+        }
+        
+        GACHA_BUTTON.onclick = (event) => 
           pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
-        await setupDetailsDialog();
         break;
 
       case "/collection.html":
