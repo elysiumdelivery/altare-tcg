@@ -1,30 +1,157 @@
-.card,
-.card-front,
-.card-back {
-  display: inline;
+:root {
+  --card-width: 200px;
+  --card-height: 279px;
+  --border-radius: 5%/3.5%;
 }
+
+tcg-card, .card-component, .card-front,
+.card-back {
+  width:var(--card-width);
+  height:var(--card-height);
+}
+tcg-card, .card-component, .card-front,
+.card-back {
+  display: inline-block;
+}
+tcg-card {
+  margin: 3%;
+  perspective: 600px; /* for the card animation */
+}
+
+#gacha-controls {
+  --card-width: 400px; /* adjust the card size for the gacha page */
+  --card-height: 559px; /* adjust the card size for the gacha page */
+}
+#gacha-controls #card-list {
+  min-height: calc(var(--card-height) + 100px);
+}
+#gacha-controls tcg-card {
+  position: absolute;
+  right:10%;
+  transition: all 0.3s ease; /* make any changes to this card flow, so it doesn't snap */
+}
+tcg-card .card-subtitle {
+  color:white;
+}
+
+/* rotate card differently depending on its position in the pile */
+#gacha-controls tcg-card:nth-child(3n+1){ transform: rotate(0deg); }
+#gacha-controls tcg-card:nth-child(3n+2){ transform: rotate(-5deg); }
+#gacha-controls tcg-card:nth-child(3n+3){ transform: rotate(3deg); }
+
+/* set a default z-index for the gacha, so the cards are reversed if they sit in a pile */
+#gacha-controls tcg-card:nth-child(1){ z-index:10; }
+#gacha-controls tcg-card:nth-child(2){ z-index:9; }
+#gacha-controls tcg-card:nth-child(3){ z-index:8; }
+#gacha-controls tcg-card:nth-child(4){ z-index:7; }
+#gacha-controls tcg-card:nth-child(5){ z-index:6; }
+#gacha-controls tcg-card:nth-child(6){ z-index:5; }
+#gacha-controls tcg-card:nth-child(7){ z-index:4; }
+#gacha-controls tcg-card:nth-child(8){ z-index:3; }
+#gacha-controls tcg-card:nth-child(9){ z-index:2; }
+#gacha-controls tcg-card:nth-child(10){ z-index:1; }
+
+
+#gacha-controls, #gacha-controls.pile-display {
+  --distance:calc(-1 * (73vw - var(--card-width)));
+}
+#gacha-controls.grid-display {
+  --distance: 0;
+  --rotation: 0;
+}
+/* when the card is clicked, it first one level down from tcg-card and the whole parent container moves across.
+  This is kept separately as it's not used in the grid layout */
+#gacha-controls #card-list tcg-card.clicked {
+  animation: left 1s ease 0s 1;
+  animation-fill-mode: forwards;
+}
+#gacha-controls tcg-card.clicked:nth-child(3n+1){
+  --rotation:-3deg;
+}
+#gacha-controls tcg-card.clicked:nth-child(3n+2){
+  --rotation:5deg;
+}
+#gacha-controls tcg-card.clicked:nth-child(3n+3){
+  --rotation:0deg;
+}
+
+@keyframes left {
+  100% {
+    transform:translateX(var(--distance)) rotate(var(--rotation));
+  }
+}
+
+/* when it is in a grid display, we no longer need any of the absolute styling */
+#gacha-controls.grid-display tcg-card {
+  position:initial;
+}
+#gacha-controls.grid-display tcg-card,
+#gacha-controls.grid-display tcg-card.clicked {
+  transform: rotate(0deg); /* reset all the cards back to straight when the class is applied */
+  animation-fill-mode: initial !important;
+}
+
 
 /* Override default button styling */
 .card-front,
 .card-back {
-  display: inline;
-  width: 200px;
-  margin: 3%;
+  display: inline-block;
   border: 0;
   padding: 0;
   background: none;
   cursor: pointer;
+  position:absolute;
+}
+
+.card-component {
+  will-change: transform;
+  transform-style: preserve-3d;
+  transition: box-shadow .4s ease;
+  transform-origin: center;
+  border-radius: var(--border-radius);
+}
+#gacha-controls .card-component {
+  box-shadow:none; /* avoid doubling up of shadows */
+}
+
+#gacha-controls .card-front {
+  backface-visibility: visible; /* to see the reverse of the card */
+  transform: rotateY(180deg) translateZ(1px); /* flip on its face so it can be opened */
+}
+#gacha-controls .card-back {
+  backface-visibility: hidden; /* to hide the other side, so we can't see the card back */
 }
 
 .card-image,
 .card-cover {
   width: 100%;
+  height:100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .card-cover {
-  margin: 3%;
   border: solid;
-  border-color: dodgerblue;
+  border-color: dodgerblue; /* update or remove when final card back is obtained */
+  box-sizing:border-box; /* avoid card becoming larger if border placed on the outside */
+  border-radius: var(--border-radius);
+  background-image:url("../images/elysium_delivery_services.jpg"); /* update this when final card back is obtained */
+  background-color: white;
+}
+
+#gacha-controls #card-list .card-component.flip {
+  /* this is the flipping animation only and affects one level down from tcg-card */
+  animation: flip 0.5s ease 0s 1;
+  animation-fill-mode: forwards;
+}
+@keyframes flip {
+  0% {
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+  100% {
+    transform: rotate3d(0, 1, 0, -180deg);
+  }
 }
 
 .dialog-title {
@@ -88,7 +215,26 @@
   display: none;
 }
 
+@media screen and (max-width: 1400px) {
+  #gacha-controls {
+    /* make the card smaller when the screen is resized */
+    --card-width: 300px;
+    --card-height: 419px;
+  }
+
+  .details-dialog-card {
+    width: 25vw;
+    height: calc(25vw*1.395);
+  }
+}
+
 @media screen and (max-width: 1000px) {
+  #gacha-controls {
+    /* make the card even smaller whtn the screen is resized further */
+    --card-width: 200px;
+    --card-height: 279px;
+  }
+
   #card-details-dialog {
     grid-template-areas:
       "x"
@@ -115,6 +261,52 @@
     min-height: auto;
     padding: 1em 2vmin;
   }
+
+}
+
+@media screen and (max-width: 900px) {
+
+  section label {
+    /* drop the filter options together to the second line when the screen becomes too small */
+    white-space: nowrap;
+    margin-top: 10px;
+    display: block;
+    padding-left: 0px;
+  }
+  section#gacha-controls label {
+    /* ensure the options display as a single line even when the screen is small */
+      white-space: normal;
+      margin-top: 0px;
+      display: inline-block;
+      padding-left:0px
+  }
+
+}
+
+@media screen and (max-width: 800px) {
+  #gacha-controls #card-list {
+    /* make the card area smaller when the screen is small */
+    min-height: calc(var(--card-height) * 2 + (6vh + 100px));
+  }
+  #gacha-controls.pile-display tcg-card {
+    /* center the cards instead of displaying them left/right */
+    left: 0;
+    right: 0;
+    margin: 3% auto 0 auto;
+  }
+  #gacha-controls.pile-display #card-list tcg-card.clicked {
+    /* use alternative top-to-bottom animation when the card is clicked */
+    animation: bottom 1s ease 0s 1;
+    animation-fill-mode: forwards;
+  }
+  @keyframes bottom {
+    0% {
+      margin-top: 3%;
+    }
+    100% {
+      margin-top: calc(var(--card-height) + 3% + 100px);
+    }
+  }
 }
 
 .dialog-container,
@@ -129,4 +321,363 @@
 
 .dialog-overlay {
   background-color: rgba(43, 46, 56, 0.7);
+}
+
+/* Card animation code, credit to simeydotme
+* Original site: https://deck-24abcd.netlify.app/
+*/
+
+:root {
+  /* BASE variables */
+  --color1: #b8b8b8;
+  --color2: #6b6b6b;
+  --posx: 50%;
+  --posy: 50%;
+}
+
+.details-dialog-card, #gacha-controls .card-image {
+  width:var(--card-width); height:var(--card-height);
+  position: relative;
+  margin: 20px;
+  overflow: hidden;
+  z-index: 10;
+  touch-action: none;
+  border-radius: 5%/3.5%;
+  box-shadow: -7px -7px 10px -5px transparent, 7px 7px 10px -5px transparent, 0 0 5px 0px rgba(255, 255, 255, 0), 0 55px 35px -20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.5s ease, box-shadow 0.2s ease;
+  will-change: transform, filter;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  transform-origin: center;
+  display: inline-block;
+  transform: translate3d(0.1px, 0.1px, 0.1px);
+}
+#gacha-controls .card-image {
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
+}
+#gacha-controls .card-image, #gacha-controls .card-image:before, #gacha-controls .card-image:after {
+  transition: all 0.5s ease;
+}
+
+.details-dialog-card {
+  /* update the card size when in the dialog */
+  width:calc(var(--card-width)*2);
+  height:calc(var(--card-height)*2);
+}
+
+#gacha-controls .card-image {
+  margin:auto;
+}
+
+@media screen and (max-width: 600px) {
+  .details-dialog-card {
+    /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
+    width:calc(var(--card-width)*1.5); height:calc(var(--card-height)*1.5);
+  }
+}
+
+/* set the card overlay gradients */
+.details-dialog-card.holo, #gacha-controls .card-image.holo {
+  --color1: #ec9bb6;
+  --color2: #ccac6f;
+  --color3: #69e4a5;
+  --color4: #8ec5d6;
+  --color5: #b98cce;
+}
+.details-dialog-card.ultra, #gacha-controls .card-image.ultra {
+  --color1: #ff7873c0;
+  --color2: #ffed5fc0;
+  --color3: #a8ff5fc0;
+  --color4: #83fff7c0;
+  --color5: #7894ffc0;
+}
+.details-dialog-card.secret, #gacha-controls .card-image.secret {
+  --color5: #ff787390;
+  --color4: #ffed5f90;
+  --color3: #a8ff5f90;
+  --color2: #83fff790;
+  --color1: #7894ff90;
+}
+
+.details-dialog-card:before,
+.details-dialog-card:after, 
+#gacha-controls .card-image:before,
+#gacha-controls .card-image:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-repeat: no-repeat;
+  opacity: 0;
+  mix-blend-mode: color-dodge;
+  transition: all 0.33s ease;
+  border-radius: var(--border-radius);
+}
+
+/* before is the gradient layer - only 2 base colours are used by default */
+.details-dialog-card:before, #gacha-controls .card-image:before {
+  background-position: 50% 50%;
+  background-size: 300% 300%;
+  background-image: linear-gradient(115deg, transparent 0%, var(--color1) 25%, transparent 47%, transparent 53%, var(--color2) 75%, transparent 100%);
+  filter: brightness(0.5) contrast(1);
+  z-index: 1;
+}
+
+.details-dialog-card.basic:before, #gacha-controls .card-image.basic:before {
+  filter: brightness(0) contrast(0); /* for basic cards we want to tone down these values more */
+}
+
+/* all the other card effects use a rainbow pattern that takes 5 colours */
+.details-dialog-card.holo:before, .details-dialog-card.ultra:before, .details-dialog-card.secret:before,
+#gacha-controls .card-image.holo:before, #gacha-controls .card-image.ultra:before, #gacha-controls .card-image.secret:before {
+  background-image: linear-gradient(115deg, transparent 20%, var(--color1) 36%, var(--color2) 43%, var(--color3) 50%, var(--color4) 57%, var(--color5) 64%, transparent 80%);
+}
+
+/* after is the image overlay layer */
+.details-dialog-card:after, #gacha-controls .card-image:after {
+  background-blend-mode: overlay;
+  z-index: 2;
+  filter: brightness(1) contrast(1);
+  transition: all 0.33s ease;
+  mix-blend-mode: color-dodge;
+}
+
+/* add a basic noise pattern over any Basic cards */
+.details-dialog-card.basic:after, #gacha-controls .card-image.basic:after {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCI+CjxmaWx0ZXIgaWQ9Im4iPgo8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjciIG51bU9jdGF2ZXM9IjEwIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIj48L2ZlVHVyYnVsZW5jZT4KPC9maWx0ZXI+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWxsPSIjMDAwIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjAuMyI+PC9yZWN0Pgo8L3N2Zz4=);
+  background-position: center;
+  background-size: 200%;
+  background-blend-mode: overlay;
+  mix-blend-mode: screen;
+}
+
+/* lay over a pattern for a more spotty foil effect; rather than a fully foiled card - will still see the rainbow sheen on top */
+.details-dialog-card.holo:after, #gacha-controls .card-image.holo:after {
+  --space: 4%;
+  --galaxybg: center 521px;
+  background-image: url(../images/galaxy.jpg), url(../images/galaxy.jpg), url(../images/galaxy.jpg), repeating-linear-gradient( 82deg, rgb(219, 204, 86) calc(var(--space)*1), rgb(121, 199, 58) calc(var(--space)*2), rgb(58, 192, 183) calc(var(--space)*3), rgb(71, 98, 207) calc(var(--space)*4), rgb(170, 69, 209) calc(var(--space)*5), rgb(255, 90, 180) calc(var(--space)*6), rgb(255, 90, 180) calc(var(--space)*7), rgb(170, 69, 209) calc(var(--space)*8), rgb(71, 98, 207) calc(var(--space)*9), rgb(58, 192, 183) calc(var(--space)*10), rgb(121, 199, 58) calc(var(--space)*11), rgb(219, 204, 86) calc(var(--space)*12) );
+  background-blend-mode: color-dodge, color-burn, saturation;
+  background-position: var(--galaxybg, cover), var(--galaxybg, cover), var(--galaxybg, cover), calc(((50% - var(--posx)) * 2.5) + 50%) calc(((50% - var(--posy)) * 2.5) + 50%);
+  background-size: cover, cover, cover, 400% 900%;
+  filter: brightness(.75) contrast(1.2) saturate(1.5);
+  mix-blend-mode: color-dodge;
+}
+
+/* lay over a repeating line pattern */
+.details-dialog-card.ultra:after, #gacha-controls .card-image.ultra:after {
+  --space: 5%;
+  --angle: 133deg;
+  --imgsize: 50% 42%;
+  background-image: url(../images/illusion3.png), repeating-linear-gradient( 0deg, rgb(255, 119, 115) calc(var(--space)*1), rgba(255,237,95,1) calc(var(--space)*2), rgba(168,255,95,1) calc(var(--space)*3), rgba(131,255,247,1) calc(var(--space)*4), rgba(120,148,255,1) calc(var(--space)*5), rgb(216, 117, 255) calc(var(--space)*6), rgb(255, 119, 115) calc(var(--space)*7) ), repeating-linear-gradient( var(--angle), #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 66%) 4.5%, hsl(180, 10%, 60%) 5.2%, #0e152e 10% , #0e152e 12% );
+  background-blend-mode: exclusion, hue;
+  background-size: var(--imgsize), 200% 400%, 195% 100%;
+  background-position: center center, 0% var(--posy), calc( var(--posx) * -1) calc( var(--posy) * -1);
+  filter: brightness(1.2) contrast(1.6) saturate(1.4);
+  mix-blend-mode: overlay;
+  background-repeat: repeat;
+}
+
+/* lay over a repeating wavy pattern - this is more similar to the above than the holo/galaxy one */
+.details-dialog-card.secret:after, #gacha-controls .card-image.secret:after {
+  --space: 5%;
+  --angle: 133deg;
+  --imgsize: 25% 20%;
+  background-image: url(../images/trainerbg3.png), repeating-linear-gradient( 0deg, rgb(255, 119, 115) calc(var(--space)*1), rgba(255,237,95,1) calc(var(--space)*2), rgba(168,255,95,1) calc(var(--space)*3), rgba(131,255,247,1) calc(var(--space)*4), rgba(120,148,255,1) calc(var(--space)*5), rgb(216, 117, 255) calc(var(--space)*6), rgb(255, 119, 115) calc(var(--space)*7) ), repeating-linear-gradient( var(--angle), #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 66%) 4.5%, hsl(180, 10%, 60%) 5.2%, #0e152e 10% , #0e152e 12%);
+  background-blend-mode: difference, hue;
+  background-size: var(--imgsize), 200% 700%, 300% 100%;
+  background-position: center, 0% var(--posy), var(--posx) var(--posy);
+  filter: brightness(0.75) contrast(2.5) saturate(.75);
+  background-repeat: repeat;
+}
+
+/* animations specific to the dialog will take 12 seconds and be slower */
+
+.details-dialog-card.animated {
+  will-change: transform;
+  transition: none;
+  animation: holoCard 12s ease 0s 1;
+}
+.details-dialog-card.animated:before {
+  will-change: opacity, background-position, filter;
+  transition: none;
+  animation: holoGradient 12s ease 0s 1;
+}
+.details-dialog-card.secret.animated:before {
+  animation: holoSecretGradient 12s ease 0s 1;
+}
+.details-dialog-card.animated:after {
+  will-change: opacity, background-position, filter;
+  transition: none;
+  animation: holoSparkle 12s ease 0s 1;
+}
+
+.details-dialog-card.secret.animated:after {
+  animation: holoSecretSparkle 12s ease 0s 1;
+}
+
+/* The animations themselves - relies on sychronised background moving */
+
+/* HoloSparkle ----------------------------------- */
+@keyframes holoSparkle {
+  0%, 100% {
+    opacity: 0;
+    background-position: 50% 50%;
+    filter: brightness(1.2) contrast(1.25);
+  }
+  6%, 11%  {
+    opacity: 0.6;
+  }
+  13%, 16% {
+    opacity: 0.5;
+    background-position: 50% 50%;
+    filter: brightness(1.2) contrast(0.8);
+  }
+  35%, 38% {
+    opacity: 1;
+    background-position: 60% 60%;
+    filter: brightness(1) contrast(1);
+  }
+  55% {
+    opacity: 0.33;
+    background-position: 45% 45%;
+    filter: brightness(1.2) contrast(1.25);
+  }
+}
+
+@keyframes holoSecretSparkle {
+  /* this is the same as above, just for secret cards - lower intensity */
+  0%, 100% {
+    opacity: 0;
+    background-position: 20% 15%;
+    filter: brightness(0.8) contrast(2.2);
+  }
+  6%, 11%  {
+    opacity: 0.6;
+  }
+  13%, 16% {
+    opacity: 0.5;
+    background-position: 20% 15%;
+    filter: brightness(0.8) contrast(1.8);
+  }
+  35%, 38% {
+    opacity: 1;
+    background-position: 30% 25%;
+    filter: brightness(0.7) contrast(2);
+  }
+  55% {
+    opacity: 0.33;
+    background-position: 15% 10%;
+    filter: brightness(0.8) contrast(2.2);
+  }
+}
+
+/* HoloGradient ----------------------------------- */
+@keyframes holoGradient {
+  0%, 100% {
+    opacity: 0;
+    background-position: 50% 50%;
+    filter: brightness(0.5) contrast(1);
+  }
+  3%, 6% {
+    opacity:0.5;
+  }
+  13%, 17% {
+    background-position: 0% 0%;
+    opacity: 0.88;
+  }
+  35%, 39% {
+    background-position: 100% 100%;
+    opacity: 1;
+    filter: brightness(0.5) contrast(1);
+  }
+  55% {
+    background-position: 0% 0%;
+    opacity: 1;
+    filter: brightness(0.75) contrast(1.25);
+  }
+}
+
+@keyframes holoSecretGradient {
+  /* this is the same as above, just for secret cards - lower intensity */
+  0%, 100% {
+    opacity: 0;
+    background-position: 50% 50%;
+    filter: brightness(0.5) contrast(0.6);
+  }
+  3%, 6% {
+    opacity:0.5;
+  }
+  13%, 17% {
+    background-position: 0% 0%;
+    opacity: 0.88;
+  }
+  35%, 39% {
+    background-position: 100% 100%;
+    opacity: 1;
+    filter: brightness(0.5) contrast(0.6);
+  }
+  55% {
+    background-position: 0% 0%;
+    opacity: 1;
+    filter: brightness(0.75) contrast(1.4);
+  }
+}
+
+/* HoloCard ----------------------------------- */
+@keyframes holoCard {
+  0%, 100% {
+    transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+  }
+  13%, 16% {
+    transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
+  }
+  35%, 38% {
+    transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
+  }
+  55% {
+    transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
+  }
+}
+
+/* Gacha page only shortened animations - only 3s long to speed things up */
+
+#gacha-controls .card-image.animated {
+  transition: none;
+  animation: holoCard 3s ease 0.5s 1;
+}
+#gacha-controls .card-image.animated:before {
+  transition: none;
+  animation: holoGradient 3s ease 0.5s 1;
+}
+#gacha-controls .card-image.secret.animated:before {
+  transition: none;
+  animation: holoSecretGradient 3s ease 0.5s 1;
+}
+#gacha-controls .card-image.animated:after {
+  transition: none;
+  animation: holoSparkle 3s ease 0.5s 1;
+}
+
+#gacha-controls .card-image.secret.animated:after {
+  transition: none;
+  animation: holoSecretSparkle 3s ease 0.5s 1;
+}
+
+/* for any additional text on the gacha page */
+#gacha-notes {
+  color:white;
+  background-color:transparent;
+  margin:1em 0;
+  font-size:0.9em;
+}
+#gacha-notes p {
+  margin:0.3em;
+}
+
+/* prevent interaction without removing the event listeners */
+.unclickable {
+  pointer-events: none;
 }

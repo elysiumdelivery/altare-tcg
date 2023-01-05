@@ -1,3 +1,5 @@
+import { setCardRarity } from "./cards.js";
+
 export let DETAILS_DIALOG_A11Y = null;
 let DETAILS_DIALOG_EL = null;
 
@@ -13,9 +15,23 @@ export async function setupDetailsDialog() {
   // A11yDialog handles toggling accessibility properties when the dialog shows/ hides,
   // as well as closing on esc, clicking outside of the dialog, etc.
   DETAILS_DIALOG_A11Y = new A11yDialog(document.getElementById("card-details"));
+
+  // animation events
+  let dialogCard = DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0];
+  dialogCard.addEventListener("animationend", function() {
+    dialogCard.classList.remove("animated", "unclickable");
+  }, false);
+  dialogCard.addEventListener("mouseover", animateCard);
+  dialogCard.addEventListener("click", animateCard);
+
+  // animation reset
+  DETAILS_DIALOG_A11Y.on('hide', function (element, event) {
+    resetCardEffects();
+  })
 }
 
 export function updateDetailsDialog(data, cardUrl) {
+
   // Header
   DETAILS_DIALOG_EL.getElementsByClassName("dialog-title")[0].innerHTML = "";
   DETAILS_DIALOG_EL.getElementsByClassName(
@@ -28,9 +44,13 @@ export function updateDetailsDialog(data, cardUrl) {
     <p>Artist: ${data["Artist Credit"]} | Writer: ${data["Writer Credit"]}</p>
   `
   );
-  // Card
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].src =
-    cardUrl;
+
+  const card_art = DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0];
+  // Card art is applied
+  card_art.style.backgroundImage = 'url("' + cardUrl + '")';
+  // Add animation start
+  card_art.classList.add(setCardRarity(data["Rarity Folder"]), "animated");
+  
   // Clear + set card metadata
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
     "";
@@ -48,3 +68,11 @@ export function updateDetailsDialog(data, cardUrl) {
   `
   );
 }
+
+function animateCard(dialogCard){
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated", "unclickable");
+}
+function resetCardEffects(){
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("holo", "basic", "secret", "rare", "ultra", "animated", "unclickable");
+}
+
