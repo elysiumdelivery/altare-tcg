@@ -37,7 +37,7 @@ export async function defineCardComponent() {
     //Returns an url of the form:
     //`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${RARITY}/${FILENAME}.png`
     getImageURL() {
-      return `${CLOUDINARY_URL}/q_auto/${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
+      return `${CLOUDINARY_URL}q_auto/${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
     }
 
     flipCard() {
