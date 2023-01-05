@@ -2,6 +2,7 @@
 
 #welcome-message {
     margin: 5em auto;
+    background: white;
 }
 #welcome-message.active.scroll-up {
     opacity: 0;
