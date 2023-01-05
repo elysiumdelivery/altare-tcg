@@ -378,7 +378,7 @@ section#gacha-controls input {
   z-index: 10;
   touch-action: none;
   border-radius: 5%/3.5%;
-  box-shadow: -7px -7px 10px -5px transparent, 7px 7px 10px -5px transparent, 0 0 5px 0px rgba(255, 255, 255, 0), 0 55px 35px -20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 55px 35px -10px rgb(0 0 0 / 50%);
   transition: transform 0.5s ease;
   background-size: cover;
   background-repeat: no-repeat;
@@ -388,6 +388,9 @@ section#gacha-controls input {
   transform: translate3d(0.1px, 0.1px, 0.1px);
 }
 #gacha-controls .card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
   box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
 }
 #gacha-controls .card-image, #gacha-controls .card-image:before, #gacha-controls .card-image:after {
@@ -401,7 +404,7 @@ section#gacha-controls input {
 }
 
 #gacha-controls .card-image {
-  margin:auto;
+  margin:0;
 }
 
 @media screen and (max-width: 600px) {
