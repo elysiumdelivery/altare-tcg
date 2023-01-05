@@ -52,24 +52,43 @@ footer svg {
   width: 1em;
 }
 
-#page-header {
-  color: white;
-  text-shadow: 4px 4px 1px rgb(13 66 163), -3px -3px 1px rgb(148 186 255);
-}
-
-#welcome-splash-button {
+button:not(.card-front):not(.card-back), select {
   background-color: var(--bg-color);
-  color:white;
+  color: white;
   border: 8px solid transparent;
-  max-height:37px;
+  max-height: 37px;
   border-radius: 5px;
   font-size: 1em;
   transition: background-color 0.3s ease;
   width: 200px;
   cursor: pointer;
 }
-#welcome-splash-button:hover {
+
+button:not(.card-front):not(.card-back):hover,
+select:hover {
   background-color: var(--accent-color);
+}
+
+#size-dropdown {
+  width: auto;
+}
+
+#title-header {
+  color: white;
+  text-align: center;
+}
+
+#page-header {
+  color: white;
+  text-shadow: 4px 4px 1px rgb(13 66 163), -3px -3px 1px rgb(148 186 255);
+}
+
+#collection-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  margin-top: 2em;
 }
 
 .visually-hidden:not(:focus):not(:active) {
@@ -80,6 +99,11 @@ footer svg {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+/* for elements we want hidden but still retain layout */
+.invisible {
+  visibility: hidden;
 }
 
 .hidden {
