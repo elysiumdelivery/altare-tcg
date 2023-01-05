@@ -1,3 +1,5 @@
+import { setCardRarity } from "./cards.js";
+
 export let DETAILS_DIALOG_A11Y = null;
 let DETAILS_DIALOG_EL = null;
 
@@ -74,22 +76,3 @@ function resetCardEffects(){
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("holo", "basic", "secret", "rare", "ultra", "animated", "unclickable");
 }
 
-export function setCardRarity(folder){
-  let rarity;
-  switch(folder){
-    case "HoloRare":
-      rarity = "holo";
-      break;
-    case "UltraRare":
-      rarity = "ultra";
-      break;
-    case "SecretRare":
-      rarity = "secret";
-      break;
-    default:
-      rarity = "basic";
-      break;
-  }
-
-  return rarity;
-}

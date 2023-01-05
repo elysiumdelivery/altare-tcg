@@ -1,5 +1,5 @@
 import { cards_data, CARD_ART_HIDDEN_ON_LOAD } from "./main.js";
-import { updateDetailsDialog, DETAILS_DIALOG_A11Y, setCardRarity } from "./dialog.js";
+import { updateDetailsDialog, DETAILS_DIALOG_A11Y } from "./dialog.js";
 
 const CLOUD_NAME = "dazcxdgiy";
 const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
@@ -325,4 +325,23 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
     PAGINATION_BTNS.container.classList.add("hidden");
   }
   renderCards(cards, htmlLocation, true, true);
+}
+
+export function setCardRarity(folder){
+  let rarity;
+  switch(folder){
+    case "HoloRare":
+      rarity = "holo";
+      break;
+    case "UltraRare":
+      rarity = "ultra";
+      break;
+    case "SecretRare":
+      rarity = "secret";
+      break;
+    default:
+      rarity = "basic";
+      break;
+  }
+  return rarity;
 }

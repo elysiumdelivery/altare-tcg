@@ -85,7 +85,6 @@ async function main() {
         
         GACHA_BUTTON.onclick = (event) => 
           pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
-        await setupDetailsDialog();
         break;
 
       case "/collection.html":
