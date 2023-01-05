@@ -20,6 +20,7 @@ export async function setupDetailsDialog() {
   let dialogCard = DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0];
   dialogCard.addEventListener("animationend", function() {
     dialogCard.classList.remove("animated", "unclickable");
+    dialogCard.style.willChange = "auto";
   }, false);
   dialogCard.addEventListener("mouseover", animateCard);
   dialogCard.addEventListener("click", animateCard);
@@ -70,9 +71,11 @@ export function updateDetailsDialog(data, cardUrl) {
 }
 
 function animateCard(dialogCard){
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].style.willChange = "transform, filter, opacity, background-position";
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated", "unclickable");
 }
 function resetCardEffects(){
+  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].style.willChange = "auto";
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("holo", "basic", "secret", "rare", "ultra", "animated", "unclickable");
 }
 
