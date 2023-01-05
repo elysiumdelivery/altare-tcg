@@ -199,7 +199,7 @@ section#credits {
 
     nav a:not(#nav-home) {
         padding: 0.55rem 2.7rem;
-        transform-origin: 50% 100%;
+        transform-origin: 50% 0%;
         font-size: 0.6em;
     }
 
@@ -219,12 +219,12 @@ section#credits {
     }
 
     nav a:first-of-type {
-        transform-origin: 0 100%;
+        transform-origin: 0 0;
     }
 
     /* specifying #nav-credits here since the last element in the nav is not a tab */
     nav a#nav-credits {
-        transform-origin: 100% 100%;
+        transform-origin: 100% 0;
     }
     
     #close-nav-menu, nav hr {
