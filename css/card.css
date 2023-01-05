@@ -691,24 +691,24 @@ section#gacha-controls input {
 
 #gacha-controls .card-image.animated {
   transition: none;
-  animation: holoCard 3s ease 0s 1;
+  animation: holoCard 3s ease 0.5s 1;
 }
 #gacha-controls .card-image.animated:before {
   transition: none;
-  animation: holoGradient 3s ease 0s 1;
+  animation: holoGradient 3s ease 0.5s 1;
 }
 #gacha-controls .card-image.secret.animated:before {
   transition: none;
-  animation: holoSecretGradient 3s ease 0s 1;
+  animation: holoSecretGradient 3s ease 0.5s 1;
 }
 #gacha-controls .card-image.animated:after {
   transition: none;
-  animation: holoSparkle 3s ease 0s 1;
+  animation: holoSparkle 3s ease 0.5s 1;
 }
 
 #gacha-controls .card-image.secret.animated:after {
   transition: none;
-  animation: holoSecretSparkle 3s ease 0s 1;
+  animation: holoSecretSparkle 3s ease 0.5s 1;
 }
 
 /* for any additional text on the gacha page */

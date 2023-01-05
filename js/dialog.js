@@ -24,7 +24,6 @@ export async function setupDetailsDialog() {
 
   // animation reset
   DETAILS_DIALOG_A11Y.on('hide', function (element, event) {
-    console.log("ayo?");
     resetCardEffects();
   })
 }

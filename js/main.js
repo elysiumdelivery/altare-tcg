@@ -1,5 +1,5 @@
 //Happy Birthday Leader! 🎇💙
-import { GACHA_VIEW_SETTING, GACHA_SECTION, defineCardComponent, showCollection, addHover, removeHover } from "./cards.js";
+import { GACHA_VIEW_SETTING, defineCardComponent, showCollection, updateGachaView } from "./cards.js";
 import { setupDetailsDialog } from "./dialog.js";
 import { GACHA_BUTTON, pullAndRenderCards } from "./gacha.js";
 
@@ -21,7 +21,6 @@ export const CARD_ART_HIDDEN_ON_LOAD =
 //Holds the data of all cards after parsing the CSV file.
 export let cards_data = [];
 export let cards_by_rarity = {};
-export let gacha_display_selection;
 
 function getCSVData(callback = undefined) {
   Papa.parse(CSV_FILENAME, {
@@ -67,36 +66,23 @@ function toggleCollection(event) {
     toggle === "true" ? "Hide Full Collection" : "Show Full Collection";
 }
 
-function updateGachaView(e){
-  gacha_display_selection = e.target.value;
-  if(gacha_display_selection == "gacha-grid"){
-    // make this a grid
-    GACHA_SECTION.classList.add("grid-display");
-    GACHA_SECTION.classList.remove("pile-display");
-    addHover();
-  } else {
-    // make this a pile
-    GACHA_SECTION.classList.remove("grid-display");
-    GACHA_SECTION.classList.add("pile-display");
-    removeHover();
-  }
-}
-
 async function main() {
   await defineCardComponent();
   getCSVData(async (cards_data) => {
     switch (CURRENT_PAGE) {
       case "/gacha.html":
-
+        // watch for any selection changes - either grid or pile card display
         GACHA_VIEW_SETTING[0].addEventListener("change", updateGachaView);
         GACHA_VIEW_SETTING[1].addEventListener("change", updateGachaView);
 
+        // if the window is less than 800, default to a grid layout
+        // this checks the box and dispatches a change event
         if(window.innerWidth <= 800){
           const gridInput = document.getElementById("gacha-grid");
           gridInput.checked = true;
           gridInput.dispatchEvent(new Event('change'));
         }
-
+        
         GACHA_BUTTON.onclick = (event) => 
           pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
         await setupDetailsDialog();
