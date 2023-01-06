@@ -84,9 +84,9 @@ function sortAndFilterCards(cards_data, sort, reverse, fullCollection) {
 //in the same way you would use an if statement.
 function showOrHidePaginationControl(control, onclick, hide = false) {
   if (hide) {
-    control.classList.add("hidden");
+    control.classList.add("invisible");
   } else {
-    control.classList.remove("hidden");
+    control.classList.remove("invisible");
     control.onclick = onclick;
   }
 }
