@@ -105,8 +105,8 @@ section#credits {
 
 #close-nav-menu img {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 50%;
+    height: 50%;
     left: 25%;
     top: 25%;
 }
@@ -183,13 +183,43 @@ section#credits {
 
 @media only screen and (min-width: 1000px) {
     /* wide styling, for when the tabs are all visible on screen */
+    nav a#nav-home .icon.icon-logo {
+        position: relative;
+        bottom: 0;
+        margin-bottom: 0.5em;
+        margin-right: 0;
+        height: 5em;
+        width: 5em;
+        pointer-events: none;
+        transform: scale(1);
+        transition: 0.2s transform ease;
+    }
+    
+    nav a#nav-home:hover .icon.icon-logo {
+        transform: scale(1.25);
+        transition: 0.2s transform ease;
+    }    
+ 
+    nav a#nav-home:hover span {
+        visibility: visible;
+        opacity: 1;
+    }    
+    
     nav a#nav-home {
         flex-grow: 1;
     }
     
     nav a#nav-home span {
+        position: absolute;
+        width: 25%;
+        text-align: center;
+        padding: 0.5em;
+        border-radius: 0.25em;
+
         visibility: hidden;
-        width: 0;
+        opacity: 0;
+        transition: 0.5s opacity ease;
+        background-color: var(--accent-color);
     }
 
     nav a#nav-home img {

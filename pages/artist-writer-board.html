@@ -32,7 +32,7 @@
 
   <body>
     <main>
-      <h1>The Regis Altare Birthday Project 2023</h1>
+      <h1 id="title-header">The Regis Altare Birthday Project 2023</h1>
 
       <a href="#artist-writer-board" class="visually-hidden">Skip to content</a>
 
@@ -51,7 +51,9 @@
       <!-- Navigation -->
       <nav>
           <a id="nav-home" href="../index.html">
-            <img class="icon icon-logo" aria-hidden="true" src="../icons/Icons_Open-Packs.svg"/>
+            <object class="icon icon-logo" type="image/svg+xml" aria-hidden="true" data="../icons/Icons_Logo.svg">
+              <img src="../icons/Icons_Logo.svg" />
+            </object>
             <span>Home</span>
           </a>
           <a id="nav-gacha" href="../pages/gacha.html">
@@ -76,11 +78,7 @@
           </button>
       </nav>
 
-      <section id="artist-writer-board" role="feed" aria-busy="false" aria-labelledby="Artist & Writer Messages">
-        <article class="header-message" tabindex="0" aria-posinset="0" aria-setsize="100">
-          <h3>Happy Birthday, Leader!</h3>
-          <p>header message here?</p>
-        </article>
+      <section id="artist-writer-board">
       </section>
 
       <footer>
@@ -101,9 +99,9 @@
     </main>
 
     <!-- Javascript must be at end so it can access the loaded DOM -->
-    <script type="text/javascript" src="../js/a11y-dialog.min.js"></script>
     <script type="text/javascript" src="../js/papaparse.min.js"></script>
-    <script type="module" src="../js/main.js"></script>
+    <script type="text/javascript" src="../js/a11y-dialog.min.js"></script>
+    <script type="module" src="../js/messages.js"></script>
     <script src="../js/nav.js"></script>
   </body>
 </html>
