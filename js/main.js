@@ -1,5 +1,9 @@
 //Happy Birthday Leader! 🎇💙
-import { GACHA_VIEW_SETTING, defineCardComponent, updateGachaView } from "./cards.js";
+import {
+  GACHA_VIEW_SETTING,
+  defineCardComponent,
+  updateGachaView,
+} from "./cards.js";
 import { setupDetailsDialog } from "./dialog.js";
 import { GACHA_BUTTON, pullAndRenderCards } from "./gacha.js";
 import { showCollection } from "./collection.js";
@@ -60,29 +64,29 @@ function getCardsByRarity() {
 //Toggle whether to show the full collection or only owned cards in the collection page.
 function toggleCollection(event) {
   let toggle =
-    localStorage.getItem("fullCollection") === "true" ? "false" : "true";
-  localStorage.setItem("fullCollection", toggle);
+    localStorage.getItem("showFullCollection") === "true" ? "false" : "true";
+  localStorage.setItem("showFullCollection", toggle);
   showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
   FULL_COLLECTION_TOGGLE.textContent =
     toggle === "true" ? "Hide Full Collection" : "Show Full Collection";
 }
 
-function setupDropdown(dropdown, storage_key, default_value) {
+function setupDropdown(dropdown, storageKey, defaultValue) {
   dropdown.onchange = (event) => {
-    localStorage.setItem(storage_key, event.target.value);
+    localStorage.setItem(storageKey, event.target.value);
     showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
   };
-  dropdown.value = localStorage.getItem(storage_key) ?? default_value;
+  dropdown.value = localStorage.getItem(storageKey) ?? defaultValue;
 }
 
 function setupCollectionControls() {
   FULL_COLLECTION_TOGGLE.onclick = toggleCollection;
-  if (localStorage.getItem("fullCollection") === "true") {
+  if (localStorage.getItem("showFullCollection") === "true") {
     FULL_COLLECTION_TOGGLE.textContent = "Hide Full Collection";
   }
   RESET_COLLECTION.onclick = (event) => {
     localStorage.clear();
-    localStorage.setItem("fullCollection", "true");
+    localStorage.setItem("showFullCollection", "true");
     localStorage.setItem("sort", SORT_DROPDOWN.value);
     localStorage.setItem("page-size", CARDS_PER_PAGE_DROPDOWN.value);
     toggleCollection();
@@ -102,19 +106,19 @@ async function main() {
 
         // if the window is less than 800, default to a grid layout
         // this checks the box and dispatches a change event
-        if(window.innerWidth <= 800){
+        if (window.innerWidth <= 800) {
           const gridInput = document.getElementById("gacha-grid");
           gridInput.checked = true;
-          gridInput.dispatchEvent(new Event('change'));
+          gridInput.dispatchEvent(new Event("change"));
         }
         // Otherwise, default to pile and assign pile-display class by default
         else {
           const pileInput = document.getElementById("gacha-pile");
           pileInput.checked = true;
-          pileInput.dispatchEvent(new Event('change'));
+          pileInput.dispatchEvent(new Event("change"));
         }
 
-        GACHA_BUTTON.onclick = (event) => 
+        GACHA_BUTTON.onclick = (event) =>
           pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
         break;
 

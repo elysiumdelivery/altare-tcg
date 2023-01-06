@@ -91,16 +91,20 @@ function showOrHidePaginationControl(control, onclick, hide = false) {
   }
 }
 
-//If we will show more cards than the amount specified in cards_per_page,
-//then we split them into parts and show the pagination controls.
-//Note: If cards_per_page is set to "all", the comparison casts it to NaN, and as such it will always return false.
+//Splits the cards array into many pages, each with a maximum amount of "cards_per_page" cards,
+//and returns an array of the card data objects that belong in the specified page parameter.
+//Additionally, if the amount of total cards is bigger than cards_per_page,
+//wires and shows/hides the pagination controls accordingly.
 function paginateCards(cards, cards_per_page, page, navigationFunction) {
+  //Note: If cards_per_page is set to "all", this comparison casts it to NaN, and as such it will always return false.
   if (cards.length > cards_per_page) {
     PAGINATION_BTNS.container.classList.remove("hidden");
     PAGINATION_BTNS.current.textContent = `${page} of ${Math.ceil(
       cards.length / cards_per_page
     )}`;
     let lastCard = cards[cards.length - 1]["Collector Number"];
+
+    //This is where we get the cards that belong in the current page.
     cards = cards.slice(cards_per_page * (page - 1), cards_per_page * page);
 
     showOrHidePaginationControl(
@@ -124,7 +128,7 @@ function paginateCards(cards, cards_per_page, page, navigationFunction) {
 export function showCollection(cards_data, htmlLocation, page = 1) {
   let sort = localStorage.getItem("sort") ?? "Collector Number";
   let cards_per_page = localStorage.getItem("page-size") ?? 10;
-  let fullCollection = localStorage.getItem("fullCollection") === "true";
+  let fullCollection = localStorage.getItem("showFullCollection") === "true";
   let reverse = false;
   let ownedCount = 0;
   for (let rarity of RARITIES) {
