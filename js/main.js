@@ -107,8 +107,14 @@ async function main() {
           gridInput.checked = true;
           gridInput.dispatchEvent(new Event('change'));
         }
+        // Otherwise, default to pile and assign pile-display class by default
+        else {
+          const pileInput = document.getElementById("gacha-pile");
+          pileInput.checked = true;
+          pileInput.dispatchEvent(new Event('change'));
+        }
 
-        GACHA_BUTTON.onclick = (event) =>
+        GACHA_BUTTON.onclick = (event) => 
           pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
         break;
 

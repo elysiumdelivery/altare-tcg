@@ -14,7 +14,7 @@ tcg-card, .card-component, .card-front,
   display: inline-block;
 }
 tcg-card {
-  margin: 3%;
+  margin: 1vmin;
   perspective: 600px; /* for the card animation */
 }
 
@@ -22,13 +22,22 @@ tcg-card {
   --card-width: 400px; /* adjust the card size for the gacha page */
   --card-height: 559px; /* adjust the card size for the gacha page */
 }
-#gacha-controls #card-list {
+#gacha-controls #card-list,
+#collection-border #card-list {
+  position: relative;
   min-height: calc(var(--card-height) + 100px);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  row-gap: 2em;
+  column-gap: 1vmin;
 }
 #gacha-controls tcg-card {
   position: absolute;
   right:10%;
-  transition: all 0.3s ease; /* make any changes to this card flow, so it doesn't snap */
+  transition: transform 0.3s ease; /* make any changes to this card flow, so it doesn't snap */
 }
 tcg-card .card-subtitle {
   color:white;
@@ -104,7 +113,6 @@ tcg-card .card-subtitle {
 }
 
 .card-component {
-  will-change: transform;
   transform-style: preserve-3d;
   transition: box-shadow .4s ease;
   transform-origin: center;
@@ -156,12 +164,17 @@ tcg-card .card-subtitle {
 
 .dialog-title {
   grid-area: head;
+  /* center contents in grid cell */
   text-align: center;
+  align-self: center;
 }
 
 .details-dialog-card {
-  width: 300px;
   grid-area: card;
+  /* center contents in grid cell */
+  justify-self: center;
+  align-self: center;
+  height: 95%;
 }
 
 .details-dialog-text {
@@ -172,76 +185,36 @@ tcg-card .card-subtitle {
 
 .card-details-dialog-close {
   grid-area: x;
-  justify-self: end;
-}
-
-.card-details-dialog-close,
-#full-collection-toggle, #reset-collection, #sort-dropdown,
-#gacha-button {
-  background-color: var(--bg-color);
-  color:white;
-  border: 8px solid transparent;
-  max-height:37px;
-  border-radius: 5px;
-  font-size: 1em;
-  transition: background-color 0.3s ease;
-  width: 200px;
-  cursor: pointer;
-}
-
-#gacha-button {
-  margin-top:1em;
-  background-color: var(--accent-color);
-}
-
-#sort-dropdown {
-  text-align:center;
-  margin-left: 4px;
-}
-
-/* general button styling */
-.card-details-dialog-close:hover,
-#full-collection-toggle:hover, #reset-collection:hover, #sort-dropdown:hover {
-  background-color: var(--accent-color);
-}
-#gacha-button:hover {
-  background-color: var(--bg-color);
-}
-#sort-dropdown:active {
-  border-color:transparent;
-}
-section label {
-  padding-left: 15px;
-}
-section#gacha-controls label {
-  color:white;
-  padding-left:0px;
-}
-section#gacha-controls input {
-  margin-left:15px;
-}
-section#gacha-controls label,
-section#gacha-controls input {
-  cursor:pointer;
-}
-
-/* pagination styling */
-#collection-pagination {
-  margin-top: 10px;
-  text-align: center;
-}
-#collection-pagination a {
-  text-decoration:none;
-  color: var(--accent-color);
-  border-bottom: 2px solid transparent;
-  padding:0 10px
-}
-#collection-pagination a:hover {
-  border-bottom: 2px solid var(--bg-color);
+  position: absolute;
+  top: 0;
+  right: 1em;
 }
 
 .card-subtitle {
   user-select: text;
+}
+
+#sort-dropdown {
+  text-align: center;
+  margin-left: 4px;
+}
+
+section label {
+  padding-left: 15px;
+}
+
+#gacha-button {
+  margin-top: 1em;
+  background-color: var(--accent-color);
+}
+
+section#gacha-controls label {
+  color: white;
+  padding-left: 0px;
+}
+
+section#gacha-controls input {
+  margin-left: 15px;
 }
 
 #card-details-dialog {
@@ -250,7 +223,7 @@ section#gacha-controls input {
   transform: translateX(-50%); /* move backwards 50% of this element's width */
   position: fixed;
   box-sizing: border-box;
-  padding: 15px;
+  padding: 2em;
   border: 1px solid #000;
   border-radius: 10px;
   background-color: #fff;
@@ -258,12 +231,15 @@ section#gacha-controls input {
   width: 90%;
   z-index: 10; /* set to 10 so that it's greater than nav a.active's z-index and #dialog-overlay */
   display: grid;
+  grid-column-gap: 0.5em;
   grid-template-areas:
-    ".     x"
-    "head  head"
+    "card     x"
+    "card  head"
     "card  text"
     "card  text";
-  overflow-y: auto;
+  /* 0.2fr for close button */
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 0.2fr 0.5fr 1fr 1fr;
 }
 
 [role="dialog"][aria-hidden="true"] {
@@ -292,19 +268,28 @@ section#gacha-controls input {
 
   #card-details-dialog {
     grid-template-areas:
-      ".     x"
-      "head  head"
-      "text  text"
-      "card  card";
+      "x"
+      "head"
+      "card"
+      "text";
     overflow: auto;
-    justify-items: center;
+    grid-template-columns: 100%;
+    /* 3em for close button. fr unit doesn't seem to work when column is 1 */
+    grid-template-rows: 3em 0.5fr 1fr 1fr;
+  }
+
+  .details-dialog-card {
+    /* fill in container */
+    height: auto;
+    width: 100%;
   }
 
   .details-dialog-text {
     /* Override overflow: auto for small screens, and let whole dialog scroll instead of just the text section */
     overflow: visible;
+    /* ignore min-height */
     min-height: auto;
-    padding-bottom: 20px;
+    padding: 1em 2vmin;
   }
 
 }
@@ -333,11 +318,15 @@ section#gacha-controls input {
     /* make the card area smaller when the screen is small */
     min-height: calc(var(--card-height) * 2 + (6vh + 100px));
   }
+  #gacha-controls #card-list {
+    align-items: flex-start;
+  }
   #gacha-controls.pile-display tcg-card {
     /* center the cards instead of displaying them left/right */
+    position: absolute;
     left: 0;
     right: 0;
-    margin: 3% auto 0 auto;
+    margin: 1vmin auto 0 auto;
   }
   #gacha-controls.pile-display #card-list tcg-card.clicked {
     /* use alternative top-to-bottom animation when the card is clicked */
@@ -346,10 +335,11 @@ section#gacha-controls input {
   }
   @keyframes bottom {
     0% {
-      margin-top: 3%;
+      margin-top: 1vmin;
     }
     100% {
-      margin-top: calc(var(--card-height) + 3% + 100px);
+      /* 1vmin margin */
+      margin-top: calc(var(--card-height) + 1vmin + 100px);
     }
   }
 }
@@ -388,9 +378,8 @@ section#gacha-controls input {
   z-index: 10;
   touch-action: none;
   border-radius: 5%/3.5%;
-  box-shadow: -7px -7px 10px -5px transparent, 7px 7px 10px -5px transparent, 0 0 5px 0px rgba(255, 255, 255, 0), 0 55px 35px -20px rgba(0, 0, 0, 0.5);
-  transition: transform 0.5s ease, box-shadow 0.2s ease;
-  will-change: transform, filter;
+  box-shadow: 0 55px 35px -10px rgb(0 0 0 / 50%);
+  transition: transform 0.5s ease;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -399,10 +388,13 @@ section#gacha-controls input {
   transform: translate3d(0.1px, 0.1px, 0.1px);
 }
 #gacha-controls .card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
   box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
 }
 #gacha-controls .card-image, #gacha-controls .card-image:before, #gacha-controls .card-image:after {
-  transition: all 0.5s ease;
+  transition: transform 0.5s ease, filter 0.5s ease;
 }
 
 .details-dialog-card {
@@ -412,7 +404,7 @@ section#gacha-controls input {
 }
 
 #gacha-controls .card-image {
-  margin:auto;
+  margin:0;
 }
 
 @media screen and (max-width: 600px) {
@@ -458,7 +450,7 @@ section#gacha-controls input {
   background-repeat: no-repeat;
   opacity: 0;
   mix-blend-mode: color-dodge;
-  transition: all 0.33s ease;
+  transition: transform 0.33s ease, filter 0.33s ease, background 0.33s ease;
   border-radius: var(--border-radius);
 }
 
@@ -486,7 +478,7 @@ section#gacha-controls input {
   background-blend-mode: overlay;
   z-index: 2;
   filter: brightness(1) contrast(1);
-  transition: all 0.33s ease;
+  transition: filter 0.33s ease;
   mix-blend-mode: color-dodge;
 }
 
@@ -541,12 +533,10 @@ section#gacha-controls input {
 /* animations specific to the dialog will take 12 seconds and be slower */
 
 .details-dialog-card.animated {
-  will-change: transform;
   transition: none;
   animation: holoCard 12s ease 0s 1;
 }
 .details-dialog-card.animated:before {
-  will-change: opacity, background-position, filter;
   transition: none;
   animation: holoGradient 12s ease 0s 1;
 }
@@ -554,7 +544,6 @@ section#gacha-controls input {
   animation: holoSecretGradient 12s ease 0s 1;
 }
 .details-dialog-card.animated:after {
-  will-change: opacity, background-position, filter;
   transition: none;
   animation: holoSparkle 12s ease 0s 1;
 }

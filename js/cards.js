@@ -68,6 +68,8 @@ export async function defineCardComponent() {
       // Start the animation and update the z-index when the animation starts
       // This is to stack any opened cards in the reverse order
       this.addEventListener("animationstart", updateZIndex);
+      // animation optimization: inform browser that we are changing the following properties
+      this.image.style.willChange = "transform, filter, opacity, background-position";
       this.image.classList.add("opened");
       this.image.classList.add("animated");
 
@@ -105,6 +107,8 @@ export async function defineCardComponent() {
 }
 
 function addAnimation(e){
+  // animation optimization: inform browser that we are changing the following properties
+  e.target.style.willChange = "transform, filter, opacity, background-position";
   // apply the animated class to start the CSS animation
   e.target.classList.add("animated");
 }
@@ -119,6 +123,7 @@ function setupHover(){
   for (let i = 0; i < cardList.length; i++) {
     cardList[i].addEventListener("animationend", function(){
       cardList[i].classList.remove("animated");
+      cardList[i].style.willChange = "auto";
     })
     cardList[i].addEventListener("mouseover", addAnimation);
     cardList[i].addEventListener("click", addAnimation);
