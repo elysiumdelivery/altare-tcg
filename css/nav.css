@@ -1,234 +1,235 @@
 /* nav styling goes here */
 nav {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 nav hr {
-    width: 30%;
-    margin: 1em 0;
+  width: 30%;
+  margin: 1em 0;
 }
 
 nav a {
-    position: relative;
+  position: relative;
 
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
-    text-decoration: none;
-    font-size: 0.8em;
+  text-decoration: none;
+  font-size: 0.8em;
 
-    color: white;
+  color: white;
 }
 
 nav a:not(#nav-home):hover:not(.active)::before {
-    background: grey;
+  background: grey;
 }
 
 nav a.active {
-    transform: scale(1.1);
-    z-index: 1;
+  transform: scale(1.1);
+  z-index: 1;
 }
 
 nav a .icon {
-    position: relative;
-    width: 2em;
-    height: 2em;
-    margin-right: 0.5em;
+  position: relative;
+  width: 2em;
+  height: 2em;
+  margin-right: 0.5em;
 }
 
 nav a#nav-gacha::before,
 section#gacha-controls {
-    background-color: #3B47B3;
+  background-color: #3b47b3;
 }
 
 nav a#nav-collection::before,
 section#card-list,
 section#collection-border {
-    background-color: #5F7BC5;
+  background-color: #5f7bc5;
 }
 
 nav a#nav-artist-writer-board::before,
 section#artist-writer-board {
-    background-color: #4C5678;
+  background-color: #4c5678;
 }
 
 nav a#nav-message-board::before,
 section#message-board {
-    background-color: #485EB3;
+  background-color: #485eb3;
 }
 
 nav a#nav-credits::before,
 section#credits {
-    background-color: #2852B3;
+  background-color: #2852b3;
 }
 
 #nav-hamburger {
-    position: relative;
-    top: 0;
-    right: 0;
-    height: 4em;
-    width: 4em;
-    background: rgb(59 71 179);
-    margin: 1em 0;
-    margin-left: auto;
-    border: 0;
-    cursor: pointer;
+  position: relative;
+  top: 0;
+  right: 0;
+  height: 4em;
+  width: 4em;
+  background: rgb(59 71 179);
+  margin: 1em 0;
+  margin-left: auto;
+  border: 0;
+  cursor: pointer;
 
-    display: none;
+  display: none;
 }
 
 #nav-hamburger img {
-    position: absolute;
-    top: 25%;
-    left: 25%;
-    width: 50%;
-    height: 50%;
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
 }
 
 #close-nav-menu {
-    position: relative;
-    width: 2em;
-    height: 2em;
-    padding: 0;
-    margin-top: 1em;
-    border-radius: 50%;
-    background: transparent;
-    border: 2px solid white;
-    
-    cursor: pointer;
+  position: relative;
+  width: 2em;
+  height: 2em;
+  padding: 0;
+  margin-top: 1em;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid white;
+
+  cursor: pointer;
 }
 
 #close-nav-menu img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 25%;
-    top: 25%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 25%;
+  top: 25%;
 }
 
 @media only screen and (max-width: 1000px) {
-    /* portrait / small width styling, show burger menu */
-    #nav-hamburger {
-        display: block;
-    }
+  /* portrait / small width styling, show burger menu */
+  #nav-hamburger {
+    display: block;
+  }
 
-    nav {
-        position: absolute;
-        top: 0;
-        right: 0;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100vw;
-        height: 100vh;
-        z-index: 999;
+  nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
 
-        background-color: rgb(59 71 179 / 80%);
+    background-color: rgb(59 71 179 / 80%);
 
-        visibility: hidden;
-        transition: 0.25s opacity ease;
-        opacity: 0;
+    visibility: hidden;
+    transition: 0.25s opacity ease;
+    opacity: 0;
 
-        pointer-events: none;
-    }
+    pointer-events: none;
+  }
 
-    nav > * {
-        transition: 0.5s transform ease, 0.5s opacity ease;
-        transform: translateY(-2em);
-        opacity: 0;
-    }
+  nav > * {
+    transition: 0.5s transform ease, 0.5s opacity ease;
+    transform: translateY(-2em);
+    opacity: 0;
+  }
 
-    nav a {
-        background-color: transparent !important;
-        padding: 0.5em 0;
-        margin: 0.5em 0;
-    }
+  nav a {
+    background-color: transparent !important;
+    padding: 0.5em 0;
+    margin: 0.5em 0;
+  }
 
-    nav a.active {
-        transform: translateY(-50%) scale(1.1);
-        border-bottom: 3px solid white;
-        border-bottom-style: double;
-    }
+  nav a.active {
+    transform: translateY(-50%) scale(1.1);
+    border-bottom: 3px solid white;
+    border-bottom-style: double;
+  }
 
-    nav a:hover:not(.active),
-    nav button:hover:not(.active) {
-        transition-duration: 0.25s;
-        transform: scale(1.1);
-    }
+  nav a:hover:not(.active),
+  nav button:hover:not(.active) {
+    transition-duration: 0.25s;
+    transform: scale(1.1);
+  }
 
-    nav.active {
-        visibility: visible;
-    }
+  nav.active {
+    visibility: visible;
+  }
 
-    nav.open {
-        opacity: 1;
-        pointer-events: auto;
-    }
+  nav.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-    nav.open > * {
-        transform: translateY(0%);
-        opacity: 1;
-    }
+  nav.open > * {
+    transform: translateY(0%);
+    opacity: 1;
+  }
 
-    nav.open a.active {
-        transform: translateY(0%) scale(1.1);
-        opacity: 1;
-    }
+  nav.open a.active {
+    transform: translateY(0%) scale(1.1);
+    opacity: 1;
+  }
 }
 
 @media only screen and (min-width: 1000px) {
-    /* wide styling, for when the tabs are all visible on screen */
-    nav a#nav-home {
-        flex-grow: 1;
-    }
-    
-    nav a#nav-home span {
-        visibility: hidden;
-        width: 0;
-    }
+  /* wide styling, for when the tabs are all visible on screen */
+  nav a#nav-home {
+    flex-grow: 1;
+  }
 
-    nav a#nav-home img {
-        width: 5em;
-        height: 5em;
-        margin-bottom: 0.5em;
-    }
+  nav a#nav-home span {
+    visibility: hidden;
+    width: 0;
+  }
 
-    nav a:not(#nav-home) {
-        padding: 0.55rem 2.7rem;
-        transform-origin: 50% 100%;
-        font-size: 0.6em;
-    }
+  nav a#nav-home img {
+    width: 5em;
+    height: 5em;
+    margin-bottom: 0.5em;
+  }
 
-    nav a:not(#nav-home).active {
-        font-size: 0.75em;
-    }
+  nav a:not(#nav-home) {
+    padding: 0.55rem 2.7rem;
+    transform-origin: 50% 100%;
+    font-size: 0.6em;
+  }
 
-    /* Setting tab styling to ::before so we can display tab outline w/ keyboard */
-    nav a:not(#nav-home)::before {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        clip-path: url(#navClip);
+  nav a:not(#nav-home).active {
+    font-size: 0.75em;
+  }
 
-        z-index: -1; /* render underneath text */
-    }
+  /* Setting tab styling to ::before so we can display tab outline w/ keyboard */
+  nav a:not(#nav-home)::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip-path: url(#navClip);
 
-    nav a:first-of-type {
-        transform-origin: 0 100%;
-    }
+    z-index: -1; /* render underneath text */
+  }
 
-    /* specifying #nav-credits here since the last element in the nav is not a tab */
-    nav a#nav-credits {
-        transform-origin: 100% 100%;
-    }
-    
-    #close-nav-menu, nav hr {
-        display: none;
-    }
+  nav a:first-of-type {
+    transform-origin: 0 100%;
+  }
+
+  /* specifying #nav-credits here since the last element in the nav is not a tab */
+  nav a#nav-credits {
+    transform-origin: 100% 100%;
+  }
+
+  #close-nav-menu,
+  nav hr {
+    display: none;
+  }
 }

@@ -7,7 +7,9 @@ const HIGHEST_Z_INDEX = 10;
 let card_z_index = HIGHEST_Z_INDEX;
 let gacha_display_selection;
 
-export const GACHA_VIEW_SETTING = document.querySelectorAll('input[name="gacha-display"]');
+export const GACHA_VIEW_SETTING = document.querySelectorAll(
+  'input[name="gacha-display"]'
+);
 export const GACHA_SECTION = document.getElementById("gacha-controls");
 
 //Custom Card component. Use it like this:
@@ -69,12 +71,13 @@ export async function defineCardComponent() {
       // This is to stack any opened cards in the reverse order
       this.addEventListener("animationstart", updateZIndex);
       // animation optimization: inform browser that we are changing the following properties
-      this.image.style.willChange = "transform, filter, opacity, background-position";
+      this.image.style.willChange =
+        "transform, filter, opacity, background-position";
       this.image.classList.add("opened");
       this.image.classList.add("animated");
 
       // remove the previous hover effects only if the gacha is not displayed as a grid
-      if(gacha_display_selection !== "gacha-grid"){
+      if (gacha_display_selection !== "gacha-grid") {
         this.addEventListener("animationend", addUnclickableToCardsExceptLast);
       }
     }
@@ -83,7 +86,7 @@ export async function defineCardComponent() {
     setupOnClickEvents() {
       this.back.onclick = (event) => this.flipCard();
       // if not gacha it will show the extra card information
-      if(!CARD_ART_HIDDEN_ON_LOAD){
+      if (!CARD_ART_HIDDEN_ON_LOAD) {
         this.front.onclick = (event) => this.showDetails();
       }
     }
@@ -106,32 +109,32 @@ export async function defineCardComponent() {
   customElements.define("tcg-card", Card);
 }
 
-function addAnimation(e){
+function addAnimation(e) {
   // animation optimization: inform browser that we are changing the following properties
   e.target.style.willChange = "transform, filter, opacity, background-position";
   // apply the animated class to start the CSS animation
   e.target.classList.add("animated");
 }
-function updateZIndex(e){
-    e.target.style.zIndex = card_z_index;
-    // we don't want this to update again when reanimating later
-    e.target.removeEventListener("animationstart", updateZIndex);
+function updateZIndex(e) {
+  e.target.style.zIndex = card_z_index;
+  // we don't want this to update again when reanimating later
+  e.target.removeEventListener("animationstart", updateZIndex);
 }
-function setupHover(){
+function setupHover() {
   // setup the initial event listeners for all cards
   let cardList = document.getElementsByClassName("card-image");
   for (let i = 0; i < cardList.length; i++) {
-    cardList[i].addEventListener("animationend", function(){
+    cardList[i].addEventListener("animationend", function () {
       cardList[i].classList.remove("animated");
       cardList[i].style.willChange = "auto";
-    })
+    });
     cardList[i].addEventListener("mouseover", addAnimation);
     cardList[i].addEventListener("click", addAnimation);
   }
 }
-export function updateGachaView(e){
+export function updateGachaView(e) {
   gacha_display_selection = e.target.value;
-  if(gacha_display_selection == "gacha-grid"){
+  if (gacha_display_selection == "gacha-grid") {
     // make this a grid
     GACHA_SECTION.classList.add("grid-display");
     GACHA_SECTION.classList.remove("pile-display");
@@ -145,7 +148,7 @@ export function updateGachaView(e){
     addUnclickableToCardsExceptLast();
   }
 }
-export function removeUnclickableFromCards(){
+export function removeUnclickableFromCards() {
   // remove any unclickable classes from all the opened cards, so all can be interacted with
   // this is only used when changing the card from a grid to a pile layout
   let clickedCard = document.getElementsByClassName("opened");
@@ -153,10 +156,9 @@ export function removeUnclickableFromCards(){
     clickedCard[i].classList.remove("unclickable");
   }
 }
-export function addUnclickableToCardsExceptLast(){
+export function addUnclickableToCardsExceptLast() {
   // check the current format is not grid
-  if(gacha_display_selection !== "gacha-grid"){
-
+  if (gacha_display_selection !== "gacha-grid") {
     // this is the parent card container
     let allFlippedCards = document.getElementsByClassName("clicked");
     // this is the specific child the animation is applied to
@@ -166,13 +168,12 @@ export function addUnclickableToCardsExceptLast(){
       let z = window.getComputedStyle(allFlippedCards[i]).zIndex;
       // the card with the matching z-index is the most recently flipped card at the top of the pile - this should still animate so won't have the unclickable class
       // while the unmatching ones are beneath the most recently flipped card, so should have any unclickable class removed
-      if(parseInt(z) !== card_z_index){
+      if (parseInt(z) !== card_z_index) {
         clickedCard[i].classList.add("unclickable");
       } else {
         clickedCard[i].classList.remove("unclickable");
       }
     }
-
   }
 }
 
@@ -200,9 +201,9 @@ export function renderCards(
   setupHover();
 }
 
-export function setCardRarity(folder){
+export function setCardRarity(folder) {
   let rarity;
-  switch(folder){
+  switch (folder) {
     case "HoloRare":
       rarity = "holo";
       break;

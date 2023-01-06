@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta
       name="description"
-      content="Regis Altare themed booster pack opening game. Open packs and collect all the cards online in this free web app."
+      content="Regis Altare themed booster pack opening simulator. Collect all the cards online in this free web game!"
     />
     <meta
       name="keywords"
@@ -14,15 +14,22 @@
     <meta name="twitter:title" content="Regis Altare Booster Pack Simulator" />
     <meta
       name="twitter:description"
-      content="Regis Altare themed booster pack opening game. Open packs and collect all the cards online in this free web app."
+      content="Regis Altare themed booster pack opening simulator. Collect all the cards online in this free web game!"
     />
     <!-- Enables media queries on mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap" rel="stylesheet">
-    <style> @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap'); </style>
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap");
+    </style>
+
     <!-- CSS-->
     <link type="text/css" rel="stylesheet" href="../css/main.css" />
     <link type="text/css" rel="stylesheet" href="../css/nav.css" />
@@ -38,46 +45,88 @@
 
       <!-- Inverted border radius for clip-path -->
       <svg width="0" height="0" aria-hidden="true">
-          <clipPath id="navClip" clipPathUnits="objectBoundingBox">
-              <path transform="scale(0.004388274530454626, 0.019230769230769232)" d="M173.88,0H54C38,0,45,21,0,52H227.88C182.88,21,189.88,0,173.88,0Z"/>
-          </clipPath>
+        <clipPath id="navClip" clipPathUnits="objectBoundingBox">
+          <path
+            transform="scale(0.004388274530454626, 0.019230769230769232)"
+            d="M173.88,0H54C38,0,45,21,0,52H227.88C182.88,21,189.88,0,173.88,0Z"
+          />
+        </clipPath>
       </svg>
 
       <!-- Burger menu for responsive layout -->
       <button id="nav-hamburger" aria-label="Toggle site navigation">
-          <img class="icon icon-menu" aria-hidden="true" src="../icons/Icons_Hamburger.svg"/>
+        <img
+          class="icon icon-menu"
+          aria-hidden="true"
+          src="../icons/Icons_Hamburger.svg"
+        />
       </button>
 
       <!-- Navigation -->
       <nav>
         <a id="nav-home" href="../index.html">
-                <img class="icon icon-logo" aria-hidden="true" src="../icons/Icons_Open-Packs.svg"/>
-                <span>Home</span>
-          </a>
-          <a id="nav-gacha" href="../pages/gacha.html">
-              <img class="icon icon-gacha" aria-hidden="true" src="../icons/Icons_Open-Packs.svg"/>
-              Gacha</a>
-          <a id="nav-collection" href="../pages/collection.html">
-              <img class="icon icon-collection" aria-hidden="true" src="../icons/Icons_Collection.svg"> 
-              Collection</a>
-          <a id="nav-artist-writer-board" href="../pages/artist-writer-board.html">
-              <img class="icon icon-artist-writer" aria-hidden="true" src="../icons/Icons_Message.svg"/>
-              Artist & Writer Messages</a>
-          <a id="nav-message-board" href="../pages/message-board.html">
-              <img class="icon icon-message-board" aria-hidden="true" src="../icons/Icons_Board.svg"/>
-              Message Board</a>
-          <a id="nav-credits" class="active" href="../pages/credits.html">
-              <img class="icon icon-credits" aria-hidden="true" src="../icons/Icons_Credits.svg"/>
-              Credits</a>
-          <!-- Menu-only elements -->
-          <hr aria-hidden="true"/>
-          <button id="close-nav-menu" aria-label="Close menu">
-              <img class="icon icon-close" aria-hidden="true" src="../icons/Icons_Close.svg"/>
-          </button>
+          <img
+            class="icon icon-logo"
+            aria-hidden="true"
+            src="../icons/Icons_Open-Packs.svg"
+          />
+          <span>Home</span>
+        </a>
+        <a id="nav-gacha" href="../pages/gacha.html">
+          <img
+            class="icon icon-gacha"
+            aria-hidden="true"
+            src="../icons/Icons_Open-Packs.svg"
+          />
+          Gacha</a
+        >
+        <a id="nav-collection" href="../pages/collection.html">
+          <img
+            class="icon icon-collection"
+            aria-hidden="true"
+            src="../icons/Icons_Collection.svg"
+          />
+          Collection</a
+        >
+        <a
+          id="nav-artist-writer-board"
+          href="../pages/artist-writer-board.html"
+        >
+          <img
+            class="icon icon-artist-writer"
+            aria-hidden="true"
+            src="../icons/Icons_Message.svg"
+          />
+          Artist & Writer Messages</a
+        >
+        <a id="nav-message-board" href="../pages/message-board.html">
+          <img
+            class="icon icon-message-board"
+            aria-hidden="true"
+            src="../icons/Icons_Board.svg"
+          />
+          Message Board</a
+        >
+        <a id="nav-credits" class="active" href="../pages/credits.html">
+          <img
+            class="icon icon-credits"
+            aria-hidden="true"
+            src="../icons/Icons_Credits.svg"
+          />
+          Credits</a
+        >
+        <!-- Menu-only elements -->
+        <hr aria-hidden="true" />
+        <button id="close-nav-menu" aria-label="Close menu">
+          <img
+            class="icon icon-close"
+            aria-hidden="true"
+            src="../icons/Icons_Close.svg"
+          />
+        </button>
       </nav>
 
-      <section id="credits">
-      </section>
+      <section id="credits"></section>
 
       <footer>
         <a href="https://github.com/elysiumdelivery/altare-tcg"
