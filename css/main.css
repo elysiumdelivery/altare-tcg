@@ -4,7 +4,7 @@
 
 :root {
   --accent-color: #54acdc;
-  --bg-color: #1D346D;
+  --bg-color: #1d346d;
 }
 
 html {
@@ -13,7 +13,7 @@ html {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   height: 100%;
 }
 
@@ -52,7 +52,8 @@ footer svg {
   width: 1em;
 }
 
-button:not(.card-front):not(.card-back), select {
+button:not(.card-front):not(.card-back),
+select {
   background-color: var(--bg-color);
   color: white;
   border: 8px solid transparent;
