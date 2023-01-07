@@ -109,13 +109,13 @@ tcg-card {
   animation: left 1s ease 0s 1;
   animation-fill-mode: forwards;
 }
-#gacha-controls tcg-card.clicked:nth-child(3n + 1) {
+#gacha-controls.pile-display tcg-card.clicked:nth-child(3n + 1) {
   --rotation: -3deg;
 }
-#gacha-controls tcg-card.clicked:nth-child(3n + 2) {
+#gacha-controls.pile-display tcg-card.clicked:nth-child(3n + 2) {
   --rotation: 5deg;
 }
-#gacha-controls tcg-card.clicked:nth-child(3n + 3) {
+#gacha-controls.pile-display tcg-card.clicked:nth-child(3n + 3) {
   --rotation: 0deg;
 }
 

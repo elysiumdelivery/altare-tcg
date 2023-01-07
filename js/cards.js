@@ -54,17 +54,23 @@ export async function defineCardComponent() {
       // The back of the card is automatically hidden for the collections page
       // We have to reset it for the gacha so that it can be clicked on
       this.back.classList.remove("hidden");
-      // Prevent the front from being tabbed on, so that you don't need to tab twice per card
+      // With card back shown, make card front inaccessible, just like it is for mouse users
       this.front.tabIndex = "-1";
+      this.front.setAttribute("aria-hidden", "true");
     }
 
     flipCard() {
       // update the next value for the zIndex
       card_z_index++;
 
-      // register this as a clicked card, and add the class to animate to flip over
+      // register as a clicked card, add class to animate flip-over, and make card front accessible again
       this.classList.add("clicked");
       this.holder.classList.add("flip");
+      this.front.removeAttribute("tabindex");
+      this.front.removeAttribute("aria-hidden");
+      this.front.setAttribute("aria-label", this.getSubtitleText());
+      this.back.tabIndex = "-1";
+      this.back.setAttribute("aria-hidden", "true");
 
       // Start the animation and update the z-index when the animation starts
       // This is to stack any opened cards in the reverse order
@@ -188,6 +194,8 @@ export function removeUnclickableFromCards() {
   let clickedCard = document.getElementsByClassName("opened");
   for (let i = 0; i < clickedCard.length; i++) {
     clickedCard[i].classList.remove("unclickable");
+    clickedCard[i].parentElement.removeAttribute("tabindex");
+    clickedCard[i].parentElement.removeAttribute("aria-hidden");
   }
 }
 export function addUnclickableToCardsExceptLast() {
@@ -204,6 +212,8 @@ export function addUnclickableToCardsExceptLast() {
       // while the unmatching ones are beneath the most recently flipped card, so should have any unclickable class removed
       if (parseInt(z) !== card_z_index) {
         clickedCard[i].classList.add("unclickable");
+        clickedCard[i].parentElement.tabIndex = "-1";
+        clickedCard[i].parentElement.setAttribute("aria-hidden", "true");
       } else {
         clickedCard[i].classList.remove("unclickable");
       }

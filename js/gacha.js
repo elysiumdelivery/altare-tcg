@@ -148,6 +148,10 @@ function getRandomCards(cards, n) {
 export function pullAndRenderCards(render_location) {
   let pulled = pullCards(slots);
   renderCards(pulled, render_location, true);
+  render_location.insertAdjacentHTML(
+    "beforeend",
+    `<span class="visually-hidden">No more cards in this pack</span>`
+  );
 }
 
 //Debug function to get the average rates for each rarity over a list of pulls.
