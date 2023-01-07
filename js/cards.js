@@ -31,6 +31,7 @@ export async function defineCardComponent() {
       this.innerHTML = html;
       this.holder = this.getElementsByClassName("card-component")[0];
       this.front = this.getElementsByClassName("card-front")[0];
+      this.front.setAttribute("aria-label", this.getSubtitleText());
       this.back = this.getElementsByClassName("card-back")[0];
       this.image = this.getElementsByClassName("card-image")[0];
       this.image.style.backgroundImage = 'url("' + this.getImageURL() + '")';
@@ -68,7 +69,6 @@ export async function defineCardComponent() {
       this.holder.classList.add("flip");
       this.front.removeAttribute("tabindex");
       this.front.removeAttribute("aria-hidden");
-      this.front.setAttribute("aria-label", this.getSubtitleText());
       this.back.tabIndex = "-1";
       this.back.setAttribute("aria-hidden", "true");
 
@@ -114,9 +114,10 @@ export async function defineCardComponent() {
     }
 
     addCardSubtitle() {
+      // aria-hidden since the card has its own aria-label handling
       this.insertAdjacentHTML(
         "beforeend",
-        `<span class="card-subtitle">${this.getSubtitleText()}</span>`
+        `<span aria-hidden="true" class="card-subtitle">${this.getSubtitleText()}</span>`
       );
     }
   }
