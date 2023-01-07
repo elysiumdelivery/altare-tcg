@@ -4,7 +4,9 @@
 
 :root {
   --accent-color: #54acdc;
+  --accent-color-lighten-50: #a9d5ed;
   --bg-color: #1D346D;
+  --bg-color-lighten-50: #6c8bd7;
 }
 
 html {
@@ -68,7 +70,9 @@ button:not(.card-front):not(.card-back), select {
 }
 
 button:not(.card-front):not(.card-back):hover,
-select:hover {
+select:hover,
+button:not(.card-front):not(.card-back):focus-visible,
+select:focus-visible {
   background-color: var(--accent-color);
 }
 
@@ -113,18 +117,25 @@ select:hover {
   display: none;
 }
 
-section#artist-writer-board {
+section#artist-writer-board ul {
   column-count: 2;
   column-gap: 0.5em;
   column-gap: 1em;
+  margin: 0;
+  padding: 0;
 }
 
-article.header-message {
+section#artist-writer-board ul li {
+  list-style: none;
+  display: block;
+}
+
+section#artist-writer-board .header-message {
   column-span: all;
   text-align: center;
   margin-bottom: 1em;
 }
-article.artist-writer-message {
+section#artist-writer-board .artist-writer-message {
   padding: 1.5em;
   background: white;
   border-top-left-radius: 0.5em;
@@ -135,13 +146,21 @@ article.artist-writer-message {
   break-inside: avoid;
 }
 
-article.artist-writer-message h4,
-article.artist-writer-message h5 {
+section#artist-writer-board .artist-writer-message h2,
+section#artist-writer-board .artist-writer-message h3 {
   margin-top: 0;
   margin-bottom: 0.5em;
 }
 
-@media only screen and (max-width: 600px) {
+section#artist-writer-board .artist-writer-message h2 {
+  font-size: 1em;
+}
+
+section#artist-writer-board .artist-writer-message h3 {
+  font-size: 0.8em;
+}
+
+@media only screen and (max-width: 800px) {
   /* mobile / portrait styling */
 
   section#artist-writer-board {
@@ -149,7 +168,7 @@ article.artist-writer-message h5 {
   }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
   /* desktop / wide styling */
   main {
     margin: 1em;

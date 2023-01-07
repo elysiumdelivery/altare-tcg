@@ -14,22 +14,30 @@ function getCSVData(callback = undefined) {
   }
 
 function renderMessages () {
-    let messageContainer = document.getElementById("artist-writer-board");
+    let messageContainer = document.getElementById("artist-writer-messages");
     for (var i = 1; i < 100; i++) {
-      let messageNode = document.createElement("article");
+      let messageNode = document.createElement("li");
+      let messageArticle = document.createElement("article");
       // TODO: Dummy data for now. Alternate roles for now as a test. This should be pulled from a csv somewhere.
       let userRole = i % 2 === 0 ? "Artist" : "Writer";
       let userSocial = `user_social_${i}`;
-      let h5String = [userRole, userSocial].join(" | ");
-      messageNode.ariaPosInSet = i;
-      messageNode.ariaSetSize = 100;
+      let h3String = [userRole, userSocial].join(" | ");
       messageNode.tabIndex = 0;
-      messageNode.classList.add("artist-writer-message");
-      messageNode.innerHTML = `
-        <h4>user_name_${i}</h4>
-        <h5>${h5String}</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus cras adipiscing enim eu turpis egestas. Blandit massa enim nec dui nunc mattis enim ut tellus. Cursus euismod quis viverra nibh cras. Porttitor massa id neque aliquam vestibulum morbi blandit cursus.</p>
-      `;
+      messageArticle.tabIndex = 0;
+      messageArticle.classList.add("artist-writer-message");
+      let messageUserHeader = document.createElement("h2");
+      let messageUserInfo = document.createElement("h3");
+      let messageUserMessage = document.createElement("p");
+      
+      messageUserHeader.innerText = `user_name_${i}`;
+      messageUserInfo.innerText = h3String;
+      messageUserMessage.innerText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus cras adipiscing enim eu turpis egestas. Blandit massa enim nec dui nunc mattis enim ut tellus. Cursus euismod quis viverra nibh cras. Porttitor massa id neque aliquam vestibulum morbi blandit cursus.`;
+      
+      messageArticle.appendChild(messageUserHeader);
+      messageArticle.appendChild(messageUserInfo);
+      messageArticle.appendChild(messageUserMessage);
+    
+      messageNode.appendChild(messageArticle);
       messageContainer.appendChild(messageNode);
     }
 }
