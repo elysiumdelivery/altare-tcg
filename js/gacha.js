@@ -145,7 +145,7 @@ function getRandomCards(cards, n) {
 }
 
 //Pulls cards from the cards_data array and renders them in render_location.
-export function pullAndRenderCards(cards_data, render_location) {
+export function pullAndRenderCards(render_location) {
   let pulled = pullCards(slots);
   renderCards(pulled, render_location, true);
 }

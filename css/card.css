@@ -43,8 +43,13 @@ tcg-card {
   right: 10%;
   transition: transform 0.3s ease; /* make any changes to this card flow, so it doesn't snap */
 }
-tcg-card .card-subtitle {
+.card-subtitle {
   color: white;
+  user-select: text;
+}
+#pile-pull-announcement {
+  margin: 0;
+  text-align: center;
 }
 
 /* rotate card differently depending on its position in the pile */
@@ -221,10 +226,6 @@ tcg-card .card-subtitle {
   right: 1em;
 }
 
-.card-subtitle {
-  user-select: text;
-}
-
 #sort-dropdown {
   text-align: center;
   margin-left: 4px;
@@ -235,7 +236,7 @@ section label {
 }
 
 #gacha-button {
-  margin-top: 1em;
+  margin-bottom: 1em;
   background-color: var(--accent-color);
 }
 

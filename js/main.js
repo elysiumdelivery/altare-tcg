@@ -119,7 +119,7 @@ async function main() {
         }
 
         GACHA_BUTTON.onclick = (event) =>
-          pullAndRenderCards(cards_data, COLLECTIONS_MAIN_CONTENT);
+          pullAndRenderCards(COLLECTIONS_MAIN_CONTENT);
         break;
 
       case "/collection.html":

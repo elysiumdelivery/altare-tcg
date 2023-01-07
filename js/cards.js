@@ -32,16 +32,15 @@ export async function defineCardComponent() {
       this.holder = this.getElementsByClassName("card-component")[0];
       this.front = this.getElementsByClassName("card-front")[0];
       this.back = this.getElementsByClassName("card-back")[0];
-      this.info = this.getElementsByClassName("card-info")[0];
       this.image = this.getElementsByClassName("card-image")[0];
       this.image.style.backgroundImage = 'url("' + this.getImageURL() + '")';
       this.image.classList.add(setCardRarity(this.data["Rarity Folder"]));
+      this.addCardSubtitle();
+      this.subtitle = this.getElementsByClassName("card-subtitle")[0];
       this.setupOnClickEvents();
       if (CARD_ART_HIDDEN_ON_LOAD) {
         this.setupCardForGacha();
-      }
-      if (this.getAttribute("show_title") === "true") {
-        this.showSubtitle();
+        this.subtitle.classList.add("hidden");
       }
     }
 
@@ -79,6 +78,12 @@ export async function defineCardComponent() {
       // remove the previous hover effects only if the gacha is not displayed as a grid
       if (gacha_display_selection !== "gacha-grid") {
         this.addEventListener("animationend", addUnclickableToCardsExceptLast);
+        document.getElementById("pile-pull-announcement").textContent =
+          this.getSubtitleText();
+      } else {
+        this.subtitle.classList.remove("hidden");
+        // Set aria-live on parent container to announce subtitle text when it appears
+        this.setAttribute("aria-live", "polite");
       }
     }
 
@@ -96,13 +101,16 @@ export async function defineCardComponent() {
       DETAILS_DIALOG_A11Y.show();
     }
 
-    showSubtitle() {
-      this.front.insertAdjacentHTML(
+    getSubtitleText() {
+      return `${this.data["Collector Number"].padStart(3, "0")} ${
+        this.data["Card Display Name"]
+      } (${this.data["Rarity Folder"]})`;
+    }
+
+    addCardSubtitle() {
+      this.insertAdjacentHTML(
         "beforeend",
-        `<p class="card-subtitle">${this.data["Collector Number"].padStart(
-          3,
-          "0"
-        )} ${this.data["Card Display Name"]}</p>`
+        `<span class="card-subtitle">${this.getSubtitleText()}</span>`
       );
     }
   }
@@ -140,12 +148,38 @@ export function updateGachaView(e) {
     GACHA_SECTION.classList.remove("pile-display");
     // we want all cards to be clickable now
     removeUnclickableFromCards();
+    // card subtitles will appear directly below cards in grid view
+    if (document.getElementById("pile-pull-announcement")) {
+      document.getElementById("pile-pull-announcement").remove();
+    }
+    // only show subtitle on flipped cards
+    Array.from(document.getElementsByClassName("clicked")).forEach(
+      (element) => {
+        element
+          .getElementsByClassName("card-subtitle")[0]
+          .classList.remove("hidden");
+      }
+    );
   } else {
     // make this a pile
     GACHA_SECTION.classList.remove("grid-display");
     GACHA_SECTION.classList.add("pile-display");
     // we want lower cards to be unclickable
     addUnclickableToCardsExceptLast();
+    Array.from(document.getElementsByClassName("card-subtitle")).forEach(
+      (element) => {
+        element.classList.add("hidden");
+      }
+    );
+    // add card pull name live announcement container below card pile
+    if (!document.getElementById("pile-pull-announcement")) {
+      document
+        .getElementById("card-list")
+        .insertAdjacentHTML(
+          "beforebegin",
+          `<p aria-live="polite" id="pile-pull-announcement" class="card-subtitle"></p>`
+        );
+    }
   }
 }
 export function removeUnclickableFromCards() {
@@ -180,19 +214,14 @@ export function addUnclickableToCardsExceptLast() {
 //Renders a list of cards in the element specified in htmlLocation.
 //If replace is true, overwrites all elements inside htmlLocation.
 //else, adds the cards to the rest of the inner content.
-export function renderCards(
-  cards,
-  htmlLocation,
-  replace = false,
-  show_title = false
-) {
+export function renderCards(cards, htmlLocation, replace = false) {
   if (replace) {
     htmlLocation.innerHTML = "";
   }
   for (let i = 0; i < cards.length; i++) {
     htmlLocation.insertAdjacentHTML(
       "beforeend",
-      `<tcg-card card-id="${cards[i]["Collector Number"]}" show_title="${show_title}"></tcg-card>`
+      `<tcg-card card-id="${cards[i]["Collector Number"]}"></tcg-card>`
     );
   }
   // reset the z-index to the highest on the closed pile
