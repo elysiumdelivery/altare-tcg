@@ -239,6 +239,11 @@ section label {
   background-color: var(--accent-color);
 }
 
+#gacha-button:hover,
+#gacha-button:focus-visible {
+  background-color: var(--accent-color-lighten-50);
+}
+
 section#gacha-controls label {
   color: white;
   padding-left: 0px;

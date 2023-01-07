@@ -4,7 +4,9 @@
 
 :root {
   --accent-color: #54acdc;
-  --bg-color: #1d346d;
+  --accent-color-lighten-50: #a9d5ed;
+  --bg-color: #1D346D;
+  --bg-color-lighten-50: #6c8bd7;
 }
 
 html {
@@ -15,6 +17,10 @@ html {
   background-position: center;
   font-family: "Montserrat", sans-serif;
   height: 100%;
+}
+
+body, main {
+  background: transparent;
 }
 
 h1,
@@ -33,7 +39,6 @@ video {
 
 section {
   padding: 30px;
-  background: white;
 
   min-height: 50vh;
 }
@@ -66,7 +71,9 @@ select {
 }
 
 button:not(.card-front):not(.card-back):hover,
-select:hover {
+select:hover,
+button:not(.card-front):not(.card-back):focus-visible,
+select:focus-visible {
   background-color: var(--accent-color);
 }
 
@@ -111,11 +118,58 @@ select:hover {
   display: none !important;
 }
 
-@media only screen and (max-width: 600px) {
-  /* mobile / portrait styling */
+section#artist-writer-board ul {
+  column-count: 2;
+  column-gap: 0.5em;
+  column-gap: 1em;
+  margin: 0;
+  padding: 0;
 }
 
-@media only screen and (min-width: 600px) {
+section#artist-writer-board ul li {
+  list-style: none;
+  display: block;
+}
+
+section#artist-writer-board .header-message {
+  column-span: all;
+  text-align: center;
+  margin-bottom: 1em;
+}
+section#artist-writer-board .artist-writer-message {
+  padding: 1.5em;
+  background: white;
+  border-top-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  margin: 1.5em 0.5em;
+  text-align: center;
+  /* avoid breaking the message box between columns */
+  break-inside: avoid;
+}
+
+section#artist-writer-board .artist-writer-message h2,
+section#artist-writer-board .artist-writer-message h3 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+section#artist-writer-board .artist-writer-message h2 {
+  font-size: 1em;
+}
+
+section#artist-writer-board .artist-writer-message h3 {
+  font-size: 0.8em;
+}
+
+@media only screen and (max-width: 800px) {
+  /* mobile / portrait styling */
+
+  section#artist-writer-board {
+    column-count: 1;
+  }
+}
+
+@media only screen and (min-width: 800px) {
   /* desktop / wide styling */
   main {
     margin: 1em;

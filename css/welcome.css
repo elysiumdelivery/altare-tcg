@@ -1,7 +1,8 @@
 /* welcome page styling goes here */
 
 #welcome-message {
-  margin: 5em auto;
+    margin: 5em auto;
+    background: white;
 }
 #welcome-message.active.scroll-up {
   opacity: 0;

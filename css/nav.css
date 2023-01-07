@@ -25,10 +25,6 @@ nav a {
   color: white;
 }
 
-nav a:not(#nav-home):hover:not(.active)::before {
-  background: grey;
-}
-
 nav a.active {
   transform: scale(1.1);
   z-index: 1;
@@ -46,10 +42,20 @@ section#gacha-controls {
   background-color: #3b47b3;
 }
 
+nav a#nav-gacha:hover:not(.active)::before,
+nav a#nav-gacha:focus-visible:not(.active)::before {
+    background-color: #6f79cf;
+}
+
 nav a#nav-collection::before,
 section#card-list,
 section#collection-border {
   background-color: #5f7bc5;
+}
+
+nav a#nav-collection:hover:not(.active)::before,
+nav a#nav-collection:focus-visible:not(.active)::before {
+    background-color: #8ea2d6;
 }
 
 nav a#nav-artist-writer-board::before,
@@ -57,14 +63,29 @@ section#artist-writer-board {
   background-color: #4c5678;
 }
 
+nav a#nav-artist-writer-board:hover:not(.active)::before,
+nav a#nav-artist-writer-board:focus-visible:not(.active)::before {
+    background-color: #7883a9;
+}
+
 nav a#nav-message-board::before,
 section#message-board {
   background-color: #485eb3;
 }
 
+nav a#nav-message-board:hover:not(.active)::before,
+nav a#nav-message-board:focus-visible:not(.active)::before {
+    background-color: #7d8dca;
+}
+
 nav a#nav-credits::before,
 section#credits {
   background-color: #2852b3;
+}
+
+nav a#nav-credits:hover:not(.active)::before,
+nav a#nav-credits:focus-visible:not(.active)::before {
+    background-color: #587fd9;
 }
 
 #nav-hamburger {
@@ -80,6 +101,11 @@ section#credits {
   cursor: pointer;
 
   display: none;
+}
+
+#nav-hamburger:hover,
+#nav-hamburger:focus-visible {
+    background-color: #6f79cf;
 }
 
 #nav-hamburger img {
@@ -104,11 +130,11 @@ section#credits {
 }
 
 #close-nav-menu img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 25%;
-  top: 25%;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    left: 25%;
+    top: 25%;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -155,11 +181,13 @@ section#credits {
     border-bottom-style: double;
   }
 
-  nav a:hover:not(.active),
-  nav button:hover:not(.active) {
-    transition-duration: 0.25s;
-    transform: scale(1.1);
-  }
+    nav a:hover:not(.active),
+    nav button:hover:not(.active),
+    nav a:focus-visible:not(.active),
+    nav button:focus-visible:not(.active) {
+        transition-duration: 0.25s;
+        transform: scale(1.1);
+    }
 
   nav.active {
     visibility: visible;
@@ -183,24 +211,56 @@ section#credits {
 
 @media only screen and (min-width: 1000px) {
   /* wide styling, for when the tabs are all visible on screen */
+  nav a#nav-home .icon.icon-logo {
+      position: relative;
+      bottom: 0;
+      margin-bottom: 0.5em;
+      margin-right: 0;
+      height: 5em;
+      width: 5em;
+      pointer-events: none;
+      transform: scale(1);
+      transition: 0.2s transform ease;
+  }
+  
+  nav a#nav-home:hover .icon.icon-logo,
+  nav a#nav-home:focus-visible .icon.icon-logo {
+      transform: scale(1.25);
+      transition: 0.2s transform ease;
+  }    
+
+  nav a#nav-home:hover span,
+  nav a#nav-home:focus-visible span {
+      visibility: visible;
+      opacity: 1;
+  }    
+  
   nav a#nav-home {
-    flex-grow: 1;
+      flex-grow: 1;
   }
-
+    
   nav a#nav-home span {
-    visibility: hidden;
-    width: 0;
-  }
+      position: absolute;
+      width: 25%;
+      text-align: center;
+      padding: 0.5em;
+      border-radius: 0.25em;
 
-  nav a#nav-home img {
-    width: 5em;
-    height: 5em;
-    margin-bottom: 0.5em;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.5s opacity ease;
+      background-color: var(--accent-color);
+  }
+  
+  nav a:not(#nav-home) {
+    padding: 0.55rem 2.7rem;
+    transform-origin: 50% 0%;
+    font-size: 0.6em;
   }
 
   nav a:not(#nav-home) {
     padding: 0.55rem 2.7rem;
-    transform-origin: 50% 100%;
+    transform-origin: 50% 50%;
     font-size: 0.6em;
   }
 
@@ -220,12 +280,12 @@ section#credits {
   }
 
   nav a:first-of-type {
-    transform-origin: 0 100%;
+    transform-origin: 0 0%;
   }
 
   /* specifying #nav-credits here since the last element in the nav is not a tab */
   nav a#nav-credits {
-    transform-origin: 100% 100%;
+    transform-origin: 100% 0%;
   }
 
   #close-nav-menu,
