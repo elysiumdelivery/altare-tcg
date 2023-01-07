@@ -47,7 +47,8 @@ tcg-card {
   color: white;
   user-select: text;
 }
-#pile-pull-announcement {
+#pull-announcement {
+  color: white;
   margin: 0;
   text-align: center;
 }

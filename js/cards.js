@@ -84,7 +84,7 @@ export async function defineCardComponent() {
       // remove the previous hover effects only if the gacha is not displayed as a grid
       if (gacha_display_selection !== "gacha-grid") {
         this.addEventListener("animationend", addUnclickableToCardsExceptLast);
-        document.getElementById("pile-pull-announcement").textContent =
+        document.getElementById("pull-announcement").textContent =
           this.getSubtitleText();
       } else {
         this.subtitle.classList.remove("hidden");
@@ -155,10 +155,10 @@ export function updateGachaView(e) {
     GACHA_SECTION.classList.remove("pile-display");
     // we want all cards to be clickable now
     removeUnclickableFromCards();
-    // card subtitles will appear directly below cards in grid view
-    if (document.getElementById("pile-pull-announcement")) {
-      document.getElementById("pile-pull-announcement").remove();
-    }
+    // hide visually since flipped cards will have subtitle below them
+    document
+      .getElementById("pull-announcement")
+      .classList.add("visually-hidden");
     // only show subtitle on flipped cards
     Array.from(document.getElementsByClassName("clicked")).forEach(
       (element) => {
@@ -178,15 +178,10 @@ export function updateGachaView(e) {
         element.classList.add("hidden");
       }
     );
-    // add card pull name live announcement container below card pile
-    if (!document.getElementById("pile-pull-announcement")) {
-      document
-        .getElementById("card-list")
-        .insertAdjacentHTML(
-          "beforebegin",
-          `<p aria-live="polite" id="pile-pull-announcement" class="card-subtitle"></p>`
-        );
-    }
+    // show pull announcement text visually since cards will not have subtitles below them
+    document
+      .getElementById("pull-announcement")
+      .classList.remove("visually-hidden");
   }
 }
 export function removeUnclickableFromCards() {
