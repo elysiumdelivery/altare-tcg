@@ -36,8 +36,8 @@ export async function defineCardComponent() {
       this.image = this.getElementsByClassName("card-image")[0];
       this.image.style.backgroundImage = 'url("' + this.getImageURL() + '")';
       this.image.classList.add(setCardRarity(this.data["Rarity Folder"]));
-      this.addCardSubtitle();
       this.subtitle = this.getElementsByClassName("card-subtitle")[0];
+      this.subtitle.textContent = this.getSubtitleText();
       this.setupOnClickEvents();
       if (CARD_ART_HIDDEN_ON_LOAD) {
         this.setupCardForGacha();
@@ -88,8 +88,6 @@ export async function defineCardComponent() {
           this.getSubtitleText();
       } else {
         this.subtitle.classList.remove("hidden");
-        // Set aria-live on parent container to announce subtitle text when it appears
-        this.setAttribute("aria-live", "polite");
       }
     }
 
@@ -111,14 +109,6 @@ export async function defineCardComponent() {
       return `${this.data["Collector Number"].padStart(3, "0")} ${
         this.data["Card Display Name"]
       } (${this.data["Rarity Folder"]})`;
-    }
-
-    addCardSubtitle() {
-      // aria-hidden since the card has its own aria-label handling
-      this.insertAdjacentHTML(
-        "beforeend",
-        `<span aria-hidden="true" class="card-subtitle">${this.getSubtitleText()}</span>`
-      );
     }
   }
   customElements.define("tcg-card", Card);
