@@ -3,56 +3,13 @@ import { updateDetailsDialog, DETAILS_DIALOG_A11Y } from "./dialog.js";
 
 const CLOUD_NAME = "dazcxdgiy";
 const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
-const COLLECTED_CARDS_NUMBER = document.getElementById(
-  "collected-cards-number"
-);
-const PAGINATION_BTNS = {
-  container: document.getElementById("collection-pagination"),
-  previous: document.getElementById("pagination-previous"),
-  current: document.getElementById("pagination-current"),
-  next: document.getElementById("pagination-next"),
-};
-const RARITIES = [
-  "Element",
-  "Common",
-  "Uncommon",
-  "Rare",
-  "HoloRare",
-  "UltraRare",
-  "SecretRare",
-];
 const HIGHEST_Z_INDEX = 10;
 let card_z_index = HIGHEST_Z_INDEX;
 let gacha_display_selection;
 
-//Object to store all supported sorting functions.
-//These are stored as closures to support reverse order without declaring new functions.
-//Can be used by calling:
-//array.sort(sort_functions[key](1, -1))
-//If you want to reverse order, swap the 1 and -1 when calling the function.
-const sort_functions = {
-  "Collector Number":
-    (before = 1, after = -1) =>
-    (a, b) => {
-      return parseInt(a["Collector Number"]) > parseInt(b["Collector Number"])
-        ? before
-        : after;
-    },
-  Rarity:
-    (before = 1, after = -1) =>
-    (a, b) => {
-      if (a["Rarity Folder"] === b["Rarity Folder"]) {
-        return sort_functions["Collector Number"]()(a, b);
-      } else {
-        return RARITIES.indexOf(a["Rarity Folder"]) <
-          RARITIES.indexOf(b["Rarity Folder"])
-          ? before
-          : after;
-      }
-    },
-};
-
-export const GACHA_VIEW_SETTING = document.querySelectorAll('input[name="gacha-display"]');
+export const GACHA_VIEW_SETTING = document.querySelectorAll(
+  'input[name="gacha-display"]'
+);
 export const GACHA_SECTION = document.getElementById("gacha-controls");
 
 //Custom Card component. Use it like this:
@@ -91,7 +48,7 @@ export async function defineCardComponent() {
     //Returns an url of the form:
     //`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${RARITY}/${FILENAME}.png`
     getImageURL() {
-      return `${CLOUDINARY_URL}/q_auto/${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
+      return `${CLOUDINARY_URL}q_auto/${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
     }
 
     setupCardForGacha() {
@@ -114,12 +71,13 @@ export async function defineCardComponent() {
       // This is to stack any opened cards in the reverse order
       this.addEventListener("animationstart", updateZIndex);
       // animation optimization: inform browser that we are changing the following properties
-      this.image.style.willChange = "transform, filter, opacity, background-position";
+      this.image.style.willChange =
+        "transform, filter, opacity, background-position";
       this.image.classList.add("opened");
       this.image.classList.add("animated");
 
       // remove the previous hover effects only if the gacha is not displayed as a grid
-      if(gacha_display_selection !== "gacha-grid"){
+      if (gacha_display_selection !== "gacha-grid") {
         this.addEventListener("animationend", addUnclickableToCardsExceptLast);
       }
     }
@@ -128,7 +86,7 @@ export async function defineCardComponent() {
     setupOnClickEvents() {
       this.back.onclick = (event) => this.flipCard();
       // if not gacha it will show the extra card information
-      if(!CARD_ART_HIDDEN_ON_LOAD){
+      if (!CARD_ART_HIDDEN_ON_LOAD) {
         this.front.onclick = (event) => this.showDetails();
       }
     }
@@ -151,32 +109,32 @@ export async function defineCardComponent() {
   customElements.define("tcg-card", Card);
 }
 
-function addAnimation(e){
+function addAnimation(e) {
   // animation optimization: inform browser that we are changing the following properties
   e.target.style.willChange = "transform, filter, opacity, background-position";
   // apply the animated class to start the CSS animation
   e.target.classList.add("animated");
 }
-function updateZIndex(e){
-    e.target.style.zIndex = card_z_index;
-    // we don't want this to update again when reanimating later
-    e.target.removeEventListener("animationstart", updateZIndex);
+function updateZIndex(e) {
+  e.target.style.zIndex = card_z_index;
+  // we don't want this to update again when reanimating later
+  e.target.removeEventListener("animationstart", updateZIndex);
 }
-function setupHover(){
+function setupHover() {
   // setup the initial event listeners for all cards
   let cardList = document.getElementsByClassName("card-image");
   for (let i = 0; i < cardList.length; i++) {
-    cardList[i].addEventListener("animationend", function(){
+    cardList[i].addEventListener("animationend", function () {
       cardList[i].classList.remove("animated");
-      cardList[i].style.willChange = "auto"; 
-    })
+      cardList[i].style.willChange = "auto";
+    });
     cardList[i].addEventListener("mouseover", addAnimation);
     cardList[i].addEventListener("click", addAnimation);
   }
 }
-export function updateGachaView(e){
+export function updateGachaView(e) {
   gacha_display_selection = e.target.value;
-  if(gacha_display_selection == "gacha-grid"){
+  if (gacha_display_selection == "gacha-grid") {
     // make this a grid
     GACHA_SECTION.classList.add("grid-display");
     GACHA_SECTION.classList.remove("pile-display");
@@ -190,7 +148,7 @@ export function updateGachaView(e){
     addUnclickableToCardsExceptLast();
   }
 }
-export function removeUnclickableFromCards(){
+export function removeUnclickableFromCards() {
   // remove any unclickable classes from all the opened cards, so all can be interacted with
   // this is only used when changing the card from a grid to a pile layout
   let clickedCard = document.getElementsByClassName("opened");
@@ -198,10 +156,9 @@ export function removeUnclickableFromCards(){
     clickedCard[i].classList.remove("unclickable");
   }
 }
-export function addUnclickableToCardsExceptLast(){
+export function addUnclickableToCardsExceptLast() {
   // check the current format is not grid
-  if(gacha_display_selection !== "gacha-grid"){
-
+  if (gacha_display_selection !== "gacha-grid") {
     // this is the parent card container
     let allFlippedCards = document.getElementsByClassName("clicked");
     // this is the specific child the animation is applied to
@@ -211,13 +168,12 @@ export function addUnclickableToCardsExceptLast(){
       let z = window.getComputedStyle(allFlippedCards[i]).zIndex;
       // the card with the matching z-index is the most recently flipped card at the top of the pile - this should still animate so won't have the unclickable class
       // while the unmatching ones are beneath the most recently flipped card, so should have any unclickable class removed
-      if(parseInt(z) !== card_z_index){
+      if (parseInt(z) !== card_z_index) {
         clickedCard[i].classList.add("unclickable");
       } else {
         clickedCard[i].classList.remove("unclickable");
       }
     }
-
   }
 }
 
@@ -245,96 +201,9 @@ export function renderCards(
   setupHover();
 }
 
-function getOwnedCards(cards_data) {
-  let ownedCards = [];
-  for (let item in localStorage) {
-    if (item.slice(0, 4) === "card") {
-      let card_id = item.split("-")[1];
-      ownedCards.push(
-        cards_data.find((card) => card["Collector Number"] === card_id)
-      );
-    }
-  }
-  return ownedCards;
-}
-
-function sortCards(cards, sortType, reverse = false) {
-  sortType = sortType ?? "Collector Number";
-  let before = reverse ? -1 : 1;
-  let after = reverse ? 1 : -1;
-  cards.sort(sort_functions[sortType](before, after));
-  return cards;
-}
-
-export function showCollection(cards_data, htmlLocation, page = 1) {
-  let sort = localStorage.getItem("sort") ?? "Collector Number";
-  let cards_per_page = localStorage.getItem("page-size") ?? 10;
-  let fullCollection = localStorage.getItem("fullCollection") === "true";
-  let cards;
-  let reverse = false;
-  let ownedCount = 0;
-  for (let rarity of RARITIES) {
-    ownedCount += parseInt(localStorage.getItem(`count-${rarity}`) ?? "0");
-  }
-  COLLECTED_CARDS_NUMBER.textContent = `Collected cards: ${ownedCount}/${cards_data.length}`;
-
-  //If the chosen sort type has a "-" at the end, it means that it's in reverse order.
-  //So we ignore that last character and take the rest of the string.
-  if (sort[sort.length - 1] === "-") {
-    sort = sort.slice(0, -1);
-    reverse = true;
-  }
-
-  if (fullCollection) {
-    cards = sortCards(cards_data, sort, reverse);
-  } else {
-    cards = getOwnedCards(cards_data);
-    if (cards.length == 0) {
-      htmlLocation.innerHTML =
-        "You have no cards at the moment. Try pulling some at the gacha!";
-      PAGINATION_BTNS.container.classList.add("invisible");
-      return;
-    } else {
-      cards = sortCards(cards, sort, reverse);
-    }
-  }
-
-  //If we will show more cards than the amount specified in cards_per_page,
-  //then we split them into parts and show the pagination controls.
-  //Note: If cards_per_page is set to "all", the comparison casts it to NaN, and as such it will always return false.
-  if (cards.length > cards_per_page) {
-    PAGINATION_BTNS.container.classList.remove("invisible");
-    PAGINATION_BTNS.current.textContent = `${page} of ${Math.ceil(
-      cards.length / cards_per_page
-    )}`;
-    let lastCard = cards[cards.length - 1]["Collector Number"];
-    cards = cards.slice(cards_per_page * (page - 1), cards_per_page * page);
-    if (page == 1) {
-      //If we're on first page, hide controls to go to previous page.
-      PAGINATION_BTNS.previous.classList.add("invisible");
-    } else {
-      PAGINATION_BTNS.previous.classList.remove("invisible");
-      PAGINATION_BTNS.previous.onclick = (event) =>
-        showCollection(cards_data, htmlLocation, page - 1);
-    }
-    if (cards[cards.length - 1]["Collector Number"] === lastCard) {
-      //If we're on last page, hide controls to go to next page.
-      PAGINATION_BTNS.next.classList.add("invisible");
-    } else {
-      PAGINATION_BTNS.next.classList.remove("invisible");
-      PAGINATION_BTNS.next.onclick = (event) =>
-        showCollection(cards_data, htmlLocation, page + 1);
-    }
-  } else {
-    //If we don't need pagination, we hide the controls.
-    PAGINATION_BTNS.container.classList.add("invisible");
-  }
-  renderCards(cards, htmlLocation, true, true);
-}
-
-export function setCardRarity(folder){
+export function setCardRarity(folder) {
   let rarity;
-  switch(folder){
+  switch (folder) {
     case "HoloRare":
       rarity = "holo";
       break;

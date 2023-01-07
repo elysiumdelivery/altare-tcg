@@ -17,22 +17,27 @@ export async function setupDetailsDialog() {
   DETAILS_DIALOG_A11Y = new A11yDialog(document.getElementById("card-details"));
 
   // animation events
-  let dialogCard = DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0];
-  dialogCard.addEventListener("animationend", function() {
-    dialogCard.classList.remove("animated", "unclickable");
-    dialogCard.style.willChange = "auto";
-  }, false);
+  let dialogCard = DETAILS_DIALOG_EL.getElementsByClassName(
+    "details-dialog-card"
+  )[0];
+  dialogCard.addEventListener(
+    "animationend",
+    function () {
+      dialogCard.classList.remove("animated", "unclickable");
+      dialogCard.style.willChange = "auto";
+    },
+    false
+  );
   dialogCard.addEventListener("mouseover", animateCard);
   dialogCard.addEventListener("click", animateCard);
 
   // animation reset
-  DETAILS_DIALOG_A11Y.on('hide', function (element, event) {
+  DETAILS_DIALOG_A11Y.on("hide", function (element, event) {
     resetCardEffects();
-  })
+  });
 }
 
 export function updateDetailsDialog(data, cardUrl) {
-
   // Header
   DETAILS_DIALOG_EL.getElementsByClassName("dialog-title")[0].innerHTML = "";
   DETAILS_DIALOG_EL.getElementsByClassName(
@@ -46,12 +51,14 @@ export function updateDetailsDialog(data, cardUrl) {
   `
   );
 
-  const card_art = DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0];
+  const card_art = DETAILS_DIALOG_EL.getElementsByClassName(
+    "details-dialog-card"
+  )[0];
   // Card art is applied
   card_art.style.backgroundImage = 'url("' + cardUrl + '")';
   // Add animation start
   card_art.classList.add(setCardRarity(data["Rarity Folder"]), "animated");
-  
+
   // Clear + set card metadata
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
     "";
@@ -70,12 +77,27 @@ export function updateDetailsDialog(data, cardUrl) {
   );
 }
 
-function animateCard(dialogCard){
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].style.willChange = "transform, filter, opacity, background-position";
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.add("animated", "unclickable");
+function animateCard(dialogCard) {
+  DETAILS_DIALOG_EL.getElementsByClassName(
+    "details-dialog-card"
+  )[0].style.willChange = "transform, filter, opacity, background-position";
+  DETAILS_DIALOG_EL.getElementsByClassName(
+    "details-dialog-card"
+  )[0].classList.add("animated", "unclickable");
 }
-function resetCardEffects(){
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].style.willChange = "auto";
-  DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-card")[0].classList.remove("holo", "basic", "secret", "rare", "ultra", "animated", "unclickable");
+function resetCardEffects() {
+  DETAILS_DIALOG_EL.getElementsByClassName(
+    "details-dialog-card"
+  )[0].style.willChange = "auto";
+  DETAILS_DIALOG_EL.getElementsByClassName(
+    "details-dialog-card"
+  )[0].classList.remove(
+    "holo",
+    "basic",
+    "secret",
+    "rare",
+    "ultra",
+    "animated",
+    "unclickable"
+  );
 }
-

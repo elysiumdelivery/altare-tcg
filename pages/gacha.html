@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta
       name="description"
-      content="Regis Altare themed booster pack opening game. Open packs and collect all the cards online in this free web app."
+      content="Regis Altare themed booster pack opening simulator. Collect all the cards online in this free web game!"
     />
     <meta
       name="keywords"
@@ -14,18 +14,25 @@
     <meta name="twitter:title" content="Regis Altare Booster Pack Simulator" />
     <meta
       name="twitter:description"
-      content="Regis Altare themed booster pack opening game. Open packs and collect all the cards online in this free web app."
+      content="Regis Altare themed booster pack opening simulator. Collect all the cards online in this free web game!"
     />
     <!-- Enables media queries on mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap" rel="stylesheet">
-  <style> @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap'); </style>
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Zen+Dots&display=swap");
+    </style>
 
-  <!-- CSS-->
-  <link type="text/css" rel="stylesheet" href="../css/main.css" />
-  <link type="text/css" rel="stylesheet" href="../css/nav.css" />
+    <!-- CSS-->
+    <link type="text/css" rel="stylesheet" href="../css/main.css" />
+    <link type="text/css" rel="stylesheet" href="../css/nav.css" />
 
     <title>Regis Altare Booster Pack Simulator</title>
   </head>
@@ -38,59 +45,116 @@
 
       <!-- Inverted border radius for clip-path -->
       <svg width="0" height="0" aria-hidden="true">
-          <clipPath id="navClip" clipPathUnits="objectBoundingBox">
-              <path transform="scale(0.00438, 0.02)" d="M173.88,0H54C38,0,45,21,0,52H227.88C182.88,21,189.88,0,173.88,0Z"/>
-          </clipPath>
+        <clipPath id="navClip" clipPathUnits="objectBoundingBox">
+          <path
+            transform="scale(0.00438, 0.02)"
+            d="M173.88,0H54C38,0,45,21,0,52H227.88C182.88,21,189.88,0,173.88,0Z"
+          />
+        </clipPath>
       </svg>
 
       <!-- Burger menu for responsive layout -->
       <button id="nav-hamburger" aria-label="Toggle site navigation">
-          <img class="icon icon-menu" aria-hidden="true" src="../icons/Icons_Hamburger.svg"/>
+        <img
+          class="icon icon-menu"
+          aria-hidden="true"
+          src="../icons/Icons_Hamburger.svg"
+        />
       </button>
 
       <!-- Navigation -->
       <nav>
-          <a id="nav-home" href="../index.html">
-            <object class="icon icon-logo" type="image/svg+xml" aria-hidden="true" data="../icons/Icons_Logo.svg" tabindex="-1">
-              <img src="../icons/Icons_Logo.svg" />
-            </object>
-              <span>Home</span>
-          </a>
-          <a id="nav-gacha" class="active" href="../pages/gacha.html">
-              <img class="icon icon-gacha" aria-hidden="true" src="../icons/Icons_Open-Packs.svg"/>
-              Gacha</a>
-          <a id="nav-collection" href="../pages/collection.html">
-              <img class="icon icon-collection" aria-hidden="true" src="../icons/Icons_Collection.svg"> 
-              Collection</a>
-          <a id="nav-artist-writer-board" href="../pages/artist-writer-board.html">
-              <img class="icon icon-artist-writer" aria-hidden="true" src="../icons/Icons_Message.svg"/>
-              Artist & Writer Messages</a>
-          <a id="nav-message-board" href="../pages/message-board.html">
-              <img class="icon icon-message-board" aria-hidden="true" src="../icons/Icons_Board.svg"/>
-              Message Board</a>
-          <a id="nav-credits" href="../pages/credits.html">
-              <img class="icon icon-credits" aria-hidden="true" src="../icons/Icons_Credits.svg"/>
-              Credits</a>
-          <!-- Menu-only elements -->
-          <hr aria-hidden="true"/>
-          <button id="close-nav-menu" aria-label="Close menu">
-              <img class="icon icon-close" aria-hidden="true" src="../icons/Icons_Close.svg"/>
-          </button>
-      </nav>
+        <a id="nav-home" href="../index.html">
+          <object class="icon icon-logo" type="image/svg+xml" aria-hidden="true" data="../icons/Icons_Logo.svg" tabindex="-1" tabindex="-1">
+            <img src="../icons/Icons_Logo.svg" />
+          </object>
+          <span>Home</span>
+        </a>
+        <a id="nav-gacha" href="../pages/gacha.html">
+          <img
+            class="icon icon-gacha"
+            aria-hidden="true"
+            src="../icons/Icons_Open-Packs.svg"
+          />
+          Gacha</a
+        >
+        <a id="nav-collection" href="../pages/collection.html">
+          <img
+            class="icon icon-collection"
+            aria-hidden="true"
+            src="../icons/Icons_Collection.svg"
+          />
+          Collection</a
+        >
+        <a
+          id="nav-artist-writer-board"
+          class="active"
+          href="../pages/artist-writer-board.html"
+        >
+          <img
+            class="icon icon-artist-writer"
+            aria-hidden="true"
+            src="../icons/Icons_Message.svg"
+          />
+          Artist & Writer Messages</a
+        >
+        <a id="nav-message-board" href="../pages/message-board.html">
+          <img
+            class="icon icon-message-board"
+            aria-hidden="true"
+            src="../icons/Icons_Board.svg"
+          />
+          Message Board</a
+        >
+        <a id="nav-credits" href="../pages/credits.html">
+          <img
+            class="icon icon-credits"
+            aria-hidden="true"
+            src="../icons/Icons_Credits.svg"
+          />
+          Credits</a
+        >
+        <!-- Menu-only elements -->
+        <hr aria-hidden="true" />
+        <button id="close-nav-menu" aria-label="Close menu">
+          <img
+            class="icon icon-close"
+            aria-hidden="true"
+            src="../icons/Icons_Close.svg"
+          />
+        </button>
+    </nav>
 
       <section id="gacha-controls">
         <form>
           <label>Show as:</label>
-          <input type="radio" id="gacha-pile" name="gacha-display" value="gacha-pile" checked>
+          <input
+            type="radio"
+            id="gacha-pile"
+            name="gacha-display"
+            value="gacha-pile"
+            checked
+          />
           <label for="gacha-pile"> Card Pile</label>
-          <input type="radio" id="gacha-grid" name="gacha-display" value="gacha-grid">
+          <input
+            type="radio"
+            id="gacha-grid"
+            name="gacha-display"
+            value="gacha-grid"
+          />
           <label for="gacha-grid"> Card Grid</label>
         </form>
         <button id="gacha-button" type="submit">Open Card Pack</button>
         <div id="gacha-notes">
-          <p>Re-pulling while half viewed, or flipping a card in 'pile' view will not allow you to see previous cards, but will be saved to your Collection. When the card has stopped moving, animate it again by clicking / hovering!</p>
+          <p>View the details of your opened cards in your Collection.</p>
+          <p>
+            When the card has stopped moving, animate it again by clicking /
+            hovering!
+          </p>
         </div>
-        <section id="card-list">Ain't nobody here but us Altventurers. Pull the gacha to get started!</section>
+        <section id="card-list">
+          Ain't nobody here but us Altventurers. Pull the gacha to get started!
+        </section>
       </section>
 
       <footer>
