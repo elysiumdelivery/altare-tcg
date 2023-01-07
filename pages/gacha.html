@@ -67,7 +67,14 @@
       <!-- Navigation -->
       <nav>
         <a id="nav-home" href="../index.html">
-          <object class="icon icon-logo" type="image/svg+xml" aria-hidden="true" data="../icons/Icons_Logo.svg" tabindex="-1" tabindex="-1">
+          <object
+            class="icon icon-logo"
+            type="image/svg+xml"
+            aria-hidden="true"
+            data="../icons/Icons_Logo.svg"
+            tabindex="-1"
+            tabindex="-1"
+          >
             <img src="../icons/Icons_Logo.svg" />
           </object>
           <span>Home</span>
@@ -125,7 +132,7 @@
             src="../icons/Icons_Close.svg"
           />
         </button>
-    </nav>
+      </nav>
 
       <section id="gacha-controls">
         <form>
@@ -157,7 +164,8 @@
           </p>
         </div>
         <button id="gacha-button" type="submit">Open Card Pack</button>
-        <p aria-live="polite" id="pull-announcement"></p>
+        <!-- block screenreaders from focusing on the announcement text -->
+        <p aria-live="polite" aria-hidden="true" id="pull-announcement"></p>
         <section id="card-list">
           Ain't nobody here but us Altventurers. Pull the gacha to get started!
         </section>

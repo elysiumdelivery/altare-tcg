@@ -71,6 +71,9 @@ export async function defineCardComponent() {
       this.front.removeAttribute("aria-hidden");
       this.back.tabIndex = "-1";
       this.back.setAttribute("aria-hidden", "true");
+      // have screenreader announce the card name
+      document.getElementById("pull-announcement").textContent =
+        this.getSubtitleText();
 
       // Start the animation and update the z-index when the animation starts
       // This is to stack any opened cards in the reverse order
@@ -84,8 +87,6 @@ export async function defineCardComponent() {
       // remove the previous hover effects only if the gacha is not displayed as a grid
       if (gacha_display_selection !== "gacha-grid") {
         this.addEventListener("animationend", addUnclickableToCardsExceptLast);
-        document.getElementById("pull-announcement").textContent =
-          this.getSubtitleText();
       } else {
         this.subtitle.classList.remove("hidden");
       }
