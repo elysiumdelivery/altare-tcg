@@ -31,17 +31,17 @@ export async function defineCardComponent() {
       this.innerHTML = html;
       this.holder = this.getElementsByClassName("card-component")[0];
       this.front = this.getElementsByClassName("card-front")[0];
+      this.front.setAttribute("aria-label", this.getSubtitleText());
       this.back = this.getElementsByClassName("card-back")[0];
-      this.info = this.getElementsByClassName("card-info")[0];
       this.image = this.getElementsByClassName("card-image")[0];
       this.image.style.backgroundImage = 'url("' + this.getImageURL() + '")';
       this.image.classList.add(setCardRarity(this.data["Rarity Folder"]));
+      this.subtitle = this.getElementsByClassName("card-subtitle")[0];
+      this.subtitle.textContent = this.getSubtitleText();
       this.setupOnClickEvents();
       if (CARD_ART_HIDDEN_ON_LOAD) {
         this.setupCardForGacha();
-      }
-      if (this.getAttribute("show_title") === "true") {
-        this.showSubtitle();
+        this.subtitle.classList.add("hidden");
       }
     }
 
@@ -55,17 +55,25 @@ export async function defineCardComponent() {
       // The back of the card is automatically hidden for the collections page
       // We have to reset it for the gacha so that it can be clicked on
       this.back.classList.remove("hidden");
-      // Prevent the front from being tabbed on, so that you don't need to tab twice per card
+      // With card back shown, make card front inaccessible, just like it is for mouse users
       this.front.tabIndex = "-1";
+      this.front.setAttribute("aria-hidden", "true");
     }
 
     flipCard() {
       // update the next value for the zIndex
       card_z_index++;
 
-      // register this as a clicked card, and add the class to animate to flip over
+      // register as a clicked card, add class to animate flip-over, and make card front accessible again
       this.classList.add("clicked");
       this.holder.classList.add("flip");
+      this.front.removeAttribute("tabindex");
+      this.front.removeAttribute("aria-hidden");
+      this.back.tabIndex = "-1";
+      this.back.setAttribute("aria-hidden", "true");
+      // have screenreader announce the card name
+      document.getElementById("pull-announcement").textContent =
+        this.getSubtitleText();
 
       // Start the animation and update the z-index when the animation starts
       // This is to stack any opened cards in the reverse order
@@ -79,6 +87,8 @@ export async function defineCardComponent() {
       // remove the previous hover effects only if the gacha is not displayed as a grid
       if (gacha_display_selection !== "gacha-grid") {
         this.addEventListener("animationend", addUnclickableToCardsExceptLast);
+      } else {
+        this.subtitle.classList.remove("hidden");
       }
     }
 
@@ -96,14 +106,10 @@ export async function defineCardComponent() {
       DETAILS_DIALOG_A11Y.show();
     }
 
-    showSubtitle() {
-      this.front.insertAdjacentHTML(
-        "beforeend",
-        `<p class="card-subtitle">${this.data["Collector Number"].padStart(
-          3,
-          "0"
-        )} ${this.data["Card Display Name"]}</p>`
-      );
+    getSubtitleText() {
+      return `${this.data["Collector Number"].padStart(3, "0")} ${
+        this.data["Card Display Name"]
+      } (${this.data["Rarity Folder"]})`;
     }
   }
   customElements.define("tcg-card", Card);
@@ -140,12 +146,33 @@ export function updateGachaView(e) {
     GACHA_SECTION.classList.remove("pile-display");
     // we want all cards to be clickable now
     removeUnclickableFromCards();
+    // hide visually since flipped cards will have subtitle below them
+    document
+      .getElementById("pull-announcement")
+      .classList.add("visually-hidden");
+    // only show subtitle on flipped cards
+    Array.from(document.getElementsByClassName("clicked")).forEach(
+      (element) => {
+        element
+          .getElementsByClassName("card-subtitle")[0]
+          .classList.remove("hidden");
+      }
+    );
   } else {
     // make this a pile
     GACHA_SECTION.classList.remove("grid-display");
     GACHA_SECTION.classList.add("pile-display");
     // we want lower cards to be unclickable
     addUnclickableToCardsExceptLast();
+    Array.from(document.getElementsByClassName("card-subtitle")).forEach(
+      (element) => {
+        element.classList.add("hidden");
+      }
+    );
+    // show pull announcement text visually since cards will not have subtitles below them
+    document
+      .getElementById("pull-announcement")
+      .classList.remove("visually-hidden");
   }
 }
 export function removeUnclickableFromCards() {
@@ -154,6 +181,8 @@ export function removeUnclickableFromCards() {
   let clickedCard = document.getElementsByClassName("opened");
   for (let i = 0; i < clickedCard.length; i++) {
     clickedCard[i].classList.remove("unclickable");
+    clickedCard[i].parentElement.removeAttribute("tabindex");
+    clickedCard[i].parentElement.removeAttribute("aria-hidden");
   }
 }
 export function addUnclickableToCardsExceptLast() {
@@ -170,6 +199,8 @@ export function addUnclickableToCardsExceptLast() {
       // while the unmatching ones are beneath the most recently flipped card, so should have any unclickable class removed
       if (parseInt(z) !== card_z_index) {
         clickedCard[i].classList.add("unclickable");
+        clickedCard[i].parentElement.tabIndex = "-1";
+        clickedCard[i].parentElement.setAttribute("aria-hidden", "true");
       } else {
         clickedCard[i].classList.remove("unclickable");
       }
@@ -180,19 +211,14 @@ export function addUnclickableToCardsExceptLast() {
 //Renders a list of cards in the element specified in htmlLocation.
 //If replace is true, overwrites all elements inside htmlLocation.
 //else, adds the cards to the rest of the inner content.
-export function renderCards(
-  cards,
-  htmlLocation,
-  replace = false,
-  show_title = false
-) {
+export function renderCards(cards, htmlLocation, replace = false) {
   if (replace) {
     htmlLocation.innerHTML = "";
   }
   for (let i = 0; i < cards.length; i++) {
     htmlLocation.insertAdjacentHTML(
       "beforeend",
-      `<tcg-card card-id="${cards[i]["Collector Number"]}" show_title="${show_title}"></tcg-card>`
+      `<tcg-card card-id="${cards[i]["Collector Number"]}"></tcg-card>`
     );
   }
   // reset the z-index to the highest on the closed pile

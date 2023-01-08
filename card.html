@@ -1,9 +1,12 @@
 <div class="card-component">
   <button class="card-front">
     <div class="card-image"></div>
-    <!--If the card renders with a subtitle it will show here as a p element with class "card-subtitle"-->
   </button>
-  <button class="card-back hidden">
+  <button aria-label="unflipped card" class="card-back hidden">
     <div class="card-cover"></div>
   </button>
 </div>
+<!--  aria-hidden since the card has its own aria-label with the same contents
+      aria-labelledby is usually ideal, but would require more work to implement
+      successfully in our complex show/ hiding behavior -->
+<span aria-hidden="true" class="card-subtitle"></span>

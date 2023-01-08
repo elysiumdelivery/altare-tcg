@@ -5,7 +5,7 @@
 :root {
   --accent-color: #54acdc;
   --accent-color-lighten-50: #a9d5ed;
-  --bg-color: #1D346D;
+  --bg-color: #1d346d;
   --bg-color-lighten-50: #6c8bd7;
 }
 
@@ -19,7 +19,8 @@ html {
   height: 100%;
 }
 
-body, main {
+body,
+main {
   background: transparent;
 }
 
@@ -75,6 +76,10 @@ select:hover,
 button:not(.card-front):not(.card-back):focus-visible,
 select:focus-visible {
   background-color: var(--accent-color);
+}
+
+.skip-link {
+  color: white;
 }
 
 #size-dropdown {
