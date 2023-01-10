@@ -150,7 +150,15 @@ section#artist-writer-board .artist-writer-message {
   text-align: center;
   /* avoid breaking the message box between columns */
   break-inside: avoid;
+
+  animation: 1s slide-up ease;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
 }
+
+section#artist-writer-board .artist-writer-message:nth-child(odd) { animation-delay: .5s }
+section#artist-writer-board .artist-writer-message:nth-child(even) { animation-delay: 0.75s }
+section#artist-writer-board .artist-writer-message:nth-child(3n) { animation-delay: 1s }
 
 section#artist-writer-board .artist-writer-message h2,
 section#artist-writer-board .artist-writer-message h3 {
@@ -166,6 +174,68 @@ section#artist-writer-board .artist-writer-message h3 {
   font-size: 0.8em;
 }
 
+section#credits {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+section.credits-column {
+  box-sizing: border-box;
+  text-align: center;
+  width: 300px;
+  min-height: auto;
+  margin: 0 0.25em;
+  margin-bottom: 1em;
+  padding: 1em;
+  background: white;
+  border-top-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  text-align: center;
+  /* avoid breaking the message box between columns */
+  break-inside: avoid;
+
+  animation: 1s slide-up ease;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+}
+
+section.credits-column:nth-child(1) { animation-delay: .5s }
+section.credits-column:nth-child(2) { animation-delay: 1s }
+section.credits-column:nth-child(3) { animation-delay: 1.5s }
+section.credits-column:nth-child(4) { animation-delay: 2s }
+
+section.credits-column h2 {
+  margin-bottom: 0.25em;
+}
+
+section.credits-column h3 {
+  margin-bottom: 0.25em;
+  color: var(--bg-color);
+}
+
+section.credits-column li h3::before,
+section.credits-column li h3::after {
+  position: relative;
+  content: '🎇';
+  margin: 0.2em;
+}
+
+section.credits-column p {
+  margin-top: 0.25em;
+  font-size: 0.8em;
+  color: var(--bg-color-lighten-50);
+}
+
+section.credits-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+}
+
 @media only screen and (max-width: 800px) {
   /* mobile / portrait styling */
 
@@ -179,4 +249,9 @@ section#artist-writer-board .artist-writer-message h3 {
   main {
     margin: 1em;
   }
+}
+
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(25%); }
+  100% { opacity: 1; transform: translateY(0%); }
 }
