@@ -241,6 +241,10 @@ section label {
   background-color: var(--accent-color);
 }
 
+#search-bar {
+  margin-top: 15px;
+}
+
 #gacha-button:hover,
 #gacha-button:focus-visible {
   background-color: var(--accent-color-lighten-50);
