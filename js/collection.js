@@ -45,6 +45,13 @@ const sort_functions = {
       }
     },
 };
+//Fields used by the search bar to look for the query.
+const search_fields = [
+  "Collector Number",
+  "Card Display Name",
+  "Artist Credit",
+  "Writer Credit",
+];
 
 function getOwnedCards(cards_data) {
   let ownedCards = [];
@@ -91,6 +98,20 @@ function showOrHidePaginationControl(control, onclick, hide = false) {
   }
 }
 
+//Searches for the specified query in the cards array and returns the cards
+//that have it in one of the fields declared in search_fields.
+function searchCards(cards, query) {
+  if (query.trim().length === 0) {
+    return cards;
+  }
+  query = query.trim().toLowerCase();
+  return cards.filter((card) =>
+    search_fields.some((field) =>
+      card[field].toLowerCase().padStart(3, "0").includes(query)
+    )
+  );
+}
+
 //Splits the cards array into many pages, each with a maximum amount of "cards_per_page" cards,
 //and returns an array of the card data objects that belong in the specified page parameter.
 //Additionally, if the amount of total cards is bigger than cards_per_page,
@@ -125,7 +146,7 @@ function paginateCards(cards, cards_per_page, page, navigationFunction) {
   }
 }
 
-export function showCollection(cards_data, htmlLocation, page = 1) {
+export function showCollection(cards_data, htmlLocation, page = 1, query = "") {
   let sort = localStorage.getItem("sort") ?? "Collector Number";
   let cards_per_page = localStorage.getItem("page-size") ?? 10;
   let fullCollection = localStorage.getItem("showFullCollection") === "true";
@@ -147,6 +168,13 @@ export function showCollection(cards_data, htmlLocation, page = 1) {
   if (cards === null) {
     htmlLocation.innerHTML =
       "You have no cards at the moment. Try pulling some at the gacha!";
+    PAGINATION_BTNS.container.classList.add("hidden");
+    return;
+  }
+
+  cards = searchCards(cards, query);
+  if (cards.length === 0) {
+    htmlLocation.innerHTML = `"${query}" not found.`;
     PAGINATION_BTNS.container.classList.add("hidden");
     return;
   }
