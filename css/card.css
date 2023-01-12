@@ -26,7 +26,7 @@ tcg-card {
   --card-width: 400px; /* adjust the card size for the gacha page */
   --card-height: 559px; /* adjust the card size for the gacha page */
 }
-#gacha-controls.grid-display {
+#gacha-controls.pulled.grid-display {
   --card-width: 300px; /* adjust the card size for the gacha page */
   --card-height: 419px; /* adjust the card size for the gacha page */
 }
