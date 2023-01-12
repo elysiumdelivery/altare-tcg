@@ -26,6 +26,10 @@ tcg-card {
   --card-width: 400px; /* adjust the card size for the gacha page */
   --card-height: 559px; /* adjust the card size for the gacha page */
 }
+#gacha-controls.grid-display {
+  --card-width: 300px; /* adjust the card size for the gacha page */
+  --card-height: 419px; /* adjust the card size for the gacha page */
+}
 #gacha-controls #card-list,
 #collection-border #card-list {
   position: relative;
@@ -35,8 +39,11 @@ tcg-card {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  row-gap: 2em;
+  row-gap: 3em;
   column-gap: 1vmin;
+}
+#gacha-controls #card-list {
+  row-gap: 3.5em;
 }
 #gacha-controls tcg-card {
   position: absolute;
@@ -46,11 +53,34 @@ tcg-card {
 .card-subtitle {
   color: white;
   user-select: text;
+  font-size: 0.9em;
+  display: inline-block;
+  opacity: 0;
+  animation: fadeIn 0.3s ease 0s 1;
+  animation-fill-mode: forwards;
+  margin-top:3px;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+#gacha-controls .card-subtitle {
+  margin-top:0px;
+  font-size: 1em;
+  padding-top: 1.5vmin;
+  position: relative;
+  z-index: -1;
 }
 #pull-announcement {
   color: white;
-  margin: 0;
+  margin: 0.5em 0;
   text-align: center;
+  font-size: 1em;
 }
 
 /* rotate card differently depending on its position in the pile */
@@ -235,10 +265,15 @@ tcg-card {
 section label {
   padding-left: 15px;
 }
-
+.grid-display.pulled section {
+  padding-bottom:70px;
+}
 #gacha-button {
   margin-bottom: 1em;
   background-color: var(--accent-color);
+}
+.pile-display #gacha-button {
+  margin-bottom:0.5em;
 }
 
 #gacha-button:hover,
@@ -316,6 +351,10 @@ section#gacha-controls input {
     grid-template-rows: 3em 0.5fr 1fr 1fr;
   }
 
+  .card-subtitle {
+    font-size: 0.8em;
+  }
+
   .details-dialog-card {
     /* fill in container */
     height: auto;
@@ -349,6 +388,17 @@ section#gacha-controls input {
 }
 
 @media screen and (max-width: 800px) {
+  .pile-display #gacha-button {
+    margin-bottom: 1em;
+  }
+  #pull-announcement {
+    position: absolute;
+    margin: calc(var(--card-height) + 5em) auto 0 auto;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    width: calc(100% - 6em);
+  }
   #gacha-controls #card-list {
     /* make the card area smaller when the screen is small */
     min-height: calc(var(--card-height) * 2 + (6vh + 100px));
@@ -447,6 +497,14 @@ section#gacha-controls input {
 }
 
 @media screen and (max-width: 600px) {
+  #gacha-controls.grid-display {
+    --card-width: 200px;
+    --card-height: 279px;
+  }
+  #gacha-controls .card-subtitle {
+    font-size: 0.8em;
+    padding-top: 2vmin;
+  }
   .details-dialog-card {
     /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
     width: calc(var(--card-width) * 1.5);

@@ -88,7 +88,13 @@ export async function defineCardComponent() {
       if (gacha_display_selection !== "gacha-grid") {
         this.addEventListener("animationend", addUnclickableToCardsExceptLast);
       } else {
+        this.subtitle.style.willChange = "opacity";
         this.subtitle.classList.remove("hidden");
+        // update value back after animation 
+        let currentSubtitle = this.subtitle;
+        this.subtitle.addEventListener("animationend", function(){
+          currentSubtitle.style.willChange = "auto";
+        })
       }
     }
 
@@ -214,6 +220,14 @@ export function addUnclickableToCardsExceptLast() {
 export function renderCards(cards, htmlLocation, replace = false) {
   if (replace) {
     htmlLocation.innerHTML = "";
+    // only on the gacha page
+    if(document.getElementById("gacha-controls") !== null){
+      // reset the z-index to the highest on the closed pile
+      card_z_index = HIGHEST_Z_INDEX;
+      // reset the subtitle in the pile display
+      document.getElementById("pull-announcement").textContent = "";
+      document.getElementById("gacha-controls").classList.add("pulled");
+    }
   }
   for (let i = 0; i < cards.length; i++) {
     htmlLocation.insertAdjacentHTML(
@@ -221,8 +235,6 @@ export function renderCards(cards, htmlLocation, replace = false) {
       `<tcg-card card-id="${cards[i]["Collector Number"]}"></tcg-card>`
     );
   }
-  // reset the z-index to the highest on the closed pile
-  card_z_index = HIGHEST_Z_INDEX;
   // setup hover for all cards
   setupHover();
 }
