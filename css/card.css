@@ -26,6 +26,11 @@ tcg-card {
   --card-width: 400px; /* adjust the card size for the gacha page */
   --card-height: 559px; /* adjust the card size for the gacha page */
 }
+/* card should be slightly smaller in the grid format, is a bit awkward otherwise */
+#gacha-controls.pulled.grid-display {
+  --card-width: 300px; /* adjust the card size for the gacha page */
+  --card-height: 419px; /* adjust the card size for the gacha page */
+}
 #gacha-controls #card-list,
 #collection-border #card-list {
   position: relative;
@@ -35,8 +40,12 @@ tcg-card {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  row-gap: 2em;
+  row-gap: 3em;
   column-gap: 1vmin;
+}
+/* create a wider gap in order to fit the subtitle */
+#gacha-controls #card-list {
+  row-gap: 3.5em;
 }
 #gacha-controls tcg-card {
   position: absolute;
@@ -46,11 +55,35 @@ tcg-card {
 .card-subtitle {
   color: white;
   user-select: text;
+  font-size: 0.9em;
+  display: inline-block;
+  opacity: 0;
+  /* not strictly necessary, but makes it look slightly nicer */
+  animation: fadeIn 0.3s ease 0s 1;
+  animation-fill-mode: forwards;
+  margin-top: 3px;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#gacha-controls .card-subtitle {
+  margin-top: 0px;
+  font-size: 1em;
+  padding-top: 1.5vmin;
+  position: relative;
+  z-index: -1;
 }
 #pull-announcement {
   color: white;
-  margin: 0;
+  margin: 0.5em 0;
   text-align: center;
+  font-size: 1em;
 }
 
 /* rotate card differently depending on its position in the pile */
@@ -177,12 +210,9 @@ tcg-card {
 }
 
 .card-cover {
-  border: solid;
-  border-color: dodgerblue; /* update or remove when final card back is obtained */
-  box-sizing: border-box; /* avoid card becoming larger if border placed on the outside */
   border-radius: var(--border-radius);
-  background-image: url("../images/elysium_delivery_services.jpg"); /* update this when final card back is obtained */
-  background-color: white;
+  background-image: url("../images/AltareTCG_Back_Compressed.png"); /* update this when final card back is obtained */
+  background-color: #58abda;
 }
 
 #gacha-controls #card-list .card-component.flip {
@@ -235,10 +265,15 @@ tcg-card {
 section label {
   padding-left: 15px;
 }
-
+.grid-display.pulled section {
+  padding-bottom: 70px;
+}
 #gacha-button {
   margin-bottom: 1em;
   background-color: var(--accent-color);
+}
+.pile-display #gacha-button {
+  margin-bottom:0.5em;
 }
 
 #gacha-button:hover,
@@ -316,6 +351,10 @@ section#gacha-controls input {
     grid-template-rows: 3em 0.5fr 1fr 1fr;
   }
 
+  .card-subtitle {
+    font-size: 0.8em;
+  }
+
   .details-dialog-card {
     /* fill in container */
     height: auto;
@@ -349,6 +388,18 @@ section#gacha-controls input {
 }
 
 @media screen and (max-width: 800px) {
+  /* adjust the spacing at the top for the pile display so it looks better */
+  .pile-display #gacha-button {
+    margin-bottom: 1em;
+  }
+  #pull-announcement {
+    position: absolute;
+    margin: calc(var(--card-height) + 5em) auto 0 auto;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    width: calc(100% - 6em);
+  }
   #gacha-controls #card-list {
     /* make the card area smaller when the screen is small */
     min-height: calc(var(--card-height) * 2 + (6vh + 100px));
@@ -393,7 +444,8 @@ section#gacha-controls input {
   background-color: rgba(43, 46, 56, 0.7);
 }
 
-/* Card animation code, credit to simeydotme
+/* Card animation code, credit to simeydotme for base animation setup
+* Tweaks made by Elysium Delivery Services Altare Birthday Project team
 * Original site: https://deck-24abcd.netlify.app/
 */
 
@@ -447,6 +499,14 @@ section#gacha-controls input {
 }
 
 @media screen and (max-width: 600px) {
+  #gacha-controls.grid-display {
+    --card-width: 200px;
+    --card-height: 279px;
+  }
+  #gacha-controls .card-subtitle {
+    font-size: 0.8em;
+    padding-top: 2vmin;
+  }
   .details-dialog-card {
     /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
     width: calc(var(--card-width) * 1.5);
@@ -564,8 +624,8 @@ section#gacha-controls input {
 #gacha-controls .card-image.holo:after {
   --space: 4%;
   --galaxybg: center 521px;
-  background-image: url(../images/galaxy.jpg), url(../images/galaxy.jpg),
-    url(../images/galaxy.jpg),
+  background-image: url(../images/AltareTCG_GachaBG_Galaxy.jpg), url(../images/AltareTCG_GachaBG_Galaxy.jpg),
+    url(../images/AltareTCG_GachaBG_Galaxy.jpg),
     repeating-linear-gradient(
       82deg,
       rgb(219, 204, 86) calc(var(--space) * 1),
@@ -597,7 +657,7 @@ section#gacha-controls input {
   --space: 5%;
   --angle: 133deg;
   --imgsize: 50% 42%;
-  background-image: url(../images/illusion3.png),
+  background-image: url(../images/AltareTCG_GachaBG_Illusion.png),
     repeating-linear-gradient(
       0deg,
       rgb(255, 119, 115) calc(var(--space) * 1),
@@ -632,7 +692,7 @@ section#gacha-controls input {
   --space: 5%;
   --angle: 133deg;
   --imgsize: 25% 20%;
-  background-image: url(../images/trainerbg3.png),
+  background-image: url(../images/AltareTCG_GachaBG_Wave.png),
     repeating-linear-gradient(
       0deg,
       rgb(255, 119, 115) calc(var(--space) * 1),
@@ -824,7 +884,7 @@ section#gacha-controls input {
   }
 }
 
-/* Gacha page only shortened animations - only 3s long to speed things up */
+/* Gacha page only shortened animations - only 3s long to speed things up, with a 0.5s delay to avoid animation lag */
 
 #gacha-controls .card-image.animated {
   transition: none;
