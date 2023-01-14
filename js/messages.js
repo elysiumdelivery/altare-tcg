@@ -31,7 +31,6 @@ function getCSVData(page, callback = undefined) {
 
 function renderMessages (message_data) {
     let messageContainer = document.getElementById("artist-writer-messages");
-    console.log(message_data);
     for (var i = 0; i < message_data.length; i++) {
         let message = message_data[i];
         let messageNode = document.createElement("li");
