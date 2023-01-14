@@ -60,27 +60,45 @@ function renderMessages (message_data) {
 }
 
 function renderCredits (credits_data) {
-    let creditsContainer = document.getElementById("credits-column");
-    credits_data.forEach((credit) => {
-        if (credit["Staff name"]) {
-            let creditListing = document.createElement("li");
-    
-            let creditName = document.createElement("h3");
+    let creditsContainer = document.getElementById("credits");
+    let roleMapping = [[]];
+    let roleElements = [];
+    credits_data.forEach((credit, i) => {
+        if (i === 0 || !credit["Role"]) {
+            let creditsColumn = document.createElement("ul");
+            creditsColumn.classList.add("credits-column");
+            roleMapping.push([]);
+            roleElements.push(creditsColumn);
+            creditsContainer.append(creditsColumn);
+        }
+        if (i === 0 || credit["Role"]) {
+            roleMapping[roleElements.length - 1].push(credit);
+        }
+    });
+
+    for (var i = 0; i < roleElements.length; i++) {
+        let roleColumn = roleElements[i];
+        let staffList = roleMapping[i];
+
+        staffList.forEach((credit) => {
+            let creditListing = document.createElement("li");    
+            let creditName = document.createElement("h2");
+            let creditRole = document.createElement("p");
             creditName.textContent = credit["Staff name"];
             creditListing.append(creditName);
             if (credit["Twitter"]) {
+                let creditTwitterHeader = document.createElement("h3");
                 let creditTwitter = document.createElement("a");
                 creditTwitter.href = `https://twitter.com/${credit["Twitter"]}`;
                 creditTwitter.textContent = credit["Twitter"];
-                creditListing.append(creditTwitter);
+                creditTwitterHeader.append(creditTwitter);
+                creditListing.append(creditTwitterHeader);
             }
-            let creditRole = document.createElement("p");
             creditRole.textContent = credit["Role"];
             creditListing.append(creditRole);
-
-            creditsContainer.append(creditListing);
-        }
-    });
+            roleColumn.append(creditListing);
+        });
+    }
 }
 
 async function main() {

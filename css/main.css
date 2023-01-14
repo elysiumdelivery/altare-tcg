@@ -6,6 +6,7 @@
   --accent-color: #54acdc;
   --accent-color-lighten-50: #a9d5ed;
   --bg-color: #1d346d;
+  --bg-color-lighten-30: #345ec5;
   --bg-color-lighten-50: #6c8bd7;
 }
 
@@ -141,9 +142,16 @@ section#artist-writer-board .header-message {
   text-align: center;
   margin-bottom: 1em;
 }
+section#artist-writer-board h1 {
+  color: white;
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 2em;
+}
+
 section#artist-writer-board .artist-writer-message {
   padding: 1.5em;
-  background: white;
+  background: #BBD5DA;
   border-top-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
   margin: 1.5em 0.5em;
@@ -157,11 +165,11 @@ section#artist-writer-board .artist-writer-message {
 }
 
 section#artist-writer-board .artist-writer-message a {
-  color: var(--accent-color);
+  color: var(--bg-color);
 }
 
 section#artist-writer-board .artist-writer-message a:visited {
-  color: var(--bg-color);
+  color: var(--bg-color-lighten-50);
 }
 
 section#artist-writer-board .artist-writer-message:nth-child(odd) { animation-delay: .5s }
@@ -191,32 +199,36 @@ section#artist-writer-board .artist-writer-message h3 {
 
 section#credits {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  column-count: 2;
 }
 
-ul#credits-column {
+section#credits h1 {
+  font-size: 1.5em;
+  margin-bottom: 2em;
+
+  width: 100%;
+  text-align: center;
+  column-span: all;
+  color: white;
+}
+
+ul.credits-column {
   list-style: none;
   padding: 0;
   margin: 0;
-
-  column-count: 2;
-  width: 100%;
   
   box-sizing: border-box;
   text-align: center;
 
   min-height: auto;
-  margin: 0 0.25em;
+  /* margin: 0 0.25em; */
   /* margin-bottom: 1em; */
-  padding: 1em;
-  /* background: white;
+  /* padding: 1em; */
+  padding: 1.5em;
+  background: #BBD5DA;
   border-top-left-radius: 0.5em;
-  border-bottom-right-radius: 0.5em; */
-  text-align: center;
+  border-bottom-right-radius: 0.5em;
+  margin: 1.5em 0.5em;
   /* avoid breaking the message box between columns */
   break-inside: avoid;
 
@@ -225,32 +237,35 @@ ul#credits-column {
   animation-iteration-count: 1;
 }
 
-ul#credits-column:nth-child(1) { animation-delay: .5s }
-ul#credits-column:nth-child(2) { animation-delay: 1s }
-ul#credits-column:nth-child(3) { animation-delay: 1.5s }
-ul#credits-column:nth-child(4) { animation-delay: 2s }
+ul.credits-column:nth-of-type(1) { animation-delay: .5s; margin-top: 0; }
+ul.credits-column:nth-of-type(2) { animation-delay: 1s }
+ul.credits-column:nth-of-type(3) { animation-delay: 1.5s }
 
-ul#credits-column h2 {
+ul.credits-column li {
+  margin: 2em 0;
+}
+
+ul.credits-column h2 {
+  font-size: 1em;
   margin-bottom: 0.25em;
 }
 
-ul#credits-column h3 {
-  margin-bottom: 0.25em;
-  color: white;
-}
-
-ul#credits-column a {
-  color: var(--accent-color);
-}
-
-ul#credits-column a:visited {
-  color: var(--bg-color);
-}
-
-ul#credits-column p {
-  margin-top: 0.25em;
+ul.credits-column h3 {
   font-size: 0.8em;
+  margin: 0.5em 0;
+}
+
+ul.credits-column a {
+  color: var(--bg-color)
+}
+
+ul.credits-column a:visited {
   color: var(--bg-color-lighten-50);
+}
+
+ul.credits-column p {
+  margin-top: 0.25em;
+  font-size: 1em;
 }
 
 @media only screen and (max-width: 800px) {
