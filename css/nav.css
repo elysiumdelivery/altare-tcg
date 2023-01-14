@@ -37,6 +37,30 @@ nav a .icon {
   margin-right: 0.5em;
 }
 
+/* chibi altare sits on active tab */
+nav a.active::after {
+  content: "";
+  position: absolute;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(../images/ChibiAltare.png);
+  width: 100%;
+  height: 70px;
+  bottom: calc(100% - 3px);
+
+  /* animation transform optimization */
+  -webkit-backface-visibility: hidden;
+
+  transform-origin: 50% 100%;
+}
+
+nav a.active:hover::after,
+nav a.active:focus-visible::after {
+  animation: chibi-altare-anim 2s linear;
+  animation-iteration-count: infinite;
+}
+
 nav a#nav-gacha::before,
 section#gacha-controls {
   background-color: #3b47b3;
@@ -175,6 +199,35 @@ nav a#nav-credits:focus-visible:not(.active)::before {
     margin: 0.5em 0;
   }
 
+  /* chibi altare hidden on other tab options in hamburger menu to prevent visual blocks */
+  nav a:not(#nav-home)::after {
+    display: none;
+  }
+
+  /* chibi altare always sits on home tab in this view */
+  nav a#nav-home::after {
+    content: "";
+    position: absolute;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(../images/ChibiAltare.png);
+    width: 100%;
+    height: 70px;
+    bottom: calc(100% - 3px);
+  
+    /* animation transform optimization */
+    -webkit-backface-visibility: hidden;
+  
+    transform-origin: 50% 100%;
+  }
+  
+  nav a#nav-home:hover::after,
+  nav a#nav-home:focus-visible::after {
+    animation: chibi-altare-anim 2s linear;
+    animation-iteration-count: infinite;
+  }
+
   nav a.active {
     transform: translateY(-50%) scale(1.1);
     border-bottom: 3px solid white;
@@ -292,4 +345,12 @@ nav a#nav-credits:focus-visible:not(.active)::before {
   nav hr {
     display: none;
   }
+}
+
+@keyframes chibi-altare-anim {
+  0% { transform: translateZ(0) rotate(0deg) scaleX(1) scaleY(1); }
+  25% { transform: translateZ(0) rotate(-1deg) scaleX(0.99) scaleY(1.02); }
+  50% { transform: translateZ(0) rotate(0deg) scaleX(1) scaleY(1); }
+  75% { transform: translateZ(0) rotate(1deg) scaleX(0.99) scaleY(1.02); }
+  100% { transform: translateZ(0) rotate(0deg) scaleX(1) scaleY(1); }
 }
