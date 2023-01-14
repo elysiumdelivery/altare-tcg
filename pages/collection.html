@@ -65,7 +65,14 @@
       <!-- Navigation -->
       <nav>
         <a id="nav-home" href="../index.html">
-          <object class="icon icon-logo" type="image/svg+xml" aria-hidden="true" data="../icons/Icons_Logo.svg" tabindex="-1" tabindex="-1">
+          <object
+            class="icon icon-logo"
+            type="image/svg+xml"
+            aria-hidden="true"
+            data="../icons/Icons_Logo.svg"
+            tabindex="-1"
+            tabindex="-1"
+          >
             <img src="../icons/Icons_Logo.svg" />
           </object>
           <span>Home</span>
@@ -125,37 +132,58 @@
         </button>
       </nav>
       <section id="collection-border">
-        <button id="full-collection-toggle">Show Full Collection</button>
-        <button id="reset-collection">Reset Card Collection</button>
-        <label>
-          Sort by:
-          <select id="sort-dropdown">
-            <option value="Collector Number" selected>Collector Number</option>
-            <option value="Collector Number-">
-              Collector Number (Reverse)
-            </option>
-            <option value="Rarity">Rarity</option>
-            <option value="Rarity-">Rarity (Reverse)</option>
-          </select>
-        </label>
-        <label>
-          Page size:
-          <select id="size-dropdown">
-            <option value="10" selected>10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="all">All</option>
-          </select>
-        </label>
-        <input type="search" name="search" id="search-bar" placeholder="Search by name/artist/writer..." aria-label="Search cards by name, artist or writer" size="23" maxlength="32">
+        <section
+          id="collection-settings"
+          aria-label="Collection Settings/ Search"
+        >
+          <button id="full-collection-toggle">Show Full Collection</button>
+          <button id="reset-collection">Reset Card Collection</button>
+          <label>
+            Sort by:
+            <select id="sort-dropdown">
+              <option value="Collector Number" selected>
+                Collector Number
+              </option>
+              <option value="Collector Number-">
+                Collector Number (Reverse)
+              </option>
+              <option value="Rarity">Rarity</option>
+              <option value="Rarity-">Rarity (Reverse)</option>
+            </select>
+          </label>
+          <label>
+            Page size:
+            <select id="size-dropdown">
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="all">All</option>
+            </select>
+          </label>
+          <label>
+            Search:
+            <input
+              type="search"
+              name="search"
+              id="search-bar"
+              placeholder="Name/artist/writer..."
+              size="23"
+              maxlength="32"
+            />
+          </label>
+        </section>
 
-        <p id="collected-cards-number">Collected cards:</p>
-        <section id="card-list"></section>
-        <div id="collection-pagination" class="hidden">
+        <h2 id="collected-cards-number">Collected cards:</h2>
+        <section id="card-list" aria-label="Card list"></section>
+        <section
+          id="collection-pagination"
+          aria-label="Pagination"
+          class="hidden"
+        >
           <button id="pagination-previous" class="invisible">Previous</button>
           <span id="pagination-current">1</span>
           <button id="pagination-next">Next</button>
-        </div>
+        </section>
       </section>
 
       <footer>

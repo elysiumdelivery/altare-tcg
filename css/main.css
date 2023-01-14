@@ -59,7 +59,8 @@ footer svg {
 }
 
 button:not(.card-front):not(.card-back),
-select {
+select,
+input {
   background-color: var(--bg-color);
   color: white;
   border: 8px solid transparent;
@@ -68,13 +69,23 @@ select {
   font-size: 1em;
   transition: background-color 0.3s ease;
   width: 200px;
+}
+::placeholder { 
+  color: white;
+  opacity: 0.8;
+}
+
+button:not(.card-front):not(.card-back),
+select {
   cursor: pointer;
 }
 
 button:not(.card-front):not(.card-back):hover,
 select:hover,
 button:not(.card-front):not(.card-back):focus-visible,
-select:focus-visible {
+select:focus-visible,
+input:hover,
+input:focus-visible {
   background-color: var(--accent-color);
 }
 
@@ -121,6 +132,16 @@ select:focus-visible {
 
 .hidden {
   display: none !important;
+}
+
+section#collection-settings,
+section#collection-pagination {
+  min-height: auto;
+  padding: 0;
+}
+
+#collected-cards-number {
+  font-size: 1em;
 }
 
 section#artist-writer-board ul {
