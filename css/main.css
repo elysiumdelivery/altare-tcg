@@ -90,6 +90,8 @@ select:focus-visible {
 #title-header {
   color: white;
   text-align: center;
+  margin-top: 1em;
+  margin-bottom: 0;
 }
 
 #page-header {
@@ -221,9 +223,6 @@ ul.credits-column {
   text-align: center;
 
   min-height: auto;
-  /* margin: 0 0.25em; */
-  /* margin-bottom: 1em; */
-  /* padding: 1em; */
   padding: 1.5em;
   background: #BBD5DA;
   border-top-left-radius: 0.5em;

@@ -37,26 +37,39 @@ nav a .icon {
   margin-right: 0.5em;
 }
 
-/* chibi altare sits on active tab */
-nav a.active::after {
+/* chibi altare always sits on home tab */
+nav a#nav-home::after {
   content: "";
   position: absolute;
-  background-position: center;
+  background-position: 50% 100%;
   background-size: contain;
   background-repeat: no-repeat;
   background-image: url(../images/ChibiAltare.png);
   width: 100%;
-  height: 70px;
-  bottom: calc(100% - 3px);
+  height: 11em;
+  bottom: -0.5em;
+  z-index: 1;
 
   /* animation transform optimization */
   -webkit-backface-visibility: hidden;
 
   transform-origin: 50% 100%;
+
+  transition: 0.5s opacity ease, 0.5s transform ease;
+  visibility: hidden;
+  opacity: 0;
 }
 
-nav a.active:hover::after,
-nav a.active:focus-visible::after {
+nav a#nav-home:hover .icon.icon-logo,
+nav a#nav-home:focus-visible .icon.icon-logo {
+  visibility: hidden;
+  opacity: 0;
+}
+
+nav a#nav-home:hover::after,
+nav a#nav-home:focus-visible::after {
+  visibility: visible;
+  opacity: 1;
   animation: chibi-altare-anim 2s linear;
   animation-iteration-count: infinite;
 }
@@ -199,33 +212,18 @@ nav a#nav-credits:focus-visible:not(.active)::before {
     margin: 0.5em 0;
   }
 
-  /* chibi altare hidden on other tab options in hamburger menu to prevent visual blocks */
-  nav a:not(#nav-home)::after {
-    display: none;
+  /* chibi altare always sits on home tab */
+  nav a#nav-home::after {
+    bottom: calc(100% - 3px);
+    right: auto;
+    visibility: visible;
+    opacity: 1;
   }
 
-  /* chibi altare always sits on home tab in this view */
-  nav a#nav-home::after {
-    content: "";
-    position: absolute;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-image: url(../images/ChibiAltare.png);
-    width: 100%;
-    height: 70px;
-    bottom: calc(100% - 3px);
-  
-    /* animation transform optimization */
-    -webkit-backface-visibility: hidden;
-  
-    transform-origin: 50% 100%;
-  }
-  
-  nav a#nav-home:hover::after,
-  nav a#nav-home:focus-visible::after {
-    animation: chibi-altare-anim 2s linear;
-    animation-iteration-count: infinite;
+  /* logo always shows */
+  nav a#nav-home .icon.icon-logo {
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   nav a.active {
@@ -265,38 +263,35 @@ nav a#nav-credits:focus-visible:not(.active)::before {
 @media only screen and (min-width: 1000px) {
   /* wide styling, for when the tabs are all visible on screen */
   nav a#nav-home .icon.icon-logo {
-      position: relative;
+      position: absolute;
       bottom: 0;
       margin-bottom: 0.5em;
       margin-right: 0;
-      height: 5em;
-      width: 5em;
+      height: 9em;
+      width: 9em;
+      margin-left: 1vmin;
       pointer-events: none;
       transform: scale(1);
-      transition: 0.2s transform ease;
+      transition: 0.2s transform ease, 0.2s opacity ease;
   }
-  
-  nav a#nav-home:hover .icon.icon-logo,
-  nav a#nav-home:focus-visible .icon.icon-logo {
-      transform: scale(1.25);
-      transition: 0.2s transform ease;
-  }    
 
   nav a#nav-home:hover span,
   nav a#nav-home:focus-visible span {
-      visibility: visible;
-      opacity: 1;
-  }    
+      visibility: hidden;
+      opacity: 0;
+  }
   
   nav a#nav-home {
       flex-grow: 1;
+      height: 5em;
   }
     
   nav a#nav-home span {
       position: absolute;
-      width: 25%;
+      width: 75%;
+      bottom: 0;
       text-align: center;
-      padding: 0.5em;
+      padding: 0.75em 0.5em;
       border-radius: 0.25em;
 
       visibility: hidden;
