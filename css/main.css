@@ -23,6 +23,7 @@ html {
 body,
 main {
   background: transparent;
+  margin: 8px;
 }
 
 h1,
@@ -102,9 +103,14 @@ select:focus-visible {
 #collection-pagination {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   gap: 1em;
   margin-top: 2em;
+}
+
+#collection-pagination button {
+  width: 30vmin;
+  max-width: 200px;
 }
 
 .visually-hidden:not(:focus):not(:active) {

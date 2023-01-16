@@ -126,16 +126,19 @@ nav a#nav-credits:focus-visible:not(.active)::before {
 }
 
 #nav-hamburger {
-  position: relative;
-  top: 0;
+  /* hamburger stays up top while user is scrolling down */
+  position: sticky;
+  top: 0.5em;
   right: 0;
   height: 4em;
   width: 4em;
   background: rgb(59 71 179);
-  margin: 1em 0;
+  margin: 1em 0.25em;
   margin-left: auto;
   border: 0;
   cursor: pointer;
+  /* enforces hamburger button to stay on top */
+  z-index: 1;
 
   display: none;
 }
@@ -181,7 +184,8 @@ nav a#nav-credits:focus-visible:not(.active)::before {
   }
 
   nav {
-    position: absolute;
+    /* prevent nav menu from being scrolled away */
+    position: fixed;
     top: 0;
     right: 0;
     flex-direction: column;
@@ -214,6 +218,7 @@ nav a#nav-credits:focus-visible:not(.active)::before {
 
   /* chibi altare always sits on home tab */
   nav a#nav-home::after {
+    height: 6em;
     bottom: calc(100% - 3px);
     right: auto;
     visibility: visible;
@@ -232,13 +237,13 @@ nav a#nav-credits:focus-visible:not(.active)::before {
     border-bottom-style: double;
   }
 
-    nav a:hover:not(.active),
-    nav button:hover:not(.active),
-    nav a:focus-visible:not(.active),
-    nav button:focus-visible:not(.active) {
-        transition-duration: 0.25s;
-        transform: scale(1.1);
-    }
+  nav a:hover:not(.active),
+  nav button:hover:not(.active),
+  nav a:focus-visible:not(.active),
+  nav button:focus-visible:not(.active) {
+    transition-duration: 0.25s;
+    transform: scale(1.1);
+  }
 
   nav.active {
     visibility: visible;
@@ -280,7 +285,7 @@ nav a#nav-credits:focus-visible:not(.active)::before {
       visibility: hidden;
       opacity: 0;
   }
-  
+   
   nav a#nav-home {
       flex-grow: 1;
       height: 5em;
