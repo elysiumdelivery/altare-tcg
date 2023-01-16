@@ -16,7 +16,7 @@ html {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Catamaran", sans-serif;
   height: 100%;
 }
 
@@ -32,7 +32,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Zen Dots", fantasy;
+  font-family: 'Rubik', sans-serif;
 }
 
 video {
@@ -94,6 +94,7 @@ select:focus-visible {
   text-align: center;
   margin-top: 1em;
   margin-bottom: 0;
+  font-family: "Zen Dots", fantasy;
 }
 
 #title-header::before {
