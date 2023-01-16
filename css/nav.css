@@ -62,16 +62,13 @@ nav a#nav-home #chibi-altare {
   transition: 0.5s opacity ease, 0.5s transform ease;
   /* visibility: visible; */
   /* opacity: 1; */
+}
 
+nav a#nav-home:hover #chibi-altare,
+nav a#nav-home:focus-visible #chibi-altare {
   animation: chibi-altare-anim 2s linear;
   animation-iteration-count: infinite;
 }
-
-/* nav a#nav-home:hover .icon.icon-logo,
-nav a#nav-home:focus-visible .icon.icon-logo {
-  visibility: visible;
-  opacity: 1;
-} */
 
 nav a#nav-gacha::before,
 section#gacha-controls {
