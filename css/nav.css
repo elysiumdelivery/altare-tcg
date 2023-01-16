@@ -38,42 +38,40 @@ nav a .icon {
 }
 
 /* chibi altare always sits on home tab */
-nav a#nav-home::after {
+nav a#nav-home #chibi-altare {
   content: "";
   position: absolute;
-  background-position: 50% 100%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-image: url(../images/ChibiAltare.png);
+  /* background-position: 50% 100%; */
+  /* background-size: contain; */
+  /* background-repeat: no-repeat; */
+  /* background-image: url(../images/ChibiAltare.png); */
+  object-fit: contain;
+  object-position: 50% 100%;
   width: 100%;
   height: 11em;
   bottom: -0.5em;
-  z-index: 1;
+  z-index: 2;
 
+  /* pat pat */
+  cursor: grab; 
   /* animation transform optimization */
   -webkit-backface-visibility: hidden;
 
   transform-origin: 50% 100%;
 
   transition: 0.5s opacity ease, 0.5s transform ease;
-  visibility: visible;
-  opacity: 1;
+  /* visibility: visible; */
+  /* opacity: 1; */
 
   animation: chibi-altare-anim 2s linear;
   animation-iteration-count: infinite;
 }
 
-nav a#nav-home:hover .icon.icon-logo,
+/* nav a#nav-home:hover .icon.icon-logo,
 nav a#nav-home:focus-visible .icon.icon-logo {
   visibility: visible;
   opacity: 1;
-}
-
-nav a#nav-home:hover::after,
-nav a#nav-home:focus-visible::after {
-  visibility: hidden;
-  opacity: 0;
-}
+} */
 
 nav a#nav-gacha::before,
 section#gacha-controls {
@@ -218,19 +216,13 @@ nav a#nav-credits:focus-visible:not(.active)::before {
   }
 
   /* chibi altare always sits on home tab */
-  nav a#nav-home::after {
-    height: 6em;
+  nav a#nav-home #chibi-altare {
+    height: 5em;
+    width: 5em;
     bottom: calc(100% - 3px);
     right: auto;
     visibility: visible;
     opacity: 1;
-  }
-
-  /* logo and cheeb always shows */
-  nav a#nav-home .icon.icon-logo,
-  nav a#nav-home::after  {
-    visibility: visible !important;
-    opacity: 1 !important;
   }
 
   nav a.active {
@@ -269,7 +261,7 @@ nav a#nav-credits:focus-visible:not(.active)::before {
 
 @media only screen and (min-width: 1000px) {
   /* wide styling, for when the tabs are all visible on screen */
-  nav a#nav-home .icon.icon-logo {
+  /* nav a#nav-home .icon.icon-logo {
       position: absolute;
       bottom: 0;
       margin-bottom: 0.5em;
@@ -283,12 +275,13 @@ nav a#nav-credits:focus-visible:not(.active)::before {
       
       visibility: hidden;
       opacity: 0;
-  }
+  } */
 
   nav a#nav-home:hover span,
   nav a#nav-home:focus-visible span {
       visibility: visible;
       opacity: 1;
+      transform: translateX(10%) rotate(-12deg);
   }
    
   nav a#nav-home {
@@ -299,15 +292,21 @@ nav a#nav-credits:focus-visible:not(.active)::before {
     
   nav a#nav-home span {
       position: absolute;
-      width: 75%;
+      width: 25%;
       text-align: center;
-      padding: 0.75em 0.5em;
+      padding: 0.5em 0.5em;
       border-radius: 0.25em;
 
       visibility: hidden;
       opacity: 0;
-      transition: 0.5s opacity ease;
+      transition: 0.5s opacity ease, 0.5s transform ease;
       background-color: var(--accent-color);
+
+      z-index: 1;
+      bottom: 10%;
+      right: 0%;
+      transform-origin: 0% 50%;
+      transform: translateX(-50%) rotate(0deg);
   }
   
   nav a:not(#nav-home) {

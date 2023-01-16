@@ -89,10 +89,26 @@ select:focus-visible {
 }
 
 #title-header {
+  position: relative;
   color: white;
   text-align: center;
   margin-top: 1em;
   margin-bottom: 0;
+}
+
+#title-header::before {
+  content: "";
+  background-image: url(../icons/Icons_Logo.svg);
+  background-size: contain;
+  background-position: center;
+  opacity: 0.5;
+  position: absolute;
+  width: 3em;
+  height: 3em;
+  background-repeat: no-repeat;
+  left: calc(50% - 1.5em);
+  top: calc(50% - 1.35em);
+  z-index: -1;
 }
 
 #page-header {
