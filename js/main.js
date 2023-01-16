@@ -87,7 +87,7 @@ function setupCollectionControls() {
   }
   RESET_COLLECTION.onclick = (event) => {
     localStorage.clear();
-    localStorage.setItem("showFullCollection", "true");
+    localStorage.setItem("showFullCollection", "false");
     localStorage.setItem("sort", SORT_DROPDOWN.value);
     localStorage.setItem("page-size", CARDS_PER_PAGE_DROPDOWN.value);
     toggleCollection();
