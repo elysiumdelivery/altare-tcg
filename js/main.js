@@ -93,7 +93,7 @@ function setupCollectionControls() {
     toggleCollection();
   };
 
-  SEARCH_BAR.oninput = (event) =>
+  SEARCH_BAR.onchange = (event) =>
     showCollection(cards_data, COLLECTIONS_MAIN_CONTENT, 1, event.target.value);
 
   setupDropdown(SORT_DROPDOWN, "sort", "Collector Number");
