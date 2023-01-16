@@ -149,7 +149,7 @@ function paginateCards(cards, cards_per_page, page, navigationFunction) {
 export function showCollection(cards_data, htmlLocation, page = 1, query = "") {
   let sort = localStorage.getItem("sort") ?? "Collector Number";
   let cards_per_page = localStorage.getItem("page-size") ?? 10;
-  let fullCollection = localStorage.getItem("showFullCollection") === "true";
+  let fullCollection = localStorage.getItem("showFullCollection") === "false";
   let reverse = false;
   let ownedCount = 0;
   for (let rarity of RARITIES) {
