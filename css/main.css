@@ -270,7 +270,8 @@ ul.credits-column p {
 @media only screen and (max-width: 800px) {
   /* mobile / portrait styling */
 
-  section#artist-writer-board {
+  section#artist-writer-board,
+  section#credits {
     column-count: 1;
   }
 }
