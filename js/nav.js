@@ -29,7 +29,7 @@ function checkTitleHeaderWidth() {
   let titleHeader = document.getElementById("title-header");
   let navHome = document.getElementById("nav-home");
   if (innerWidth >= 1000) {
-    titleHeader.style.width = `${innerWidth - navHome.offsetWidth - navHome.offsetLeft}px`;
+    titleHeader.style.width = `${innerWidth - navHome.offsetWidth}px`;
     titleHeader.style.marginLeft = "auto";
   }
   else {

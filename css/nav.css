@@ -274,24 +274,30 @@ nav a#nav-credits:focus-visible:not(.active)::before {
       opacity: 0;
   } */
 
+  nav {
+    justify-content: center;
+  }
+
   nav a#nav-home:hover span,
   nav a#nav-home:focus-visible span {
       visibility: visible;
       opacity: 1;
-      transform: translateX(10%) rotate(-12deg);
+      transform: translateX(-10%) rotate(12deg);
   }
    
   nav a#nav-home {
-    flex-grow: 1;
+    flex-basis: 11vw;
     height: 10em;
     margin-top: -5em;
+    margin-right: 1em;
   }
     
   nav a#nav-home span {
       position: absolute;
-      width: 25%;
+      width: 70px;
       text-align: center;
       padding: 0.5em 0.5em;
+      padding-right: 1vw;
       border-radius: 0.25em;
 
       visibility: hidden;
@@ -301,9 +307,9 @@ nav a#nav-credits:focus-visible:not(.active)::before {
 
       z-index: 1;
       bottom: 10%;
-      right: 0%;
-      transform-origin: 0% 50%;
-      transform: translateX(-50%) rotate(0deg);
+      right: 50%;
+      transform-origin: 50% 0%;
+      transform: translateX(50%) rotate(0deg);
   }
   
   nav a:not(#nav-home) {
