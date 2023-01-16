@@ -56,22 +56,23 @@ nav a#nav-home::after {
   transform-origin: 50% 100%;
 
   transition: 0.5s opacity ease, 0.5s transform ease;
-  visibility: hidden;
-  opacity: 0;
+  visibility: visible;
+  opacity: 1;
+
+  animation: chibi-altare-anim 2s linear;
+  animation-iteration-count: infinite;
 }
 
 nav a#nav-home:hover .icon.icon-logo,
 nav a#nav-home:focus-visible .icon.icon-logo {
-  visibility: hidden;
-  opacity: 0;
+  visibility: visible;
+  opacity: 1;
 }
 
 nav a#nav-home:hover::after,
 nav a#nav-home:focus-visible::after {
-  visibility: visible;
-  opacity: 1;
-  animation: chibi-altare-anim 2s linear;
-  animation-iteration-count: infinite;
+  visibility: hidden;
+  opacity: 0;
 }
 
 nav a#nav-gacha::before,
@@ -225,8 +226,9 @@ nav a#nav-credits:focus-visible:not(.active)::before {
     opacity: 1;
   }
 
-  /* logo always shows */
-  nav a#nav-home .icon.icon-logo {
+  /* logo and cheeb always shows */
+  nav a#nav-home .icon.icon-logo,
+  nav a#nav-home::after  {
     visibility: visible !important;
     opacity: 1 !important;
   }
@@ -278,23 +280,26 @@ nav a#nav-credits:focus-visible:not(.active)::before {
       pointer-events: none;
       transform: scale(1);
       transition: 0.2s transform ease, 0.2s opacity ease;
+      
+      visibility: hidden;
+      opacity: 0;
   }
 
   nav a#nav-home:hover span,
   nav a#nav-home:focus-visible span {
-      visibility: hidden;
-      opacity: 0;
+      visibility: visible;
+      opacity: 1;
   }
    
   nav a#nav-home {
-      flex-grow: 1;
-      height: 5em;
+    flex-grow: 1;
+    height: 10em;
+    margin-top: -5em;
   }
     
   nav a#nav-home span {
       position: absolute;
       width: 75%;
-      bottom: 0;
       text-align: center;
       padding: 0.75em 0.5em;
       border-radius: 0.25em;
