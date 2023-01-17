@@ -34,8 +34,6 @@ function renderMessages (message_data) {
     for (var i = 0; i < message_data.length; i++) {
         let message = message_data[i];
         let messageNode = document.createElement("li");
-        // TODO: Dummy data for now. Alternate roles for now as a test. This should be pulled from a csv somewhere.
-        //   let userRole = i % 2 === 0 ? "Artist" : "Writer";
         messageNode.classList.add("artist-writer-message");
         let messageUserHeader = document.createElement("h2");
         let messageUserInfo = document.createElement("h3");

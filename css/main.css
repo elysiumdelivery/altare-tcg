@@ -23,6 +23,7 @@ html {
 body,
 main {
   background: transparent;
+  /* adding a bit of extra spacing, mostly for aesthetic reasons. Mobile view looked especially tight. */
   margin: 8px;
 }
 
@@ -92,6 +93,7 @@ select:focus-visible {
   position: relative;
   color: white;
   text-align: center;
+  /* Reducing spacing here on the title header */
   margin-top: 1em;
   margin-bottom: 0;
   font-family: "Zen Dots", fantasy;
@@ -120,6 +122,7 @@ select:focus-visible {
 #collection-pagination {
   display: flex;
   align-items: center;
+  /* More spacing. Makes it look better in portrait/narrow view. */
   justify-content: space-around;
   gap: 1em;
   margin-top: 2em;

@@ -41,10 +41,6 @@ nav a .icon {
 nav a#nav-home #chibi-altare {
   content: "";
   position: absolute;
-  /* background-position: 50% 100%; */
-  /* background-size: contain; */
-  /* background-repeat: no-repeat; */
-  /* background-image: url(../images/ChibiAltare.png); */
   object-fit: contain;
   object-position: 50% 100%;
   width: 100%;
@@ -60,8 +56,6 @@ nav a#nav-home #chibi-altare {
   transform-origin: 50% 100%;
 
   transition: 0.5s opacity ease, 0.5s transform ease;
-  /* visibility: visible; */
-  /* opacity: 1; */
 }
 
 nav a#nav-home:hover #chibi-altare,
@@ -258,22 +252,7 @@ nav a#nav-credits:focus-visible:not(.active)::before {
 
 @media only screen and (min-width: 1000px) {
   /* wide styling, for when the tabs are all visible on screen */
-  /* nav a#nav-home .icon.icon-logo {
-      position: absolute;
-      bottom: 0;
-      margin-bottom: 0.5em;
-      margin-right: 0;
-      height: 9em;
-      width: 9em;
-      margin-left: 1vmin;
-      pointer-events: none;
-      transform: scale(1);
-      transition: 0.2s transform ease, 0.2s opacity ease;
-      
-      visibility: hidden;
-      opacity: 0;
-  } */
-
+  
   nav {
     justify-content: center;
   }
