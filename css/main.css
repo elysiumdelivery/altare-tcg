@@ -64,6 +64,7 @@ footer svg {
 button:not(.card-front):not(.card-back),
 select,
 input {
+  font-family: "Montserrat", sans-serif;
   background-color: var(--bg-color);
   color: white;
   border: 8px solid transparent;
