@@ -19,6 +19,7 @@ const FULL_COLLECTION_TOGGLE = document.getElementById(
 const RESET_COLLECTION = document.getElementById("reset-collection");
 const SORT_DROPDOWN = document.getElementById("sort-dropdown");
 const CARDS_PER_PAGE_DROPDOWN = document.getElementById("size-dropdown");
+const SEARCH_BAR = document.getElementById("search-bar");
 
 export const CARD_ART_HIDDEN_ON_LOAD =
   PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
@@ -91,6 +92,10 @@ function setupCollectionControls() {
     localStorage.setItem("page-size", CARDS_PER_PAGE_DROPDOWN.value);
     toggleCollection();
   };
+
+  SEARCH_BAR.onchange = (event) =>
+    showCollection(cards_data, COLLECTIONS_MAIN_CONTENT, 1, event.target.value);
+
   setupDropdown(SORT_DROPDOWN, "sort", "Collector Number");
   setupDropdown(CARDS_PER_PAGE_DROPDOWN, "page-size", "10");
 }
