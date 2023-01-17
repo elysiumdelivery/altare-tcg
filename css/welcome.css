@@ -1,5 +1,10 @@
 /* welcome page styling goes here */
 
+body,
+main {
+  margin: 0px;
+}
+
 #welcome-message {
     margin: 5em auto;
     background: white;

@@ -25,4 +25,27 @@ async function setupNavClickEvents() {
   closeButton.onclick = closeNavMenu.bind(navElement);
 }
 
+function checkTitleHeaderWidth() {
+  let titleHeader = document.getElementById("title-header");
+  let navHome = document.getElementById("nav-home");
+  if (innerWidth >= 1000) {
+    titleHeader.style.width = `${innerWidth - navHome.offsetWidth}px`;
+    titleHeader.style.marginLeft = "auto";
+  }
+  else {
+    titleHeader.style.width = null;
+    titleHeader.style.marginLeft = null;
+  }
+}
+
+/**
+ * For wide views where chibi Altare is sitting on the nav,
+ * scale the header title to center between him and the right edge of the screen
+ */
+async function setupHeaderResizeEvent() {
+  window.onresize = checkTitleHeaderWidth;
+  checkTitleHeaderWidth();
+}
+
 setupNavClickEvents();
+setupHeaderResizeEvent();

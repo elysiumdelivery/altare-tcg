@@ -37,6 +37,33 @@ nav a .icon {
   margin-right: 0.5em;
 }
 
+/* chibi altare always sits on home tab */
+nav a#nav-home #chibi-altare {
+  content: "";
+  position: absolute;
+  object-fit: contain;
+  object-position: 50% 100%;
+  width: 100%;
+  height: 11em;
+  bottom: -0.5em;
+  z-index: 2;
+
+  /* pat pat */
+  cursor: grab; 
+  /* animation transform optimization */
+  -webkit-backface-visibility: hidden;
+
+  transform-origin: 50% 100%;
+
+  transition: 0.5s opacity ease, 0.5s transform ease;
+}
+
+nav a#nav-home:hover #chibi-altare,
+nav a#nav-home:focus-visible #chibi-altare {
+  animation: chibi-altare-anim 2s linear;
+  animation-iteration-count: infinite;
+}
+
 nav a#nav-gacha::before,
 section#gacha-controls {
   background-color: #3b47b3;
@@ -89,16 +116,19 @@ nav a#nav-credits:focus-visible:not(.active)::before {
 }
 
 #nav-hamburger {
-  position: relative;
-  top: 0;
+  /* hamburger stays up top while user is scrolling down */
+  position: sticky;
+  top: 0.5em;
   right: 0;
   height: 4em;
   width: 4em;
   background: rgb(59 71 179);
-  margin: 1em 0;
+  margin: 1em 0.25em;
   margin-left: auto;
   border: 0;
   cursor: pointer;
+  /* enforces hamburger button to stay on top */
+  z-index: 1;
 
   display: none;
 }
@@ -144,7 +174,8 @@ nav a#nav-credits:focus-visible:not(.active)::before {
   }
 
   nav {
-    position: absolute;
+    /* prevent nav menu from being scrolled away */
+    position: fixed;
     top: 0;
     right: 0;
     flex-direction: column;
@@ -175,19 +206,29 @@ nav a#nav-credits:focus-visible:not(.active)::before {
     margin: 0.5em 0;
   }
 
+  /* chibi altare always sits on home tab */
+  nav a#nav-home #chibi-altare {
+    height: 5em;
+    width: 5em;
+    bottom: calc(100% - 3px);
+    right: auto;
+    visibility: visible;
+    opacity: 1;
+  }
+
   nav a.active {
     transform: translateY(-50%) scale(1.1);
     border-bottom: 3px solid white;
     border-bottom-style: double;
   }
 
-    nav a:hover:not(.active),
-    nav button:hover:not(.active),
-    nav a:focus-visible:not(.active),
-    nav button:focus-visible:not(.active) {
-        transition-duration: 0.25s;
-        transform: scale(1.1);
-    }
+  nav a:hover:not(.active),
+  nav button:hover:not(.active),
+  nav a:focus-visible:not(.active),
+  nav button:focus-visible:not(.active) {
+    transition-duration: 0.25s;
+    transform: scale(1.1);
+  }
 
   nav.active {
     visibility: visible;
@@ -211,51 +252,43 @@ nav a#nav-credits:focus-visible:not(.active)::before {
 
 @media only screen and (min-width: 1000px) {
   /* wide styling, for when the tabs are all visible on screen */
-  nav a#nav-home .icon.icon-logo {
-      position: relative;
-      bottom: 0;
-      margin-bottom: 0.5em;
-      margin-right: 0;
-      height: 5em;
-      width: 5em;
-      pointer-events: none;
-      transform: scale(1);
-      transition: 0.2s transform ease;
-  }
   
-  nav a#nav-home:hover .icon.icon-logo,
-  nav a#nav-home:focus-visible .icon.icon-logo {
-      transform: scale(1.25);
-      transition: 0.2s transform ease;
-  }    
+  nav {
+    justify-content: center;
+  }
 
   nav a#nav-home:hover span,
   nav a#nav-home:focus-visible span {
       visibility: visible;
       opacity: 1;
-  }    
-  
+      transform: translateX(-10%) rotate(12deg);
+  }
+   
   nav a#nav-home {
-      flex-grow: 1;
+    flex-basis: 11vw;
+    height: 10em;
+    margin-top: -5em;
+    margin-right: 1em;
   }
     
   nav a#nav-home span {
       position: absolute;
-      width: 25%;
+      width: 70px;
       text-align: center;
-      padding: 0.5em;
+      padding: 0.5em 0.5em;
+      padding-right: 1vw;
       border-radius: 0.25em;
 
       visibility: hidden;
       opacity: 0;
-      transition: 0.5s opacity ease;
+      transition: 0.5s opacity ease, 0.5s transform ease;
       background-color: var(--accent-color);
-  }
-  
-  nav a:not(#nav-home) {
-    padding: 0.55rem 2.7rem;
-    transform-origin: 50% 0%;
-    font-size: 0.6em;
+
+      z-index: 1;
+      bottom: 10%;
+      right: 50%;
+      transform-origin: 50% 0%;
+      transform: translateX(50%) rotate(0deg);
   }
 
   nav a:not(#nav-home) {
@@ -292,4 +325,12 @@ nav a#nav-credits:focus-visible:not(.active)::before {
   nav hr {
     display: none;
   }
+}
+
+@keyframes chibi-altare-anim {
+  0% { transform: translateZ(0) rotate(0deg) scaleX(1) scaleY(1); }
+  25% { transform: translateZ(0) rotate(-1deg) scaleX(0.99) scaleY(1.02); }
+  50% { transform: translateZ(0) rotate(0deg) scaleX(1) scaleY(1); }
+  75% { transform: translateZ(0) rotate(1deg) scaleX(0.99) scaleY(1.02); }
+  100% { transform: translateZ(0) rotate(0deg) scaleX(1) scaleY(1); }
 }
