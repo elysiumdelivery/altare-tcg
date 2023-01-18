@@ -319,11 +319,6 @@ section#gacha-controls input {
   right: 0;
 }
 
-#gacha-prompt-roll-again img {
-  /* make the slime a little bigger & responsive */
-  width: 15vmax;
-}
-
 #gacha-controls.grid-display #gacha-prompt-roll-again {
   /* roll again prompt fixed to bottom right so it's always there even if user opens cards out of order */
   position: fixed;
@@ -334,6 +329,7 @@ section#gacha-controls input {
   z-index: 50;
 }
 
+/* have the roll again prompt fill the blank space */
 #gacha-controls.pile-display #gacha-prompt-roll-again {
   position: absolute;
   width: 50%;
