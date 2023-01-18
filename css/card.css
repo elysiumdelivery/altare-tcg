@@ -45,6 +45,7 @@ tcg-card {
 }
 
 #gacha-controls #card-list:not(.gacha-drawn) {
+  /* if we're looking at the initial prompt, don't set min-height yet. doing so adds a lot of blank space */
   min-height: auto;
 }
 
