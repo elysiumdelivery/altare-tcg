@@ -1,7 +1,7 @@
 import { renderCards } from "./cards.js";
 import { cards_by_rarity } from "./main.js";
 
-export const GACHA_BUTTON = document.getElementById("gacha-button");
+export const GACHA_BUTTONS = document.getElementsByClassName("gacha-button");
 
 //Card slots on each pull, representing the percent chance of getting a card of that rarity in each slot.
 //The sum of all rarities on a slot should be 100 or higher for proper function.
@@ -150,8 +150,23 @@ export function pullAndRenderCards(render_location) {
   renderCards(pulled, render_location, true);
   render_location.insertAdjacentHTML(
     "beforeend",
-    `<span class="visually-hidden">No more cards in this pack</span>`
+    `<span class="visually-hidden">No more cards in this pack. Roll again?</span>`
   );
+  
+  // Add prompt to roll again
+  let gachaRollAgain = document.createElement("div");
+  gachaRollAgain.id = "gacha-prompt-roll-again";
+  gachaRollAgain.className = "gacha-prompt hidden";
+  gachaRollAgain.insertAdjacentHTML("beforeend", `<img src="../images/slimelooptransparent.gif" alt="Cultare slime bouncing up and down"/>`);
+  
+  let gachaRollAgainButton = document.createElement("button");
+  gachaRollAgainButton.className = "gacha-button";
+  gachaRollAgainButton.type = "button";
+  gachaRollAgainButton.textContent = "Roll again";
+  gachaRollAgainButton.onclick = (event) => pullAndRenderCards(document.getElementById("card-list"));
+
+  gachaRollAgain.append(gachaRollAgainButton);
+  render_location.append(gachaRollAgain);
 }
 
 //Debug function to get the average rates for each rarity over a list of pulls.
