@@ -1005,7 +1005,10 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
 card will still fly across the screen, or flip when opened */
 #gacha-controls .card-image.animated.reduced-motion, 
 #gacha-controls .card-image.animated.reduced-motion:after, 
-#gacha-controls .card-image.animated.reduced-motion:before {
+#gacha-controls .card-image.animated.reduced-motion:before,
+#gacha-controls button.gacha-button.reduced-motion,
+#gacha-controls #card-list tcg-card.reduced-motion > .card-component.flip,
+#gacha-controls #card-list tcg-card.clicked.reduced-motion {
   /* not using the "animation-play-state: paused" code here as it makes the animationend never fire
   the animations then all begin playing at the same time when removed, which is not ideal */
   animation-duration: 0s;
