@@ -301,6 +301,13 @@ section#gacha-controls label {
 section#gacha-controls input {
   margin-left: 15px;
 }
+section#gacha-controls fieldset:nth-child(2){
+  margin-left:20px;
+  border-left:1px solid var(--bg-color-lighten-50);
+}
+section#gacha-controls fieldset:nth-child(2) > input:first-child {
+  margin-left:20px;
+}
 
 .gacha-prompt {
   display: flex;
@@ -327,6 +334,9 @@ section#gacha-controls input {
   right: 1em;
   /* z-index high enough to go ontop of tcg-card z-index */
   z-index: 50;
+
+  /* suggested to make it easier to see over a noisy background */
+  filter: drop-shadow(0px 5px 3px #222);
 }
 
 /* have the roll again prompt fill the blank space */
@@ -375,6 +385,10 @@ section#gacha-controls input {
     width: 25vw;
     height: calc(25vw * 1.395);
   }
+
+  #pull-announcement {
+    margin:1.5em 0 0.5em 0;
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -412,6 +426,10 @@ section#gacha-controls input {
     /* ignore min-height */
     min-height: auto;
     padding: 1em 2vmin;
+  }
+
+  #gacha-controls.grid-display .gacha-prompt img {
+    width: 12vmax;
   }
 }
 
@@ -463,6 +481,9 @@ section#gacha-controls input {
     /* use alternative top-to-bottom animation when the card is clicked */
     animation: bottom 1s ease 0s 1;
     animation-fill-mode: forwards;
+  }
+  .pile-display .gacha-prompt img {
+    width: 11vmax;
   }
 
   #gacha-controls.grid-display #gacha-prompt-roll-again {
@@ -552,6 +573,22 @@ section#gacha-controls input {
 
 #gacha-controls .card-image {
   margin: 0;
+}
+
+@media screen and (max-width: 620px) {
+
+  /* adjust the display of the reduce motion checkbox when screen is small */
+  section#gacha-controls fieldset {
+    display: block;
+  }
+  section#gacha-controls fieldset:nth-child(2){
+    border-left: none;
+    margin: 10px 0px 20px 0px;
+  }
+  section#gacha-controls fieldset:nth-child(2) > input:first-child {
+    margin-left: 0px;
+  }
+  
 }
 
 @media screen and (max-width: 600px) {
@@ -962,6 +999,17 @@ section#gacha-controls input {
 #gacha-controls .card-image.secret.animated:after {
   transition: none;
   animation: holoSecretSparkle 3s ease 0.5s 1;
+}
+
+/* remove the card shake motion if 'Disable Animation' is selected.
+card will still fly across the screen, or flip when opened */
+#gacha-controls .card-image.animated.reduced-motion, 
+#gacha-controls .card-image.animated.reduced-motion:after, 
+#gacha-controls .card-image.animated.reduced-motion:before {
+  /* not using the "animation-play-state: paused" code here as it makes the animationend never fire
+  the animations then all begin playing at the same time when removed, which is not ideal */
+  animation-duration: 0s;
+  animation-fill-mode: forwards;
 }
 
 /* for any additional text on the gacha page */

@@ -1,4 +1,4 @@
-import { renderCards } from "./cards.js";
+import { renderCards, GACHA_MOTION_SETTING } from "./cards.js";
 import { cards_by_rarity } from "./main.js";
 
 // Potentially multiple gacha buttons, so look for all
@@ -158,7 +158,11 @@ export function pullAndRenderCards(render_location) {
   let gachaRollAgain = document.createElement("div");
   gachaRollAgain.id = "gacha-prompt-roll-again";
   gachaRollAgain.className = "gacha-prompt hidden";
-  gachaRollAgain.insertAdjacentHTML("beforeend", `<img src="../images/slimelooptransparent.gif" alt="Cultare slime bouncing up and down"/>`);
+  if(GACHA_MOTION_SETTING[0].checked){
+    gachaRollAgain.insertAdjacentHTML("beforeend", `<img src="../images/slimenolooptransparent.png" alt="Cultare slime smiling happily"/>`);
+  } else {
+    gachaRollAgain.insertAdjacentHTML("beforeend", `<img src="../images/slimelooptransparent.gif" alt="Cultare slime bouncing up and down"/>`);
+  }
   
   let gachaRollAgainButton = document.createElement("button");
   gachaRollAgainButton.id = "gacha-button-roll-again";
