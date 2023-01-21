@@ -7,7 +7,6 @@ main {
 
 #welcome-message {
     margin: 5em auto;
-    background: white;
 }
 #welcome-message.active.scroll-up {
   opacity: 0;
@@ -31,6 +30,10 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  background: #BBD5DA;
+  border-top-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
 
   width: 75%;
   min-height: 70vh;

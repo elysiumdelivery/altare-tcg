@@ -5,7 +5,7 @@ import {
   updateGachaView,
 } from "./cards.js";
 import { setupDetailsDialog } from "./dialog.js";
-import { GACHA_BUTTON, pullAndRenderCards } from "./gacha.js";
+import { GACHA_BUTTONS, pullAndRenderCards } from "./gacha.js";
 import { showCollection } from "./collection.js";
 
 const CSV_FILENAME = "../Test Card List CSV.csv";
@@ -123,8 +123,12 @@ async function main() {
           pileInput.dispatchEvent(new Event("change"));
         }
 
-        GACHA_BUTTON.onclick = (event) =>
-          pullAndRenderCards(COLLECTIONS_MAIN_CONTENT);
+        for (var i = 0; i < GACHA_BUTTONS.length; i++) {
+          GACHA_BUTTONS.item(i).onclick = (event) => {
+            document.getElementById("card-list").classList.add("gacha-drawn");
+            pullAndRenderCards(COLLECTIONS_MAIN_CONTENT);
+          }
+        }
         break;
 
       case "/collection.html":

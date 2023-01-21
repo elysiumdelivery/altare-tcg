@@ -6,6 +6,8 @@ const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
 const HIGHEST_Z_INDEX = 10;
 let card_z_index = HIGHEST_Z_INDEX;
 let gacha_display_selection;
+let lastCardClicked;
+let secondToLastCardClicked;
 
 export const GACHA_VIEW_SETTING = document.querySelectorAll(
   'input[name="gacha-display"]'
@@ -95,6 +97,21 @@ export async function defineCardComponent() {
         this.subtitle.addEventListener("animationend", function(){
           currentSubtitle.style.willChange = "auto";
         })
+      }
+
+      // for optimization purposes, only animate two at a time. 
+      if (secondToLastCardClicked) {
+        secondToLastCardClicked.image.classList.remove("animated");
+      }
+      secondToLastCardClicked = lastCardClicked;
+      lastCardClicked = this;
+
+      // check if we pulled all possible cards. if yes, display the roll again prompt
+      if (document.getElementsByClassName("clicked").length === document.getElementsByTagName("tcg-card").length) {
+        // reset memory of clicked cards
+        lastCardClicked = undefined;
+        secondToLastCardClicked = undefined;
+        document.getElementById("gacha-prompt-roll-again").classList.remove("hidden");
       }
     }
 

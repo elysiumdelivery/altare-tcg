@@ -43,6 +43,12 @@ tcg-card {
   row-gap: 3em;
   column-gap: 1vmin;
 }
+
+#gacha-controls #card-list:not(.gacha-drawn) {
+  /* if we're looking at the initial prompt, don't set min-height yet. doing so adds a lot of blank space */
+  min-height: auto;
+}
+
 /* create a wider gap in order to fit the subtitle */
 #gacha-controls #card-list {
   row-gap: 3.5em;
@@ -268,11 +274,13 @@ section label {
 .grid-display.pulled section {
   padding-bottom: 70px;
 }
-#gacha-button {
+#gacha-controls button.gacha-button {
+  margin-top: 2px;
   margin-bottom: 1em;
   background-color: var(--accent-color);
+  animation: button-wiggle 2.32s ease 0s infinite;
 }
-.pile-display #gacha-button {
+.pile-display button.gacha-button {
   margin-bottom:0.5em;
 }
 
@@ -280,8 +288,8 @@ section label {
   margin-top: 15px;
 }
 
-#gacha-button:hover,
-#gacha-button:focus-visible {
+#gacha-controls button.gacha-button:hover,
+#gacha-controls button.gacha-button:focus-visible {
   background-color: var(--accent-color-lighten-50);
 }
 
@@ -292,6 +300,39 @@ section#gacha-controls label {
 
 section#gacha-controls input {
   margin-left: 15px;
+}
+
+.gacha-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gacha-prompt img {
+  width: 15vmax;
+}
+
+#gacha-prompt-roll-again {
+  position: absolute;
+  width: 50%;
+  right: 0;
+}
+
+#gacha-controls.grid-display #gacha-prompt-roll-again {
+  /* roll again prompt fixed to bottom right so it's always there even if user opens cards out of order */
+  position: fixed;
+  width: 30vmin;
+  bottom: 1em;
+  right: 1em;
+  /* z-index high enough to go ontop of tcg-card z-index */
+  z-index: 50;
+}
+
+/* have the roll again prompt fill the blank space */
+#gacha-controls.pile-display #gacha-prompt-roll-again {
+  position: absolute;
+  width: 50%;
 }
 
 #card-details-dialog {
@@ -393,7 +434,7 @@ section#gacha-controls input {
 
 @media screen and (max-width: 800px) {
   /* adjust the spacing at the top for the pile display so it looks better */
-  .pile-display #gacha-button {
+  .pile-display .gacha-button {
     margin-bottom: 1em;
   }
   #pull-announcement {
@@ -423,6 +464,17 @@ section#gacha-controls input {
     animation: bottom 1s ease 0s 1;
     animation-fill-mode: forwards;
   }
+
+  #gacha-controls.grid-display #gacha-prompt-roll-again {
+    bottom: 0;
+    right: 5vmin;
+  }
+
+  #gacha-controls.pile-display #gacha-prompt-roll-again {
+    position: relative;
+    width: 100%;
+  }
+
   @keyframes bottom {
     0% {
       margin-top: 1vmin;
@@ -926,4 +978,13 @@ section#gacha-controls input {
 /* prevent interaction without removing the event listeners */
 .unclickable {
   pointer-events: none;
+}
+
+@keyframes button-wiggle {
+  0% { transform: scaleX(1) scaleY(1); }
+  50% { transform: scaleX(1) scaleY(1); }
+  51% { transform: scaleX(1.1) scaleY(0.9); }
+  60% { transform: scaleX(0.9) scaleY(1.1); }
+  70% { transform: scaleX(1) scaleY(1); }
+  100% { transform: scaleX(1) scaleY(1); }
 }

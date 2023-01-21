@@ -65,6 +65,7 @@ nav a#nav-home:focus-visible #chibi-altare {
 }
 
 nav a#nav-gacha::before,
+section#gacha-controls section#card-list,
 section#gacha-controls {
   background-color: #3b47b3;
 }
@@ -75,7 +76,7 @@ nav a#nav-gacha:focus-visible:not(.active)::before {
 }
 
 nav a#nav-collection::before,
-section#card-list,
+section#collection-border section#card-list,
 section#collection-border {
   background-color: #5f7bc5;
 }

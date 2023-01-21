@@ -1,4 +1,3 @@
-const loading_overlay = document.getElementById("loading-overlay");
 const welcome_message = document.getElementById("welcome-message");
 const welcome_message_button = document.getElementById("welcome-splash-button");
 const welcome_fancy_menu = document.getElementById("welcome-fancy-menu");
@@ -8,14 +7,11 @@ const welcome_fancy_menu = document.getElementById("welcome-fancy-menu");
 document.body.onload = function () {
   setTimeout(function () {
     window.scrollTo(0, 0);
-    loading_overlay.classList.remove("active");
-    setTimeout(function () {
-      welcome_message.classList.add("active");
-    }, 100);
-  }, 2000);
+    welcome_message.classList.add("active");
+  }, 500);
 };
 
-function toggleWelcomeTwo() {
+function toggleWelcome() {
   welcome_message.classList.add("scroll-up");
   setTimeout(function () {
     welcome_fancy_menu.classList.add("active");
