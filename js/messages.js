@@ -1,31 +1,20 @@
 const MESSAGES_CSV = "../contributor_data.csv";
 const CREDITS_CSV = "../credits_data.csv";
+const TWITTER_ART_CREDITS_CSV = "../twitter_art_data.csv";
 const pathname = window.location.pathname;
 const CURRENT_PAGE = pathname.slice(pathname.lastIndexOf("/"), pathname.length);
 
-function getCSVData(page, callback = undefined) {
-  let filename;
-  switch (page) {
-    case "/contributor-board.html":
-      filename = MESSAGES_CSV;
-      break;
-    case "/credits.html":
-      filename = CREDITS_CSV;
-      break;
-  }
-
-  if (filename) {
-    Papa.parse(filename, {
-      download: true,
-      //To treat the first row as column titles
-      header: true,
-      complete: (result) => {
-        if (callback) {
-          callback(result.data);
-        }
-      },
-    });
-  }
+function getCSVData(filename, callback = undefined) {
+  Papa.parse(filename, {
+    download: true,
+    //To treat the first row as column titles
+    header: true,
+    complete: (result) => {
+      if (callback) {
+        callback(result.data);
+      }
+    },
+  });
 }
 
 function renderMessages(message_data) {
@@ -59,10 +48,9 @@ function renderCredits(credits_data) {
   let creditsContainer = document.getElementById("credits");
   let roleMapping = [[]];
   let roleElements = [];
-  const artworkMap = getArtworkMap();
   credits_data.forEach((credit, i) => {
     if (i === 0 || !credit["Role"]) {
-      let creditsColumn = document.createElement("ul");
+      let creditsColumn = document.createElement("section");
       creditsColumn.classList.add("credits-column");
       roleMapping.push([]);
       roleElements.push(creditsColumn);
@@ -78,6 +66,7 @@ function renderCredits(credits_data) {
     let staffList = roleMapping[i];
 
     staffList.forEach((credit) => {
+      let creditListingWrapper = document.createElement("ul");
       let creditListing = document.createElement("li");
       let creditName = document.createElement("h2");
       let creditRole = document.createElement("p");
@@ -93,190 +82,52 @@ function renderCredits(credits_data) {
       }
       creditRole.textContent = credit["Role"];
       creditListing.append(creditRole);
-      roleColumn.append(creditListing);
-
-      if (credit["Role"].includes("Twitter Illustrator")) {
-        const artworks = artworkMap[credit["Staff name"]];
-        const artContainer = document.createElement("div");
-        artworks.forEach((artwork) => {
-          const img = document.createElement("img");
-          img.src = artwork.path;
-          img.alt = artwork.alt;
-          img.className = "credits-page-artwork";
-          artContainer.append(img);
-        });
-        creditListing.append(artContainer);
-      }
+      creditListingWrapper.append(creditListing);
+      roleColumn.append(creditListingWrapper);
     });
   }
 }
 
-function getArtworkMap() {
-  return {
-    K: [
-      {
-        path: "../images/Twitter Images/K-01.jpg",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/K-02.jpg",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/K-03.jpg",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/K-04.jpg",
-        alt: "",
-      },
-    ],
-    Minjastars: [
-      {
-        path: "../images/Twitter Images/minji-01.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/minji-02.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/minji-03.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/minji-04.png",
-        alt: "",
-      },
-    ],
-    Mowo: [
-      {
-        path: "../images/Twitter Images/mowo-01.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/mowo-02.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/mowo-03.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/mowo-04.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/mowo-05.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/mowo-06.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/mowo-07.png",
-        alt: "",
-      },
-    ],
-    newmoniks: [
-      {
-        path: "../images/Twitter Images/newmoniks-01.png",
-        alt: "",
-      },
-    ],
-    Nui: [
-      {
-        path: "../images/Twitter Images/nui-01.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/nui-02.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/nui-03.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/nui-04.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/nui-05.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/nui-06.png",
-        alt: "",
-      },
-    ],
-    Tear: [
-      {
-        path: "../images/Twitter Images/tear-01.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/tear-02.png",
-        alt: "",
-      },
-    ],
-    yukinayee: [
-      {
-        path: "../images/Twitter Images/yukinayee-01.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/yukinayee-02.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/yukinayee-03.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/yukinayee-04.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/yukinayee-05.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/yukinayee-05.jpg",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/yukinayee-06.jpg",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/yukinayee-07.png",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/yukinayee-07.jpg",
-        alt: "",
-      },
-      {
-        path: "../images/Twitter Images/yukinayee-08.png",
-        alt: "",
-      },
-    ],
-  };
+function renderTwitterArtCredits(twitter_art_data) {
+  let creditsContainer = document.getElementById("credits");
+  // Create new "section"
+  let creditsColumn = document.createElement("section");
+  creditsColumn.classList.add("credits-column");
+  creditsColumn.id = "twitter-images";
+  let twitterImagesHeader = document.createElement("h2");
+  twitterImagesHeader.textContent = "Twitter Images";
+  creditsColumn.append(twitterImagesHeader);
+  const artList = document.createElement("ul");
+
+  twitter_art_data.forEach((artData) => {
+    const artContainer = document.createElement("li");
+    const img = document.createElement("img");
+    img.src = `../images/Twitter Images/${artData["Artwork"]}`;
+    img.alt = artData["Alt"];
+    img.className = "credits-page-artwork";
+    artContainer.append(img);
+    if (artData["Twitter"]) {
+      let creditTwitter = document.createElement("a");
+      creditTwitter.href = `https://twitter.com/${artData["Twitter"]}`;
+      creditTwitter.textContent = artData["Staff name"];
+      artContainer.append(creditTwitter);
+    }
+    artList.append(artContainer);
+  });
+  creditsColumn.append(artList);
+  creditsContainer.append(creditsColumn);
 }
 
 async function main() {
-  getCSVData(CURRENT_PAGE, async (csv_data) => {
-    switch (CURRENT_PAGE) {
-      case "/contributor-board.html":
-        renderMessages(csv_data);
-        break;
-      case "/credits.html":
-        renderCredits(csv_data);
-        break;
-    }
-  });
+  switch (CURRENT_PAGE) {
+    case "/contributor-board.html":
+      getCSVData(MESSAGES_CSV, renderMessages);
+      break;
+    case "/credits.html":
+      getCSVData(CREDITS_CSV, renderCredits);
+      getCSVData(TWITTER_ART_CREDITS_CSV, renderTwitterArtCredits);
+      break;
+  }
 }
 
 main();

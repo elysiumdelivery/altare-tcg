@@ -267,14 +267,7 @@ section#credits h1 {
   color: white;
 }
 
-ul.credits-column {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  box-sizing: border-box;
-  text-align: center;
-
+section.credits-column {
   min-height: auto;
   padding: 1.5em;
   background: #bbd5da;
@@ -288,48 +281,61 @@ ul.credits-column {
   animation-fill-mode: both;
   animation-iteration-count: 1;
 }
+section.credits-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 
-ul.credits-column:nth-of-type(1) {
+  box-sizing: border-box;
+  text-align: center;
+}
+
+section.credits-column:nth-of-type(1) {
   animation-delay: 0.5s;
   margin-top: 0;
 }
-ul.credits-column:nth-of-type(2) {
+section.credits-column:nth-of-type(2) {
   animation-delay: 1s;
 }
-ul.credits-column:nth-of-type(3) {
+section.credits-column:nth-of-type(3) {
   animation-delay: 1.5s;
 }
 
-ul.credits-column li {
+section.credits-column li {
   margin: 2em 0;
 }
+section.credits-column#twitter-images ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 300px);
+  grid-column-gap: 20px;
+}
 
-ul.credits-column h2 {
+section.credits-column h2 {
   font-size: 1.25em;
   margin-bottom: 0.25em;
 }
 
-ul.credits-column h3 {
+section.credits-column h3 {
   font-size: 1em;
   margin: 0.5em 0;
 }
 
-ul.credits-column a {
+section.credits-column a {
   color: var(--bg-color);
 }
 
-ul.credits-column a:visited {
+section.credits-column a:visited {
   color: var(--bg-color-lighten-50);
 }
 
-ul.credits-column p {
+section.credits-column p {
   margin-top: 0.25em;
   font-size: 1em;
 }
 
 .credits-page-artwork {
-  height: 100px;
-  width: auto;
+  height: auto;
+  width: 300px;
 }
 
 @media only screen and (max-width: 800px) {
