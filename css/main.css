@@ -92,6 +92,13 @@ input:focus-visible {
   background-color: var(--accent-color);
 }
 
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+}
+
 .skip-link {
   color: white;
 }

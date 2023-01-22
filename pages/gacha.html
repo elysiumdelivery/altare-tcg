@@ -138,22 +138,32 @@
 
       <section id="gacha-controls">
         <form>
-          <label>Show as:</label>
-          <input
-            type="radio"
-            id="gacha-pile"
-            name="gacha-display"
-            value="gacha-pile"
-            checked
-          />
-          <label for="gacha-pile"> Card Pile</label>
-          <input
-            type="radio"
-            id="gacha-grid"
-            name="gacha-display"
-            value="gacha-grid"
-          />
-          <label for="gacha-grid"> Card Grid</label>
+          <fieldset>
+            <label>Show as:</label>
+            <input
+              type="radio"
+              id="gacha-pile"
+              name="gacha-display"
+              value="gacha-pile"
+              checked
+            />
+            <label for="gacha-pile"> Card Pile</label>
+            <input
+              type="radio"
+              id="gacha-grid"
+              name="gacha-display"
+              value="gacha-grid"
+            />
+            <label for="gacha-grid"> Card Grid</label>
+          </fieldset>
+          <fieldset>
+            <input 
+              type="checkbox" 
+              id="gacha-reduce-motion"
+              name="gacha-reduce-motion"
+              value="gacha-reduce-motion">
+            <label for="gacha-reduce-motion"> Disable Animations</label>
+          </fieldset>
         </form>
         <div id="gacha-notes">
           <p class="visually-hidden">

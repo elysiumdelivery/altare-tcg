@@ -12,6 +12,9 @@ let secondToLastCardClicked;
 export const GACHA_VIEW_SETTING = document.querySelectorAll(
   'input[name="gacha-display"]'
 );
+export const GACHA_MOTION_SETTING = document.querySelectorAll(
+  'input[name="gacha-reduce-motion"]'
+);
 export const GACHA_SECTION = document.getElementById("gacha-controls");
 
 //Custom Card component. Use it like this:
@@ -198,6 +201,55 @@ export function updateGachaView(e) {
       .classList.remove("visually-hidden");
   }
 }
+export function updateGachaMotion(){
+  // get the list of cards
+  let cardImageList = document.getElementsByClassName("card-image");
+  let cardList = document.getElementsByTagName("tcg-card");
+  // get the card prompt
+  let rollPrompt;
+  if(document.getElementsByClassName("gacha-prompt") !== null){
+    rollPrompt = document.getElementsByClassName("gacha-prompt")[0];
+  }
+  if(document.getElementById("gacha-prompt-roll-again") !== null){
+    rollPrompt = document.getElementById("gacha-prompt-roll-again");
+  }
+  // see the checkbox settings
+  if(GACHA_MOTION_SETTING[0].checked){
+    // remove motion from all cards
+    for (let i = 0; i < cardImageList.length; i++) {
+      cardImageList[i].classList.add("reduced-motion");
+      cardList[i].classList.add("reduced-motion");
+    }
+    // update the roll prompt/roll again prompt
+    if(rollPrompt !== undefined){
+      rollPrompt.getElementsByTagName('img')[0].src = "../images/slimenolooptransparent.png";
+      rollPrompt.getElementsByTagName('img')[0].alt = "Cultare slime smiling happily";
+    }
+    // update the button wiggle, but wait for it to be added first
+    setTimeout(function(){
+      if(document.getElementsByClassName("gacha-button") !== null){
+        document.getElementsByClassName("gacha-button")[0].classList.add("reduced-motion");
+      }
+    }, 100);
+  } else {
+    // add motion to all cards
+    for (let i = 0; i < cardImageList.length; i++) {
+      cardImageList[i].classList.remove("reduced-motion");
+      cardList[i].classList.remove("reduced-motion");
+    }
+    // update the roll prompt/roll again prompt
+    if(rollPrompt !== undefined){
+      rollPrompt.getElementsByTagName('img')[0].src = "../images/slimelooptransparent.gif";
+      rollPrompt.getElementsByTagName('img')[0].alt = "Cultare slime bouncing up and down";
+    }
+    // update the button wiggle, but wait for it to be added first
+    setTimeout(function(){
+      if(document.getElementsByClassName("gacha-button") !== null){
+        document.getElementsByClassName("gacha-button")[0].classList.remove("reduced-motion");
+      }
+    }, 100);
+  }
+}
 export function removeUnclickableFromCards() {
   // remove any unclickable classes from all the opened cards, so all can be interacted with
   // this is only used when changing the card from a grid to a pile layout
@@ -254,6 +306,12 @@ export function renderCards(cards, htmlLocation, replace = false) {
   }
   // setup hover for all cards
   setupHover();
+
+  // only on the gacha page, but we want to do this after cards are added
+  if(document.getElementById("gacha-controls") !== null){
+    // update the motion settings based on the checkbox
+    updateGachaMotion();
+  }
 }
 
 export function setCardRarity(folder) {
