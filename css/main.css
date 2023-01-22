@@ -324,7 +324,7 @@ section.credits-column#twitter-images h2 {
 }
 section.credits-column#twitter-images ul {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 300px);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-column-gap: 20px;
 }
 
@@ -353,7 +353,7 @@ section.credits-column p {
 
 .credits-page-artwork {
   height: auto;
-  width: 300px;
+  width: 100%;
 }
 
 @media only screen and (max-width: 800px) {
