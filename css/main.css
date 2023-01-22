@@ -359,7 +359,10 @@ section.credits-column p {
 @media only screen and (max-width: 800px) {
   /* mobile / portrait styling */
 
-  section#artist-writer-board ul,
+  section#artist-writer-board ul {
+    column-count: 1;
+  }
+
   section#credits {
     grid-template-areas:
       "header"
