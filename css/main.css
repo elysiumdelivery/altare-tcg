@@ -254,10 +254,16 @@ section#artist-writer-board .artist-writer-message h3 {
 
 section#credits {
   position: relative;
-  column-count: 2;
+  display: grid;
+  grid-template-areas:
+    "header     header"
+    "general    devs"
+    "twitillust x"
+    "twitter    twitter";
 }
 
 section#credits h1 {
+  grid-area: header;
   font-size: 1.5em;
   margin-bottom: 2em;
 
@@ -273,7 +279,10 @@ section.credits-column {
   background: #bbd5da;
   border-top-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
-  margin: 1.5em 0.5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-top: 0;
+  margin-bottom: 1.5em;
   /* avoid breaking the message box between columns */
   break-inside: avoid;
 
@@ -291,18 +300,27 @@ section.credits-column ul {
 }
 
 section.credits-column:nth-of-type(1) {
+  grid-area: general;
   animation-delay: 0.5s;
   margin-top: 0;
 }
 section.credits-column:nth-of-type(2) {
+  grid-area: devs;
   animation-delay: 1s;
 }
 section.credits-column:nth-of-type(3) {
+  grid-area: twitillust;
   animation-delay: 1.5s;
 }
 
 section.credits-column li {
   margin: 2em 0;
+}
+section.credits-column#twitter-images {
+  grid-area: twitter;
+}
+section.credits-column#twitter-images h2 {
+  text-align: center;
 }
 section.credits-column#twitter-images ul {
   display: grid;
@@ -343,7 +361,12 @@ section.credits-column p {
 
   section#artist-writer-board ul,
   section#credits {
-    column-count: 1;
+    grid-template-areas:
+      "header"
+      "general"
+      "devs"
+      "twitillust"
+      "twitter";
   }
 }
 
