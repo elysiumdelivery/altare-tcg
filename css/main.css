@@ -323,10 +323,24 @@ section.credits-column#twitter-images h2 {
   text-align: center;
 }
 section.credits-column#twitter-images ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 300px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  grid-column-gap: 20px;
+  row-gap: 2em;
+  column-gap: 2vmin;
+}
+section.credits-column#twitter-images li {
+  display: flex;
+  flex-direction: column;
+}
+section.credits-column#twitter-images li img {
+  height: auto;
+  width: 50vmin;
+  max-width: 300px;
+}
+section.credits-column#twitter-images li a {
+  margin-top: 0.5em;
 }
 
 section.credits-column h2 {
@@ -350,11 +364,6 @@ section.credits-column a:visited {
 section.credits-column p {
   margin-top: 0.25em;
   font-size: 1em;
-}
-
-.credits-page-artwork {
-  height: auto;
-  width: 100%;
 }
 
 @media only screen and (max-width: 800px) {

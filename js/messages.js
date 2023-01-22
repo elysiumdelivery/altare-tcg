@@ -104,7 +104,6 @@ function renderTwitterArtCredits(twitter_art_data) {
     const img = document.createElement("img");
     img.src = `../images/Twitter Images/${artData["Artwork"]}`;
     img.alt = artData["Alt"];
-    img.className = "credits-page-artwork";
     artContainer.append(img);
     if (artData["Twitter"]) {
       let creditTwitter = document.createElement("a");
