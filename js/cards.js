@@ -205,7 +205,6 @@ export function updateGachaMotion(){
   // get the list of cards
   let cardImageList = document.getElementsByClassName("card-image");
   let cardList = document.getElementsByTagName("tcg-card");
-  // document.getElementsByClassName("card-component");
   // get the card prompt
   let rollPrompt;
   if(document.getElementsByClassName("gacha-prompt") !== null){

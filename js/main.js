@@ -110,7 +110,6 @@ async function main() {
         // watch for any selection changes - either grid or pile card display
         GACHA_VIEW_SETTING[0].addEventListener("change", updateGachaView);
         GACHA_VIEW_SETTING[1].addEventListener("change", updateGachaView);
-        // add or remove the shine animation on the cards to reduce the amount of animations there are
         GACHA_MOTION_SETTING[0].addEventListener("change", updateGachaMotion);
         // if the window is less than 800, default to a grid layout
         // this checks the box and dispatches a change event
