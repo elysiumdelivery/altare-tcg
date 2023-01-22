@@ -340,6 +340,8 @@ section.credits-column#twitter-images li img {
   max-width: 300px;
 }
 section.credits-column#twitter-images li a {
+  color: var(--bg-color);
+  font-weight: bold;
   margin-top: 0.5em;
 }
 
