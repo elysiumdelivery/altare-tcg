@@ -220,6 +220,10 @@ section#artist-writer-board .artist-writer-message {
   animation-iteration-count: 1;
 }
 
+section#artist-writer-board .artist-writer-message:first-child {
+  margin-top: 0px;
+}
+
 section#artist-writer-board .artist-writer-message a {
   color: var(--bg-color);
 }
