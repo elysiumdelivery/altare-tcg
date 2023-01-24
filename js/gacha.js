@@ -8,51 +8,57 @@ export const GACHA_BUTTONS = document.getElementsByClassName("gacha-button");
 //The sum of all rarities on a slot should be 100 or higher for proper function.
 const slots = [
   {
+    //1
     Element: 100,
   },
+
   {
+    //2
     Common: 100,
   },
   {
+    //3
     Common: 80,
     Uncommon: 20,
   },
   {
+    //4
     Common: 80,
     Uncommon: 20,
   },
   {
+    //5
     Common: 50,
     Uncommon: 50,
   },
   {
+    //6
     Uncommon: 100,
   },
   {
-    Uncommon: 26,
-    Rare: 26,
-    HoloRare: 21,
-    UltraRare: 17,
-    SecretRare: 10,
-  },
-  {
-    Uncommon: 26,
-    Rare: 26,
-    HoloRare: 21,
-    UltraRare: 17,
-    SecretRare: 10,
-  },
-  {
+    //7
+    Uncommon: 50,
     Rare: 40,
-    HoloRare: 20,
-    UltraRare: 20,
-    SecretRare: 20,
+    HoloRare: 10,
   },
   {
+    //8
+    Uncommon: 25,
     Rare: 40,
-    HoloRare: 20,
+    HoloRare: 35,
+  },
+  {
+    //9
+    Rare: 40,
+    HoloRare: 40,
     UltraRare: 20,
-    SecretRare: 20,
+  },
+  {
+    //10
+    Rare: 30,
+    HoloRare: 30,
+    UltraRare: 30,
+    SecretRare: 10,
   },
 ];
 
@@ -148,6 +154,7 @@ function getRandomCards(cards, n) {
 
 //Pulls cards from the cards_data array and renders them in render_location.
 export function pullAndRenderCards(render_location) {
+  testRates();
   let pulled = pullCards(slots);
   renderCards(pulled, render_location, true);
   render_location.insertAdjacentHTML(
