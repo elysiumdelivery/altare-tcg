@@ -69,7 +69,7 @@ const specialSlots = {
 //Pulls a set of cards guided by an array of "slots" passed to the function.
 function pullCards(slots) {
   let pullCount = parseInt(localStorage.getItem("pull-count") ?? "0") + 1;
-  let pulledIDs = [];
+  //let pulledIDs = [];
   let cards = [];
   let card;
   for (let slot of slots) {
@@ -88,7 +88,7 @@ function pullCards(slots) {
       if (dice <= slot[rarity]) {
         card = getRandomCards(cards_by_rarity[rarity], 1)[0];
         cards.push(card);
-        pulledIDs.push(card["Collector Number"]);
+        //pulledIDs.push(card["Collector Number"]);
         //Saves the card's id to localStorage if it's new,, to keep track of owned cards.
         //Also saves the count of owned cards per rarity.
         if (!localStorage.getItem(`card-${card["Collector Number"]}`)) {
@@ -112,8 +112,9 @@ function pullCards(slots) {
       }
     }
   }
-  localStorage.setItem("pull-count", pullCount);
-  localStorage.setItem(`pull-${pullCount}`, JSON.stringify(pulledIDs));
+  //Commenting because we aren't doing anything with this yet... if ever.
+  //localStorage.setItem("pull-count", pullCount);
+  //localStorage.setItem(`pull-${pullCount}`, JSON.stringify(pulledIDs));
   return cards;
 }
 
@@ -153,24 +154,34 @@ export function pullAndRenderCards(render_location) {
     "beforeend",
     `<span id="roll-again-prompt" class="visually-hidden">No more cards in this pack.</span>`
   );
-  
+
   // Add prompt to roll again
   let gachaRollAgain = document.createElement("div");
   gachaRollAgain.id = "gacha-prompt-roll-again";
   gachaRollAgain.className = "gacha-prompt hidden";
-  if(GACHA_MOTION_SETTING[0].checked){
-    gachaRollAgain.insertAdjacentHTML("beforeend", `<img src="../images/slimenolooptransparent.png" alt="Cultare slime smiling happily"/>`);
+  if (GACHA_MOTION_SETTING[0].checked) {
+    gachaRollAgain.insertAdjacentHTML(
+      "beforeend",
+      `<img src="../images/slimenolooptransparent.png" alt="Cultare slime smiling happily"/>`
+    );
   } else {
-    gachaRollAgain.insertAdjacentHTML("beforeend", `<img src="../images/slimelooptransparent.gif" alt="Cultare slime bouncing up and down"/>`);
+    gachaRollAgain.insertAdjacentHTML(
+      "beforeend",
+      `<img src="../images/slimelooptransparent.gif" alt="Cultare slime bouncing up and down"/>`
+    );
   }
-  
+
   let gachaRollAgainButton = document.createElement("button");
   gachaRollAgainButton.id = "gacha-button-roll-again";
   gachaRollAgainButton.className = "gacha-button";
   gachaRollAgainButton.type = "button";
   gachaRollAgainButton.textContent = "Roll Again?";
-  gachaRollAgainButton.setAttribute("aria-labelledby", "roll-again-prompt gacha-button-roll-again");
-  gachaRollAgainButton.onclick = (event) => pullAndRenderCards(document.getElementById("card-list"));
+  gachaRollAgainButton.setAttribute(
+    "aria-labelledby",
+    "roll-again-prompt gacha-button-roll-again"
+  );
+  gachaRollAgainButton.onclick = (event) =>
+    pullAndRenderCards(document.getElementById("card-list"));
 
   gachaRollAgain.append(gachaRollAgainButton);
   render_location.append(gachaRollAgain);
