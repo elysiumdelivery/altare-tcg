@@ -295,16 +295,17 @@ main {
     transform: none;
     padding: 0.75em 0.5em;
 
-    background: white;
+    background: #bfdaf5;
     border-radius: 5px;
-    border: 0.5vmin solid gray;
+    border: 0.5vmin solid var(--accent-color);
 
     box-sizing: border-box;
 
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    color: var(--accent-color);
+    color: #0e00c3;
+    font-family: "Rowdies", sans-serif;
 
     display: flex;
     flex-direction: column;
