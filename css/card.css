@@ -619,17 +619,20 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 520px) {
   #reset-collection {
     margin-top:10px;
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 420px) {
   #sort-dropdown {
-    width: 60vw;
+    width: 52vw;
     text-overflow: ellipsis;
-}
+  }
+  #search-bar {
+    width: 52vw;
+  }
 }
 
 /* set the card overlay gradients */
@@ -1041,26 +1044,37 @@ card will still fly across the screen, or flip when opened */
   animation-fill-mode: forwards;
 }
 
-/* for any additional text on the gacha or collections page */
+/* for any additional text on the gacha page */
 #gacha-notes {
   color: white;
   background-color: transparent;
   margin: 1em 0;
-  font-size: 0.9em;
-}
-#collection-foreword {
-  font-size: 0.9em;
-  border-radius: 8px 0;
-  margin: 1.2em 0;
+  font-size: 1em;
 }
 #gacha-notes p {
   margin: 0.3em 0;
+}
+
+/* for any additional text on the collections page */
+#collection-foreword {
+  text-align: right;
+  font-size: 1em;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 1.2em;
+  border-radius: 8px 0;
+  margin: 1.2em 0;
+}
+#collection-foreword p {
+  text-align: left;
 }
 #collection-foreword p {
   margin: 0
 }
 #collection-foreword p:nth-child(2) {
   margin-top: 0.5em;
+}
+#foreword-close {
+  margin-top: 10px;
 }
 
 /* prevent interaction without removing the event listeners */
