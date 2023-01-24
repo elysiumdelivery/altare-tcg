@@ -52,10 +52,10 @@ const slots = [
   },
   {
     //10
-    Rare: 15,
-    HoloRare: 40,
-    UltraRare: 35,
-    SecretRare: 10,
+    Rare: 25,
+    HoloRare: 45,
+    UltraRare: 25,
+    SecretRare: 5,
   },
 ];
 
@@ -63,9 +63,9 @@ const slots = [
 //This can be used to help collect all cards.
 const specialSlots = {
   69: {
-    HoloRare: 100 / 3,
-    UltraRare: 100 / 3,
-    SecretRare: 100 / 3,
+    HoloRare: 50,
+    UltraRare: 35,
+    SecretRare: 15,
   },
 };
 
