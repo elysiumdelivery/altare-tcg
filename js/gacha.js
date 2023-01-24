@@ -76,10 +76,15 @@ function pullCards(slots) {
   let cards = [];
   let card;
   let pulled_cards;
+  let special_count = parseInt(localStorage.getItem("special-count") ?? 0);
   for (let slot of slots) {
     let dice = Math.floor(Math.random() * 100) + 1;
     if (dice in specialSlots) {
-      slot = specialSlots[dice];
+      special_count = (special_count + 1) % 3;
+      localStorage.setItem("special-count", special_count.toString());
+      if (special_count == 2) {
+        slot = specialSlots[dice];
+      }
     }
     //This algorithm divides the range [1, 100] into rarity intervals, dictated by the slots.
     //Example: A slot with the following definition:
