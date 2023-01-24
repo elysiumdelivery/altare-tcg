@@ -95,22 +95,6 @@ main {
   position: absolute;
   width: 13vmin;
   height: 17vmin;
-  background: white;
-  border-radius: 5px;
-  border: 0.5vmin solid gray;
-
-  box-sizing: border-box;
-  padding: 1em;
-
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  color: var(--accent-color);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
   filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
 
@@ -118,11 +102,8 @@ main {
   transform: scale(1);
 }
 
-#welcome-nav a.special-nav-card {
-  /* border gradient only seems to work when adding it to the bg property */
-  border-color: transparent;
-  background: linear-gradient(45deg, #a7daf5, #ffffff, #a7daf5) padding-box,
-    linear-gradient(45deg, gold, #ffffff, gold) border-box;
+#welcome-nav a img {
+    width: 100%;
 }
 
 #welcome-nav a.special-nav-card .special-nav-card-sparkle {
@@ -313,6 +294,34 @@ main {
     height: auto;
     transform: none;
     padding: 0.75em 0.5em;
+
+    background: white;
+    border-radius: 5px;
+    border: 0.5vmin solid gray;
+
+    box-sizing: border-box;
+
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: var(--accent-color);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #welcome-nav a.special-nav-card {
+    /* border gradient only seems to work when adding it to the bg property */
+    border-color: transparent;
+    background: linear-gradient(45deg, #a7daf5, #ffffff, #a7daf5) padding-box,
+      linear-gradient(45deg, gold, #ffffff, gold) border-box;
+  }
+
+  /* hide the card images w/ alt text and use the span for text */
+  #welcome-nav a img {
+    display: none;
   }
 }
 
@@ -321,6 +330,11 @@ main {
 
   #welcome-nav a {
     font-size: 1.8vmin;
+  }
+
+  /* hide the text and let the card imgs read out the alt text */
+  #welcome-nav a span {
+    display: none;
   }
 
   #welcome-nav a:hover,
