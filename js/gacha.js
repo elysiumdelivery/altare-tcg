@@ -95,7 +95,7 @@ function pullCards(slots) {
     //This applies to as many rarities as declared in the slot.
     for (let rarity in slot) {
       if (dice <= slot[rarity]) {
-        pulled_cards = getRandomCards(cards_by_rarity[rarity], 7);
+        pulled_cards = getRandomCards(cards_by_rarity[rarity], 4);
         card = pulled_cards[0];
         //Checks for no repeats in the same pull
         for (let pulled_card in pulled_cards) {
