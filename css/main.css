@@ -33,7 +33,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Rowdies', sans-serif;
+  font-family: "Rowdies", sans-serif;
 }
 
 video {
@@ -73,7 +73,7 @@ input {
   font-size: 1em;
   transition: background-color 0.3s ease;
 }
-::placeholder { 
+::placeholder {
   color: white;
   opacity: 0.8;
 }
@@ -207,7 +207,7 @@ section#artist-writer-board h1 {
 
 section#artist-writer-board .artist-writer-message {
   padding: 1.5em;
-  background: #BBD5DA;
+  background: #bbd5da;
   border-top-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
   margin: 1.5em 0.5em;
@@ -228,9 +228,15 @@ section#artist-writer-board .artist-writer-message a:visited {
   color: var(--bg-color-lighten-50);
 }
 
-section#artist-writer-board .artist-writer-message:nth-child(odd) { animation-delay: .5s }
-section#artist-writer-board .artist-writer-message:nth-child(even) { animation-delay: 0.75s }
-section#artist-writer-board .artist-writer-message:nth-child(3n) { animation-delay: 1s }
+section#artist-writer-board .artist-writer-message:nth-child(odd) {
+  animation-delay: 0.5s;
+}
+section#artist-writer-board .artist-writer-message:nth-child(even) {
+  animation-delay: 0.75s;
+}
+section#artist-writer-board .artist-writer-message:nth-child(3n) {
+  animation-delay: 1s;
+}
 
 section#artist-writer-board .artist-writer-message h2,
 section#artist-writer-board .artist-writer-message h3 {
@@ -245,7 +251,7 @@ section#artist-writer-board .artist-writer-message h2 {
 section#artist-writer-board .artist-writer-message h2::before,
 section#artist-writer-board .artist-writer-message h2::after {
   position: relative;
-  content: '🎇';
+  content: "🎇";
   margin: 0.2em;
 }
 
@@ -255,10 +261,16 @@ section#artist-writer-board .artist-writer-message h3 {
 
 section#credits {
   position: relative;
-  column-count: 2;
+  display: grid;
+  grid-template-areas:
+    "header        header"
+    "general       devs"
+    "accessibility twitillust"
+    "twitter       twitter";
 }
 
 section#credits h1 {
+  grid-area: header;
   font-size: 1.5em;
   margin-bottom: 2em;
 
@@ -268,20 +280,16 @@ section#credits h1 {
   color: white;
 }
 
-ul.credits-column {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  
-  box-sizing: border-box;
-  text-align: center;
-
+section.credits-column {
   min-height: auto;
   padding: 1.5em;
-  background: #BBD5DA;
+  background: #bbd5da;
   border-top-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
-  margin: 1.5em 0.5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-top: 0;
+  margin-bottom: 1.5em;
   /* avoid breaking the message box between columns */
   break-inside: avoid;
 
@@ -289,34 +297,85 @@ ul.credits-column {
   animation-fill-mode: both;
   animation-iteration-count: 1;
 }
+section.credits-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 
-ul.credits-column:nth-of-type(1) { animation-delay: .5s; margin-top: 0; }
-ul.credits-column:nth-of-type(2) { animation-delay: 1s }
-ul.credits-column:nth-of-type(3) { animation-delay: 1.5s }
-
-ul.credits-column li {
-  margin: 2em 0;
+  box-sizing: border-box;
+  text-align: center;
 }
 
-ul.credits-column h2 {
+section.credits-column:nth-of-type(1) {
+  grid-area: general;
+  animation-delay: 0.5s;
+  margin-top: 0;
+}
+section.credits-column:nth-of-type(2) {
+  grid-area: devs;
+  animation-delay: 1s;
+}
+section.credits-column:nth-of-type(3) {
+  grid-area: accessibility;
+  animation-delay: 1.5s;
+}
+section.credits-column:nth-of-type(4) {
+  grid-area: twitillust;
+  animation-delay: 2.0s;
+}
+
+section.credits-column li {
+  margin: 2em 0;
+}
+section.credits-column#twitter-images {
+  grid-area: twitter;
+  animation-delay: 2.5s;
+}
+section.credits-column#twitter-images h2 {
+  text-align: center;
+}
+section.credits-column#twitter-images ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  row-gap: 2em;
+  column-gap: 2vmin;
+}
+section.credits-column#twitter-images li {
+  display: flex;
+  flex-direction: column;
+}
+section.credits-column#twitter-images li img {
+  height: auto;
+  width: 50vmin;
+  max-width: 300px;
+}
+section.credits-column#twitter-images li a {
+  color: var(--bg-color);
+  font-weight: bold;
+  margin-top: 0.5em;
+}
+
+section.credits-column h2 {
   font-size: 1.25em;
   margin-bottom: 0.25em;
 }
 
-ul.credits-column h3 {
+section.credits-column h3 {
   font-size: 1em;
   margin: 0.5em 0;
 }
 
-ul.credits-column a {
-  color: var(--bg-color)
+section.credits-column a {
+  color: var(--bg-color);
 }
 
-ul.credits-column a:visited {
+section.credits-column a:visited {
   color: var(--bg-color-lighten-50);
 }
 
-ul.credits-column p {
+section.credits-column p {
   margin-top: 0.25em;
   font-size: 1em;
 }
@@ -324,9 +383,18 @@ ul.credits-column p {
 @media only screen and (max-width: 800px) {
   /* mobile / portrait styling */
 
-  section#artist-writer-board ul,
-  section#credits {
+  section#artist-writer-board ul {
     column-count: 1;
+  }
+
+  section#credits {
+    grid-template-areas:
+      "header"
+      "general"
+      "devs"
+      "accessibility"
+      "twitillust"
+      "twitter";
   }
 }
 
@@ -338,6 +406,12 @@ ul.credits-column p {
 }
 
 @keyframes slide-up {
-  0% { opacity: 0; transform: translateY(25%); }
-  100% { opacity: 1; transform: translateY(0%); }
+  0% {
+    opacity: 0;
+    transform: translateY(25%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
 }
