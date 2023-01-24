@@ -154,7 +154,6 @@ function getRandomCards(cards, n) {
 
 //Pulls cards from the cards_data array and renders them in render_location.
 export function pullAndRenderCards(render_location) {
-  testRates();
   let pulled = pullCards(slots);
   renderCards(pulled, render_location, true);
   render_location.insertAdjacentHTML(
