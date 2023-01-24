@@ -193,13 +193,13 @@ export function showCollection(cards_data, htmlLocation, page = 1, query = "") {
 export function setupForeword(){
   if(closed_foreword == null){
     document.getElementById("collection-foreword").classList.remove("hidden");
-    document.getElementById("foreword-close").addEventListener("click", closeCollectionForeword);
+    document.getElementById("foreword-close").addEventListener("click", closeForeword);
   } else {
-    closeCollectionForeword();
+    closeForeword();
   }
 }
 
-function closeCollectionForeword(){
+function closeForeword(){
   document.getElementById("collection-foreword").classList.add("hidden");
   if(closed_foreword == null){
     localStorage.setItem('closedForeword', true);
