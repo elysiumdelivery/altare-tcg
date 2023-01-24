@@ -213,11 +213,12 @@ tcg-card {
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  border-radius: var(--border-radius);
 }
 
 .card-cover {
   border-radius: var(--border-radius);
-  background-image: url("../images/AltareTCG_Back_Compressed.png"); /* update this when final card back is obtained */
+  background-image: url("../images/AltareTCG_Back_Compressed.jpg");
   background-color: #58abda;
 }
 
