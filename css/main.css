@@ -256,10 +256,10 @@ section#credits {
   position: relative;
   display: grid;
   grid-template-areas:
-    "header     header"
-    "general    devs"
-    "twitillust x"
-    "twitter    twitter";
+    "header        header"
+    "general       devs"
+    "accessibility twitillust"
+    "twitter       twitter";
 }
 
 section#credits h1 {
@@ -309,8 +309,12 @@ section.credits-column:nth-of-type(2) {
   animation-delay: 1s;
 }
 section.credits-column:nth-of-type(3) {
-  grid-area: twitillust;
+  grid-area: accessibility;
   animation-delay: 1.5s;
+}
+section.credits-column:nth-of-type(4) {
+  grid-area: twitillust;
+  animation-delay: 2.0s;
 }
 
 section.credits-column li {
@@ -318,6 +322,7 @@ section.credits-column li {
 }
 section.credits-column#twitter-images {
   grid-area: twitter;
+  animation-delay: 2.5s;
 }
 section.credits-column#twitter-images h2 {
   text-align: center;
@@ -380,6 +385,7 @@ section.credits-column p {
       "header"
       "general"
       "devs"
+      "accessibility"
       "twitillust"
       "twitter";
   }
