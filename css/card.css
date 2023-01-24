@@ -90,6 +90,7 @@ tcg-card {
   margin: 0.5em 0;
   text-align: center;
   font-size: 1em;
+  height:20px;
 }
 
 /* rotate card differently depending on its position in the pile */
@@ -310,6 +311,9 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   margin-left:20px;
 }
 
+.grid-display .gacha-prompt {
+  margin-top:calc(20px + 0.5em);
+}
 .gacha-prompt {
   display: flex;
   flex-direction: column;
@@ -355,7 +359,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   padding: 2em;
   border: 1px solid #000;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: #bbd5da;
   height: 90%;
   width: 90%;
   z-index: 10; /* set to 10 so that it's greater than nav a.active's z-index and #dialog-overlay */
@@ -389,6 +393,10 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
 
   #pull-announcement {
     margin:1.5em 0 0.5em 0;
+  }
+  .grid-display .gacha-prompt {
+    /* this number is a bit arbitrary */
+    margin-top:calc(20px + 1.1em);
   }
 }
 
@@ -429,7 +437,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     padding: 1em 2vmin;
   }
 
-  #gacha-controls.grid-display .gacha-prompt img {
+  #gacha-controls.grid-display.pulled .gacha-prompt img {
     width: 12vmax;
   }
 }
@@ -464,6 +472,9 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     z-index: 1;
     width: calc(100% - 6em);
   }
+  .grid-display .gacha-prompt {
+    margin-top: 0px;
+}
   #gacha-controls #card-list {
     /* make the card area smaller when the screen is small */
     min-height: calc(var(--card-height) * 2 + (6vh + 100px));
@@ -483,7 +494,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     animation: bottom 1s ease 0s 1;
     animation-fill-mode: forwards;
   }
-  .pile-display .gacha-prompt img {
+  .pile-display.pulled .gacha-prompt img {
     width: 11vmax;
   }
 
