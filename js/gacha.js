@@ -75,6 +75,7 @@ function pullCards(slots) {
   //let pulledIDs = [];
   let cards = [];
   let card;
+  let pulled_cards;
   for (let slot of slots) {
     let dice = Math.floor(Math.random() * 100) + 1;
     if (dice in specialSlots) {
@@ -89,7 +90,21 @@ function pullCards(slots) {
     //This applies to as many rarities as declared in the slot.
     for (let rarity in slot) {
       if (dice <= slot[rarity]) {
-        card = getRandomCards(cards_by_rarity[rarity], 1)[0];
+        pulled_cards = getRandomCards(cards_by_rarity[rarity], 7);
+        card = pulled_cards[0];
+        //Checks for no repeats in the same pull
+        for (let pulled_card in pulled_cards) {
+          if (
+            !cards.some(
+              (card) =>
+                card["Collector Number"] ===
+                pulled_cards[pulled_card]["Collector Number"]
+            )
+          ) {
+            card = pulled_cards[pulled_card];
+            break;
+          }
+        }
         cards.push(card);
         //pulledIDs.push(card["Collector Number"]);
         //Saves the card's id to localStorage if it's new,, to keep track of owned cards.
