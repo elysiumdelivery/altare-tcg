@@ -48,7 +48,7 @@ section {
 }
 
 footer {
-  color:rgba(255, 255, 255, 0.4);
+  color: white;
   text-align: center;
   padding: 30px;
 }
@@ -62,6 +62,11 @@ footer p {
   display: flex;
   justify-content: center;
   column-gap: 2vh;
+}
+
+footer svg {
+  width:1em;
+  margin-right: 5px;
 }
 
 #download-links a,
