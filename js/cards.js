@@ -142,10 +142,19 @@ export async function defineCardComponent() {
 }
 
 function addAnimation(e) {
+  let target = e.target;
+  // if our target is the parent button (from keyboard focus, then target the child image after)
+  if (target.className.includes("card-front")) {
+    target = e.target.querySelector('.card-image');
+  }
   // animation optimization: inform browser that we are changing the following properties
-  e.target.style.willChange = "transform, filter, opacity, background-position";
+  target.style.willChange = "transform, filter, opacity, background-position";
   // apply the animated class to start the CSS animation
-  e.target.classList.add("animated");
+  target.classList.add("animated");
+}
+function removeAnimation (e) {
+  e.target.classList.remove("animated");
+  e.target.style.willChange = "auto";
 }
 function updateZIndex(e) {
   e.target.style.zIndex = card_z_index;
@@ -156,11 +165,10 @@ function setupHover() {
   // setup the initial event listeners for all cards
   let cardList = document.getElementsByClassName("card-image");
   for (let i = 0; i < cardList.length; i++) {
-    cardList[i].addEventListener("animationend", function () {
-      cardList[i].classList.remove("animated");
-      cardList[i].style.willChange = "auto";
-    });
+    cardList[i].addEventListener("animationend", removeAnimation);
+    cardList[i].parentElement.addEventListener("blur", removeAnimation);
     cardList[i].addEventListener("mouseover", addAnimation);
+    cardList[i].parentElement.addEventListener("focus", addAnimation);
     cardList[i].addEventListener("click", addAnimation);
   }
 }
