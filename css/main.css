@@ -382,7 +382,7 @@ section.credits-column#twitter-images ul {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  row-gap: 2em;
+  row-gap: 0em;
   column-gap: 2vmin;
 }
 section.credits-column#twitter-images li {
