@@ -187,6 +187,7 @@ tcg-card {
   background: none;
   cursor: pointer;
   position: absolute;
+  /* card-back showing fix for Firefox */
   transform: rotateX(0deg);
 }
 
