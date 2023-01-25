@@ -148,7 +148,8 @@ tcg-card {
   This is kept separately as it's not used in the grid layout */
 #gacha-controls #card-list tcg-card.clicked {
   animation: left 1s ease 0s 1;
-  animation-fill-mode: forwards;
+  /* for some reason this gets ignored in Firefox unless important applied */
+  animation-fill-mode: forwards !important;
 }
 #gacha-controls.pile-display tcg-card.clicked:nth-child(3n + 1) {
   --rotation: -3deg;
