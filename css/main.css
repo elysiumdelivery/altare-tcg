@@ -340,25 +340,25 @@ section.credits-column ul {
   text-align: center;
 }
 
-section.credits-column:nth-of-type(1) {
+section.credits-column#download-links {
   grid-area: downloadlinks;
   animation-delay: 0.5s;
   text-align: center;
 }
-section.credits-column:nth-of-type(2) {
+section.credits-column#credits-role-id-0 {
   grid-area: general;
   animation-delay: 1s;
   margin-top: 0;
 }
-section.credits-column:nth-of-type(3) {
+section.credits-column#credits-role-id-1 {
   grid-area: devs;
   animation-delay: 1.5s;
 }
-section.credits-column:nth-of-type(4) {
+section.credits-column#credits-role-id-2 {
   grid-area: accessibility;
   animation-delay: 2s;
 }
-section.credits-column:nth-of-type(5) {
+section.credits-column#credits-role-id-3 {
   grid-area: twitillust;
   animation-delay: 2.5s;
 }

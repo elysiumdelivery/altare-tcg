@@ -52,6 +52,7 @@ function renderCredits(credits_data) {
     if (i === 0 || !credit["Role"]) {
       let creditsColumn = document.createElement("section");
       creditsColumn.classList.add("credits-column");
+      creditsColumn.id = "credits-role-id-" + roleElements.length;
       roleMapping.push([]);
       roleElements.push(creditsColumn);
       creditsContainer.append(creditsColumn);
@@ -124,9 +125,7 @@ async function main() {
       break;
     case "/credits.html":
       getCSVData(CREDITS_CSV, renderCredits);
-      setTimeout(function(){
-        getCSVData(TWITTER_ART_CREDITS_CSV, renderTwitterArtCredits);
-      }, 100);
+      getCSVData(TWITTER_ART_CREDITS_CSV, renderTwitterArtCredits);
       break;
   }
 }
