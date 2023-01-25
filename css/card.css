@@ -269,8 +269,14 @@ tcg-card {
   margin-left: 4px;
 }
 
+#reset-collection {
+  margin-right: 15px;
+}
+
 section label {
-  padding-left: 15px;
+  padding-right: 15px;
+  display: inline-block;
+  white-space: nowrap;
 }
 .grid-display.pulled section {
   padding-bottom: 70px;
@@ -283,10 +289,6 @@ section label {
 }
 .pile-display button.gacha-button {
   margin-bottom:0.5em;
-}
-
-#search-bar {
-  margin-top: 15px;
 }
 
 #gacha-controls button.gacha-button:hover,
@@ -392,6 +394,12 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   }
 }
 
+@media screen and (max-width: 1320px) {
+  #search-bar {
+    margin-top: 15px;
+  }
+}
+
 @media screen and (max-width: 1000px) {
   #gacha-controls {
     /* make the card even smaller whtn the screen is resized further */
@@ -437,10 +445,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
 @media screen and (max-width: 900px) {
   section label {
     /* drop the filter options together to the second line when the screen becomes too small */
-    white-space: nowrap;
     margin-top: 10px;
-    display: block;
-    padding-left: 0px;
   }
   section#gacha-controls label {
     /* ensure the options display as a single line even when the screen is small */
@@ -448,6 +453,9 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     margin-top: 0px;
     display: inline-block;
     padding-left: 0px;
+  }
+  #search-bar {
+    margin-top:0px;
   }
 }
 
@@ -576,7 +584,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   margin: 0;
 }
 
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 670px) {
 
   /* adjust the display of the reduce motion checkbox when screen is small */
   section#gacha-controls fieldset {
@@ -605,6 +613,26 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
     width: calc(var(--card-width) * 1.5);
     height: calc(var(--card-height) * 1.5);
+  }
+  #collection-border {
+    --card-width:250px;
+    --card-height:349px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  #reset-collection {
+    margin-top:10px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  #sort-dropdown {
+    width: 52vw;
+    text-overflow: ellipsis;
+  }
+  #search-bar {
+    width: 52vw;
   }
 }
 
@@ -1022,10 +1050,32 @@ card will still fly across the screen, or flip when opened */
   color: white;
   background-color: transparent;
   margin: 1em 0;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 #gacha-notes p {
-  margin: 0.3em;
+  margin: 0.3em 0;
+}
+
+/* for any additional text on the collections page */
+#collection-foreword {
+  text-align: right;
+  font-size: 1em;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 1.2em;
+  border-radius: 8px 0;
+  margin: 1.2em 0;
+}
+#collection-foreword p {
+  text-align: left;
+}
+#collection-foreword p {
+  margin: 0
+}
+#collection-foreword p:nth-child(2) {
+  margin-top: 0.5em;
+}
+#foreword-close {
+  margin-top: 10px;
 }
 
 /* prevent interaction without removing the event listeners */
