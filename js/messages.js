@@ -124,7 +124,9 @@ async function main() {
       break;
     case "/credits.html":
       getCSVData(CREDITS_CSV, renderCredits);
-      getCSVData(TWITTER_ART_CREDITS_CSV, renderTwitterArtCredits);
+      setTimeout(function(){
+        getCSVData(TWITTER_ART_CREDITS_CSV, renderTwitterArtCredits);
+      }, 100);
       break;
   }
 }

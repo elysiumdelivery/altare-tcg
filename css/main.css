@@ -48,17 +48,34 @@ section {
 }
 
 footer {
-  display: flex;
-  justify-content: center;
+  color:rgba(255, 255, 255, 0.4);
+  text-align: center;
   padding: 30px;
 }
 
-footer a {
-  color: white;
+footer p {
+  font-size: 0.8em;
 }
 
-footer svg {
-  width: 1em;
+#footer-nav {
+  color: white;
+  display: flex;
+  justify-content: center;
+  column-gap: 2vh;
+}
+
+#download-links a,
+#footer-nav a {
+  padding: 7px 13px !important;
+  background-color: var(--bg-color-lighten-30);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#download-links a:hover, #download-links a:active,
+#footer-nav a:hover, #footer-nav a:active {
+  background-color: var(--accent-color);
+  transition: background-color 0.3s ease;
 }
 
 button:not(.card-front):not(.card-back),
@@ -263,14 +280,15 @@ section#credits {
   position: relative;
   display: grid;
   grid-template-areas:
-    "header        header"
+    "downloadheader downloadheader"
+    "downloadlinks downloadlinks"
+    "creditsheader        creditsheader"
     "general       devs"
     "accessibility twitillust"
     "twitter       twitter";
 }
 
 section#credits h1 {
-  grid-area: header;
   font-size: 1.5em;
   margin-bottom: 2em;
 
@@ -278,6 +296,22 @@ section#credits h1 {
   text-align: center;
   column-span: all;
   color: white;
+}
+section#credits h1#download-header {
+  grid-area: downloadheader;
+}
+section#credits h1#credits-header {
+  grid-area: creditsheader;
+}
+section#download-links {
+  padding: 2em 1em;
+  display: flex;
+  justify-content: center;
+}
+section#download-links a {
+  color: white;
+  text-decoration: none;
+  margin: 20px 5px;
 }
 
 section.credits-column {
@@ -307,21 +341,26 @@ section.credits-column ul {
 }
 
 section.credits-column:nth-of-type(1) {
-  grid-area: general;
+  grid-area: downloadlinks;
   animation-delay: 0.5s;
-  margin-top: 0;
+  text-align: center;
 }
 section.credits-column:nth-of-type(2) {
-  grid-area: devs;
+  grid-area: general;
   animation-delay: 1s;
+  margin-top: 0;
 }
 section.credits-column:nth-of-type(3) {
-  grid-area: accessibility;
+  grid-area: devs;
   animation-delay: 1.5s;
 }
 section.credits-column:nth-of-type(4) {
+  grid-area: accessibility;
+  animation-delay: 2s;
+}
+section.credits-column:nth-of-type(5) {
   grid-area: twitillust;
-  animation-delay: 2.0s;
+  animation-delay: 2.5s;
 }
 
 section.credits-column li {
@@ -389,7 +428,9 @@ section.credits-column p {
 
   section#credits {
     grid-template-areas:
-      "header"
+      "downloadheader"
+      "downloadlinks"
+      "creditsheader"
       "general"
       "devs"
       "accessibility"
@@ -414,4 +455,16 @@ section.credits-column p {
     opacity: 1;
     transform: translateY(0%);
   }
+}
+
+@media only screen and (max-width: 520px) {
+
+  section#download-links {
+    padding: 1em;
+    flex-direction: column;
+  }
+  section#download-links a {
+    margin: 10px 5px;
+  }
+
 }
