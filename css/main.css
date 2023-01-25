@@ -69,6 +69,26 @@ footer svg {
   margin-right: 5px;
 }
 
+footer a,
+#download-links a {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 0.8em;
+  color: white;
+}
+
+footer a .icon,
+#download-links a .icon {
+  position: relative;
+  width: 2em;
+  height: 2em;
+  margin-right: 0.5em;
+}
+
 #download-links a,
 #footer-nav a {
   padding: 7px 13px !important;

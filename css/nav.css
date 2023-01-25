@@ -11,9 +11,7 @@ nav hr {
   margin: 1em 0;
 }
 
-nav a,
-footer a,
-#download-links a {
+nav a {
   position: relative;
 
   display: flex;
@@ -32,9 +30,7 @@ nav a.active {
   z-index: 1;
 }
 
-nav a .icon,
-footer a .icon,
-#download-links a .icon {
+nav a .icon {
   position: relative;
   width: 2em;
   height: 2em;
