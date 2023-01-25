@@ -37,8 +37,8 @@ export async function setupDetailsDialog() {
   });
 }
 
-function costAndDamageHTML(cost, damage) {
-  if (!cost && !damage) {
+function attackTraitsHTML(cost, damage, type) {
+  if (!cost && !damage && !type) {
     return "";
   }
   const htmlList = [];
@@ -47,6 +47,9 @@ function costAndDamageHTML(cost, damage) {
   }
   if (damage) {
     htmlList.push(`Damage: ${damage}`);
+  }
+  if (type) {
+    htmlList.push(`Type: ${type}`);
   }
   return `<p>${htmlList.filter((item) => Boolean(item)).join(" | ")}</p>`;
 }
@@ -86,16 +89,17 @@ export function updateDetailsDialog(data, cardUrl) {
     detailsHTML += `
       <h3>Item Description</h3>
       <p>${data["Item Description"]}</p>
-      <p>${data["Item Extended Lore"]}</p>`;
+      <p><b>Extended Lore: </b>${data["Item Extended Lore"]}</p>`;
   } else {
     detailsHTML += `
       ${
         data["Attack 1 Name"]
           ? `
         <h3>${data["Attack 1 Name"]}</h3>
-        ${costAndDamageHTML(
+        ${attackTraitsHTML(
           data["Attack 1 Element Cost"],
-          data["Attack 1 Damage"]
+          data["Attack 1 Damage"],
+          data["Attack 1 Type"]
         )}
         <p>${data["Attack 1 Description"]}</p>
         `
@@ -103,7 +107,7 @@ export function updateDetailsDialog(data, cardUrl) {
       }
       ${
         data["Attack 1 Extended Lore"]
-          ? `<p>${data["Attack 1 Extended Lore"]}</p>`
+          ? `<p><b>Extended Lore: </b>${data["Attack 1 Extended Lore"]}</p>`
           : ""
       }
 
@@ -111,9 +115,10 @@ export function updateDetailsDialog(data, cardUrl) {
         data["Attack 2 Name"]
           ? `
         <h3>${data["Attack 2 Name"]}</h3>
-        ${costAndDamageHTML(
+        ${attackTraitsHTML(
           data["Attack 2 Element Cost"],
-          data["Attack 2 Damage"]
+          data["Attack 2 Damage"],
+          data["Attack 2 Type"]
         )}
         <p>${data["Attack 2 Description"]}</p>
         `
@@ -121,7 +126,7 @@ export function updateDetailsDialog(data, cardUrl) {
       }
       ${
         data["Attack 2 Extended Lore"]
-          ? `<p>${data["Attack 2 Extended Lore"]}</p>`
+          ? `<p><b>Extended Lore: </b>${data["Attack 2 Extended Lore"]}</p>`
           : ""
       }
   `;
