@@ -290,14 +290,15 @@ main {
 
   #welcome-nav a {
     position: relative;
-    width: 50%;
+    width: max(50%, 9em);
     height: auto;
     transform: none;
     padding: 0.75em 0.5em;
 
     background: #bfdaf5;
+    background-image: url(../images/Button_Texture_800px_landscape.png);
     border-radius: 5px;
-    border: 0.5vmin solid var(--accent-color);
+    border: 3px solid var(--accent-color);
 
     box-sizing: border-box;
 
@@ -311,13 +312,6 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-
-  #welcome-nav a.special-nav-card {
-    /* border gradient only seems to work when adding it to the bg property */
-    border-color: transparent;
-    background: linear-gradient(45deg, #a7daf5, #ffffff, #a7daf5) padding-box,
-      linear-gradient(45deg, gold, #ffffff, gold) border-box;
   }
 
   /* hide the card images w/ alt text and use the span for text */
