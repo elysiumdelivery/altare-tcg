@@ -52,6 +52,7 @@ function renderCredits(credits_data) {
     if (i === 0 || !credit["Role"]) {
       let creditsColumn = document.createElement("section");
       creditsColumn.classList.add("credits-column");
+      creditsColumn.id = "credits-role-id-" + roleElements.length;
       roleMapping.push([]);
       roleElements.push(creditsColumn);
       creditsContainer.append(creditsColumn);
