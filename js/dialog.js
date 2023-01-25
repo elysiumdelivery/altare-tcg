@@ -42,14 +42,14 @@ function attackTraitsHTML(cost, damage, type) {
     return "";
   }
   const htmlList = [];
+  if (type) {
+    htmlList.push(`Type: ${type}`);
+  }
   if (cost) {
     htmlList.push(`Cost: ${cost}`);
   }
   if (damage) {
     htmlList.push(`Damage: ${damage}`);
-  }
-  if (type) {
-    htmlList.push(`Type: ${type}`);
   }
   return `<p>${htmlList.filter((item) => Boolean(item)).join(" | ")}</p>`;
 }
@@ -89,7 +89,8 @@ export function updateDetailsDialog(data, cardUrl) {
     detailsHTML += `
       <h3>Item Description</h3>
       <p>${data["Item Description"]}</p>
-      <p><b>Extended Lore: </b>${data["Item Extended Lore"]}</p>`;
+      <h4>Extended Lore</h4>
+      <p>${data["Item Extended Lore"]}</p>`;
   } else {
     detailsHTML += `
       ${
@@ -107,7 +108,8 @@ export function updateDetailsDialog(data, cardUrl) {
       }
       ${
         data["Attack 1 Extended Lore"]
-          ? `<p><b>Extended Lore: </b>${data["Attack 1 Extended Lore"]}</p>`
+          ? ` <h4>Extended Lore</h4>
+              <p>${data["Attack 1 Extended Lore"]}</p>`
           : ""
       }
 
@@ -126,7 +128,8 @@ export function updateDetailsDialog(data, cardUrl) {
       }
       ${
         data["Attack 2 Extended Lore"]
-          ? `<p><b>Extended Lore: </b>${data["Attack 2 Extended Lore"]}</p>`
+          ? `<h4>Extended Lore</h4>
+              <p>${data["Attack 2 Extended Lore"]}</p>`
           : ""
       }
   `;
