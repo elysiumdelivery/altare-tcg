@@ -314,7 +314,7 @@ main {
     justify-content: center;
   }
 
-  /* hide the card images w/ alt text and use the span for text */
+  /* hide the card images from desktop w/ the alt text and use the span for text instead */
   #welcome-nav a img {
     display: none;
   }
@@ -327,7 +327,7 @@ main {
     font-size: 1.8vmin;
   }
 
-  /* hide the text and let the card imgs read out the alt text */
+  /* hide the mobile-only text that shows in hamburger menu and let the card imgs read out the alt text */
   #welcome-nav a span {
     display: none;
   }
