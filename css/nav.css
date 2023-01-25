@@ -335,3 +335,65 @@ nav a#nav-credits:focus-visible:not(.active)::before {
   75% { transform: translateZ(0) rotate(1deg) scaleX(0.99) scaleY(1.02); }
   100% { transform: translateZ(0) rotate(0deg) scaleX(1) scaleY(1); }
 }
+
+@media (prefers-color-scheme: dark) {
+
+  nav a#nav-gacha::before,
+  section#gacha-controls section#card-list,
+  section#gacha-controls {
+    background-color: rgb(47, 57, 143);
+  }
+
+  nav a#nav-gacha:hover:not(.active)::before,
+  nav a#nav-gacha:focus-visible:not(.active)::before {
+      background-color: #6f79cf;
+  }
+
+  nav a#nav-collection::before,
+  section#collection-border section#card-list,
+  section#collection-border {
+    background-color: rgb(48, 72, 133);
+  }
+
+  nav a#nav-collection:hover:not(.active)::before,
+  nav a#nav-collection:focus-visible:not(.active)::before {
+      background-color: #8ea2d6;
+  }
+
+  nav a#nav-artist-writer-board::before,
+  section#artist-writer-board {
+    background-color: rgb(61, 69, 96);
+  }
+
+  nav a#nav-artist-writer-board:hover:not(.active)::before,
+  nav a#nav-artist-writer-board:focus-visible:not(.active)::before {
+      background-color: rgb(58, 75, 143);
+  }
+
+  nav a#nav-message-board::before,
+  section#message-board {
+    background-color: rgb(32, 66, 143);
+  }
+
+  nav a#nav-message-board:hover:not(.active)::before,
+  nav a#nav-message-board:focus-visible:not(.active)::before {
+      background-color: #7d8dca;
+  }
+
+  nav a#nav-credits::before,
+  section#credits {
+    background-color: #2852b3;
+  }
+
+  nav a#nav-credits:hover:not(.active)::before,
+  nav a#nav-credits:focus-visible:not(.active)::before {
+      background-color: #587fd9;
+  }
+}
+
+@media only screen and (max-width: 1000px) and (prefers-color-scheme: dark) {
+  nav {
+    /* bg-darken-50 at 80% opacity */
+    background-color: rgb(14 25 54 / 80%); 
+  }
+}

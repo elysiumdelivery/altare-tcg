@@ -4,10 +4,12 @@
 
 :root {
   --accent-color: #54acdc;
+  --accent-color-darken-50: #195a7e;
   --accent-color-lighten-50: #a9d5ed;
   --bg-color: #1d346d;
   --bg-color-lighten-30: #345ec5;
   --bg-color-lighten-50: #6c8bd7;
+  --bg-color-darken-50: #0e1936;
 }
 
 html {
@@ -413,5 +415,54 @@ section.credits-column p {
   100% {
     opacity: 1;
     transform: translateY(0%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --darkreader-bg--color1: #404548;
+    --darkreader-bg--color2: #51575b;
+    --darkreader-bg--accent-color: #1e6891;
+    --darkreader-bg--accent-color-lighten-50: #14445e;
+    --darkreader-bg--bg-color: #172a57;
+    --darkreader-text--bg-color: #95bae3;
+    --bg-color-lighten-30: #345ec5;
+    --darkreader-text--bg-color-lighten-50: #70a1d8;
+    --darkreader-border--bg-color-lighten-50: #223c7c;
+  }
+
+  html, body {
+    border-color: #736b5e;
+    color: #e8e6e3;
+  }
+
+  .welcome-splash {
+    background-color: var(--bg-color-darken-50);
+    color: rgb(232, 230, 227);
+  }
+
+  #card-details-dialog {
+    background-color: var(--bg-color-darken-50);
+    color: rgb(232, 230, 227);
+  }
+
+  button:not(.card-front):not(.card-back), select, input {
+    background-color: var(--darkreader-bg--bg-color);
+    color: rgb(232, 230, 227);
+  }
+
+  section#artist-writer-board h1 {
+    color: #e8e6e3;
+  }
+
+  section#artist-writer-board .artist-writer-message,
+  section.credits-column {
+    background-color: #272c3a;
+    color: #e8e6e3;
+  }
+
+  section#artist-writer-board .artist-writer-message a,
+  section.credits-column a {
+    color: var(--darkreader-text--bg-color);
   }
 }
