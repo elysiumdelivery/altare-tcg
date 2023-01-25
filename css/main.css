@@ -304,15 +304,16 @@ section#credits h1#credits-header {
   grid-area: creditsheader;
 }
 section#download-links {
-  padding: 2em 1em;
   display: flex;
   justify-content: center;
+  background-color:transparent;
 }
 section#download-links a {
   color: white;
   text-decoration: none;
-  margin: 20px 5px;
+  margin: 0px 5px;
   font-size: 1em;
+  background-color: var(--bg-color);
 }
 
 section.credits-column {
@@ -345,6 +346,8 @@ section.credits-column#download-links {
   grid-area: downloadlinks;
   animation-delay: 0.5s;
   text-align: center;
+  margin: 0 0 2em 0;
+  padding: 0;
 }
 section.credits-column#credits-role-id-0 {
   grid-area: general;
