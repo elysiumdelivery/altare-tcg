@@ -312,6 +312,7 @@ section#download-links a {
   color: white;
   text-decoration: none;
   margin: 20px 5px;
+  font-size: 1em;
 }
 
 section.credits-column {
