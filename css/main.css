@@ -436,11 +436,6 @@ section.credits-column p {
     color: #e8e6e3;
   }
 
-  .welcome-splash {
-    background-color: var(--bg-color-darken-50);
-    color: rgb(232, 230, 227);
-  }
-
   #card-details-dialog {
     background-color: var(--bg-color-darken-50);
     color: rgb(232, 230, 227);
