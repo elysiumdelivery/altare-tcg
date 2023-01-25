@@ -81,20 +81,20 @@ footer a,
   color: white;
 }
 
-footer a .icon,
-#download-links a .icon {
-  position: relative;
-  width: 2em;
-  height: 2em;
-  margin-right: 0.5em;
-}
-
 #download-links a,
 #footer-nav a {
   padding: 7px 13px !important;
   background-color: var(--bg-color-lighten-30);
   border-radius: 3px;
   cursor: pointer;
+}
+
+footer a .icon,
+#download-links a .icon {
+  position: relative;
+  width: 2em;
+  height: 2em;
+  margin-right: 0.5em;
 }
 
 #download-links a:hover, #download-links a:active,

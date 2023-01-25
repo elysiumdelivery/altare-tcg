@@ -55,6 +55,24 @@ main {
   pointer-events: auto;
   visibility: visible;
 }
+
+/* match similar effect to welcome splash */
+#homepage-footer {
+  opacity: 0;
+  padding: 0px;
+  height: 0px;
+  overflow: hidden;
+  visibility: hidden;
+  transition: 1s opacity ease 1s;
+}
+#homepage-footer.active {
+  opacity: 1;
+  height:auto;
+  padding: 30px;
+  visibility: visible;
+  position: initial;
+}
+
 #altare-img-bg {
   position: absolute;
   top: 0;
