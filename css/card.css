@@ -570,7 +570,6 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   margin: 20px;
   overflow: hidden;
   z-index: 10;
-  touch-action: none;
   border-radius: 5%/3.5%;
   box-shadow: 0 55px 35px -10px rgb(0 0 0 / 50%);
   transition: transform 0.5s ease;
@@ -696,6 +695,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   mix-blend-mode: color-dodge;
   transition: transform 0.33s ease, filter 0.33s ease, background 0.33s ease;
   border-radius: var(--border-radius);
+  pointer-events: none;
 }
 
 /* before is the gradient layer - only 2 base colours are used by default */

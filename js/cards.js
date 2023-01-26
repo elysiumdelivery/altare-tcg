@@ -186,9 +186,9 @@ function setupHover() {
   for (let i = 0; i < cardList.length; i++) {
     cardList[i].addEventListener("animationend", removeAnimation);
     cardList[i].parentElement.addEventListener("blur", removeAnimation);
-    cardList[i].addEventListener("mouseover", addAnimation);
     cardList[i].parentElement.addEventListener("focus", addAnimation);
-    cardList[i].addEventListener("click", addAnimation);
+    cardList[i].parentElement.addEventListener("click", addAnimation);
+    cardList[i].parentElement.addEventListener("mouseover", addAnimation);
   }
 }
 export function updateGachaView(e) {
