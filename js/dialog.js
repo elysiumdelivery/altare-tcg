@@ -83,14 +83,18 @@ export function updateDetailsDialog(data, cardUrl) {
   // Clear + set card metadata
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
     "";
-  let detailsHTML = `<p><b>Image description: </b>${data["Card Image Alt Text Description"]}</p>`;
+  let detailsHTML = `<h3>Image description</h3><p>${data["Card Image Alt Text Description"]}</p>`;
   if (data["Item Description"]) {
     // Item card without attacks
     detailsHTML += `
       <h3>Item Description</h3>
-      <p>${data["Item Description"]}</p>
+      <p>${data["Item Description"]}</p>`;
+    // if there's no extended lore, skip it
+    if(data["Item Extended Lore"] !== ""){
+      detailsHTML += `
       <h4>Extended Lore</h4>
       <p>${data["Item Extended Lore"]}</p>`;
+    }
   } else {
     detailsHTML += `
       ${

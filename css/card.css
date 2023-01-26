@@ -389,6 +389,50 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   display: none;
 }
 
+@media screen and (min-width: 1600px) {
+  .details-dialog-card {
+    /* make the card larger when the screen is resized */
+    --card-width: 300px;
+    --card-height: calc(300px * 1.395);
+  }
+  .details-dialog-card.basic:after, #gacha-controls .card-image.basic:after {
+    background-size: 150% !important;
+    background-repeat: repeat;
+  }
+}
+
+@media screen and (min-width: 2200px) {
+  .details-dialog-card {
+    /* make the card larger when the screen is resized */
+    --card-width: 350px;
+    --card-height: calc(350px * 1.395);
+  }
+  .details-dialog-card.basic:after, #gacha-controls .card-image.basic:after {
+    background-size: 120% !important;
+    background-repeat: repeat;
+  }
+}
+
+@media screen and (min-width: 1600px) and (max-height: 1200px),
+screen and (max-height: 820px) {
+  #card-details-dialog {
+    /* let whole dialog scroll */
+    overflow: auto;
+  }
+
+  .details-dialog-card {
+    /* make the card sit up the top instead */
+    align-self: start;
+  }
+
+  .details-dialog-text {
+    /* Override overflow: auto for small screens, 
+    and let whole dialog scroll instead of just the text section */
+    overflow: visible;
+    height: max-content;
+  }
+}
+
 @media screen and (max-width: 1400px) {
   #gacha-controls {
     /* make the card smaller when the screen is resized */
@@ -451,6 +495,8 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     /* ignore min-height */
     min-height: auto;
     padding: 1em 2vmin;
+    /* push it slightly further down to match spacing with top of card */
+    margin-top: 1.5em;
   }
 
   #gacha-controls.grid-display.pulled .gacha-prompt img {
@@ -545,6 +591,12 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   /* set to 20 so that it's greater than nav a.active's z-index */
   /* also so it's greater than the hamburger button, which has to be greater than the max z-index value of the last flipped card in the gacha page */
   z-index: 20; 
+}
+
+/* create a clearer separation between the different text sections of the card */
+.dialog-container h3:not(:first-child) {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 1em;
 }
 
 .dialog-overlay {
@@ -879,7 +931,9 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   transition: none;
   animation: holoSparkle 12s ease 0s 1;
 }
-
+.details-dialog-card.basic.animated:after {
+  animation: holoBasicSparkle 12s ease 0s 1;
+}
 .details-dialog-card.secret.animated:after {
   animation: holoSecretSparkle 12s ease 0s 1;
 }
@@ -913,6 +967,33 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   55% {
     opacity: 0.33;
     background-position: 45% 45%;
+    filter: brightness(1.2) contrast(1.25);
+  }
+}
+
+@keyframes holoBasicSparkle {
+  /* same as above, less movement of the background */
+  0%,
+  100% {
+    opacity: 0;
+    filter: brightness(1.2) contrast(1.25);
+  }
+  6%,
+  11% {
+    opacity: 0.6;
+  }
+  13%,
+  16% {
+    opacity: 0.5;
+    filter: brightness(1.2) contrast(0.8);
+  }
+  35%,
+  38% {
+    opacity: 1;
+    filter: brightness(1) contrast(1);
+  }
+  55% {
+    opacity: 0.33;
     filter: brightness(1.2) contrast(1.25);
   }
 }
@@ -1045,7 +1126,10 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   transition: none;
   animation: holoSparkle 3s ease 0.5s 1;
 }
-
+#gacha-controls .card-image.basic.animated:after {
+  transition: none;
+  animation: holoBasicSparkle 3s ease 0.5s 1;
+}
 #gacha-controls .card-image.secret.animated:after {
   transition: none;
   animation: holoSecretSparkle 3s ease 0.5s 1;
