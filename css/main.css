@@ -451,13 +451,15 @@ section.credits-column p {
   }
 
   section#artist-writer-board .artist-writer-message,
-  section.credits-column {
+  section.credits-column,
+  section.credits-column#twitter-images {
     background-color: #272c3a;
     color: #e8e6e3;
   }
 
   section#artist-writer-board .artist-writer-message a,
-  section.credits-column a {
+  section.credits-column a,
+  section.credits-column#twitter-images li a {
     color: var(--darkreader-text--bg-color);
   }
 }
