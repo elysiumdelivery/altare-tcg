@@ -95,6 +95,7 @@ main {
   position: absolute;
   width: 13vmin;
   height: calc(13vmin*1.3975);
+  /* hack to get the tag's size to be the same as the card image */
 
   border-radius: 0.8vmin;
   box-sizing: border-box;
