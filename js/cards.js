@@ -167,8 +167,13 @@ function addAnimation(e) {
   target.classList.add("animated");
 }
 function removeAnimation (e) {
-  e.target.classList.remove("animated");
-  e.target.style.willChange = "auto";
+  let target = e.target;
+  // if our target is the parent button (from keyboard blur, then target the child image after)
+  if (target.className.includes("card-front")) {
+    target = e.target.querySelector('.card-image');
+  }
+  target.classList.remove("animated");
+  target.style.willChange = "auto";
 }
 function updateZIndex(e) {
   e.target.style.zIndex = card_z_index;

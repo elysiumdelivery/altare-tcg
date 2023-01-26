@@ -56,8 +56,6 @@ nav a#nav-home #chibi-altare {
   -webkit-backface-visibility: hidden;
 
   transform-origin: 50% 100%;
-
-  /* transition: 0.5s opacity ease, 0.5s transform ease; */
 }
 
 nav a#nav-home:hover #chibi-altare,
