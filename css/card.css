@@ -90,7 +90,10 @@ tcg-card {
   margin: 0.5em 0;
   text-align: center;
   font-size: 1em;
-  height:20px;
+  /* this is added as a hack/fix for the variable height of the gacha section tag
+  after content is inserted into the pull announcement after first pull,
+  this causes the height to suddenly change from 0 to roughly 19.something */
+  height: 20px;
 }
 
 /* rotate card differently depending on its position in the pile */
