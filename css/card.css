@@ -262,6 +262,8 @@ tcg-card {
   padding: 0 30px;
   overflow: auto;
   grid-area: text;
+  /* to make it sit over the card shadow */
+  z-index: 11;
 }
 
 .card-details-dialog-close {
@@ -389,6 +391,43 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   display: none;
 }
 
+
+@media screen and (min-width: 1500px) {
+  .details-dialog-card {
+    /* make the card larger when the screen is resized */
+    --card-width: 300px;
+    --card-height: calc(300px * 1.395);
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .details-dialog-card {
+    /* make the card larger when the screen is resized */
+    --card-width: 350px;
+    --card-height: calc(350px * 1.395);
+  }
+}
+
+@media screen and (min-width: 1500px) and (max-height: 1200px),
+screen and (max-height: 820px) {
+  #card-details-dialog {
+    /* let whole dialog scroll */
+    overflow: auto;
+  }
+
+  .details-dialog-card {
+    /* make the card sit up the top instead */
+    align-self: start;
+  }
+
+  .details-dialog-text {
+    /* Override overflow: auto for small screens, 
+    and let whole dialog scroll instead of just the text section */
+    overflow: visible;
+    height: max-content;
+  }
+}
+
 @media screen and (max-width: 1400px) {
   #gacha-controls {
     /* make the card smaller when the screen is resized */
@@ -451,6 +490,8 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     /* ignore min-height */
     min-height: auto;
     padding: 1em 2vmin;
+    /* push it slightly further down to match spacing with top of card */
+    margin-top: 1.5em;
   }
 
   #gacha-controls.grid-display.pulled .gacha-prompt img {
@@ -543,6 +584,12 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   bottom: 0;
   left: 0;
   z-index: 5; /* set to 10 so that it's greater than nav a.active's z-index */
+}
+
+/* create a clearer separation between the different text sections of the card */
+.dialog-container h3:not(:first-child) {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 1em;
 }
 
 .dialog-overlay {
