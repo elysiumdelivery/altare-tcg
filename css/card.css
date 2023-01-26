@@ -372,7 +372,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   background-color: #bbd5da;
   height: 90%;
   width: 90%;
-  z-index: 10; /* set to 10 so that it's greater than nav a.active's z-index and #dialog-overlay */
+  z-index: 25; /* set to 25 so that it's greater than nav a.active's z-index and #dialog-overlay */
   display: grid;
   grid-column-gap: 0.5em;
   grid-template-areas:
