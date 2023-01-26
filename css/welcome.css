@@ -94,23 +94,11 @@ main {
 #welcome-nav a {
   position: absolute;
   width: 13vmin;
-  height: 17vmin;
-  background: white;
-  border-radius: 5px;
-  border: 0.5vmin solid gray;
+  height: calc(13vmin*1.3975);
+  /* hack to get the tag's size to be the same as the card image */
 
+  border-radius: 0.8vmin;
   box-sizing: border-box;
-  padding: 1em;
-
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  color: var(--accent-color);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
   filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
 
@@ -118,11 +106,8 @@ main {
   transform: scale(1);
 }
 
-#welcome-nav a.special-nav-card {
-  /* border gradient only seems to work when adding it to the bg property */
-  border-color: transparent;
-  background: linear-gradient(45deg, #a7daf5, #ffffff, #a7daf5) padding-box,
-    linear-gradient(45deg, gold, #ffffff, gold) border-box;
+#welcome-nav a img {
+    width: 100%;
 }
 
 #welcome-nav a.special-nav-card .special-nav-card-sparkle {
@@ -309,10 +294,33 @@ main {
 
   #welcome-nav a {
     position: relative;
-    width: 50%;
+    width: max(50%, 9em);
     height: auto;
     transform: none;
     padding: 0.75em 0.5em;
+
+    background: #bfdaf5;
+    background-image: url(../images/Button_Texture_800px_landscape.png);
+    border-radius: 5px;
+    border: 3px solid var(--accent-color);
+
+    box-sizing: border-box;
+
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #0e00c3;
+    font-family: "Rowdies", sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* hide the card images from desktop w/ the alt text and use the span for text instead */
+  #welcome-nav a img {
+    display: none;
   }
 }
 
@@ -321,6 +329,11 @@ main {
 
   #welcome-nav a {
     font-size: 1.8vmin;
+  }
+
+  /* hide the mobile-only text that shows in hamburger menu and let the card imgs read out the alt text */
+  #welcome-nav a span {
+    display: none;
   }
 
   #welcome-nav a:hover,
