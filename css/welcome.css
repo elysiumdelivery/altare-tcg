@@ -93,8 +93,8 @@ main {
 
 #welcome-nav a {
   position: absolute;
-  width: 12.2vmin;
-  height: 17vmin;
+  width: 13vmin;
+  height: calc(13vmin*1.3975);
 
   border-radius: 0.8vmin;
   box-sizing: border-box;
@@ -106,7 +106,7 @@ main {
 }
 
 #welcome-nav a img {
-    height: 100%;
+    width: 100%;
 }
 
 #welcome-nav a.special-nav-card .special-nav-card-sparkle {
