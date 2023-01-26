@@ -43,17 +43,59 @@ section {
 }
 
 footer {
-  display: flex;
-  justify-content: center;
+  color: white;
+  text-align: center;
   padding: 30px;
 }
 
-footer a {
+footer p {
+  font-size: 0.8em;
+}
+
+#footer-nav {
   color: white;
+  display: flex;
+  justify-content: center;
+  column-gap: 2vh;
 }
 
 footer svg {
-  width: 1em;
+  width:1em;
+  margin-right: 5px;
+}
+
+footer a,
+#download-links a {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 0.8em;
+  color: white;
+}
+
+#download-links a,
+#footer-nav a {
+  padding: 7px 13px !important;
+  background-color: var(--bg-color-lighten-30);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+footer a .icon,
+#download-links a .icon {
+  position: relative;
+  width: 2em;
+  height: 2em;
+  margin-right: 0.5em;
+}
+
+#download-links a:hover, #download-links a:active,
+#footer-nav a:hover, #footer-nav a:active {
+  background-color: var(--accent-color);
+  transition: background-color 0.3s ease;
 }
 
 button:not(.card-front):not(.card-back),
@@ -213,6 +255,7 @@ section#artist-writer-board .artist-writer-message {
   animation: 1s slide-up ease;
   animation-fill-mode: both;
   animation-iteration-count: 1;
+  will-change: transform;
 }
 
 section#artist-writer-board .artist-writer-message:first-child {
@@ -262,14 +305,15 @@ section#credits {
   position: relative;
   display: grid;
   grid-template-areas:
-    "header        header"
+    "downloadheader downloadheader"
+    "downloadlinks downloadlinks"
+    "creditsheader        creditsheader"
     "general       devs"
     "accessibility twitillust"
     "twitter       twitter";
 }
 
 section#credits h1 {
-  grid-area: header;
   font-size: 1.5em;
   margin-bottom: 2em;
 
@@ -277,6 +321,24 @@ section#credits h1 {
   text-align: center;
   column-span: all;
   color: white;
+}
+section#credits h1#download-header {
+  grid-area: downloadheader;
+}
+section#credits h1#credits-header {
+  grid-area: creditsheader;
+}
+section#download-links {
+  display: flex;
+  justify-content: center;
+  background-color:transparent;
+}
+section#download-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0px 5px;
+  font-size: 1em;
+  background-color: var(--bg-color);
 }
 
 section.credits-column {
@@ -295,6 +357,7 @@ section.credits-column {
   animation: 1s slide-up ease;
   animation-fill-mode: both;
   animation-iteration-count: 1;
+  will-change: transform;
 }
 section.credits-column ul {
   list-style: none;
@@ -305,22 +368,29 @@ section.credits-column ul {
   text-align: center;
 }
 
-section.credits-column:nth-of-type(1) {
-  grid-area: general;
+section.credits-column#download-links {
+  grid-area: downloadlinks;
   animation-delay: 0.5s;
+  text-align: center;
+  margin: 0 0 2em 0;
+  padding: 0;
+}
+section.credits-column#credits-role-id-0 {
+  grid-area: general;
+  animation-delay: 1s;
   margin-top: 0;
 }
-section.credits-column:nth-of-type(2) {
+section.credits-column#credits-role-id-1 {
   grid-area: devs;
-  animation-delay: 1s;
-}
-section.credits-column:nth-of-type(3) {
-  grid-area: accessibility;
   animation-delay: 1.5s;
 }
-section.credits-column:nth-of-type(4) {
+section.credits-column#credits-role-id-2 {
+  grid-area: accessibility;
+  animation-delay: 2s;
+}
+section.credits-column#credits-role-id-3 {
   grid-area: twitillust;
-  animation-delay: 2.0s;
+  animation-delay: 2.5s;
 }
 
 section.credits-column li {
@@ -328,7 +398,7 @@ section.credits-column li {
 }
 section.credits-column#twitter-images {
   grid-area: twitter;
-  animation-delay: 2.5s;
+  animation-delay: 3s;
 }
 section.credits-column#twitter-images h2 {
   text-align: center;
@@ -338,7 +408,7 @@ section.credits-column#twitter-images ul {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  row-gap: 2em;
+  row-gap: 0em;
   column-gap: 2vmin;
 }
 section.credits-column#twitter-images li {
@@ -418,7 +488,9 @@ section.credits-column p {
 
   section#credits {
     grid-template-areas:
-      "header"
+      "downloadheader"
+      "downloadlinks"
+      "creditsheader"
       "general"
       "devs"
       "accessibility"
@@ -445,10 +517,22 @@ section.credits-column p {
 @keyframes slide-up {
   0% {
     opacity: 0;
-    transform: translateY(25%);
+    transform: translateY(250px);
   }
   100% {
     opacity: 1;
     transform: translateY(0%);
   }
+}
+
+@media only screen and (max-width: 520px) {
+
+  section#download-links {
+    padding: 1em;
+    flex-direction: column;
+  }
+  section#download-links a {
+    margin: 10px 5px;
+  }
+
 }
