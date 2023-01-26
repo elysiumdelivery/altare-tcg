@@ -72,7 +72,6 @@ const specialSlots = {
 //Pulls a set of cards guided by an array of "slots" passed to the function.
 function pullCards(slots) {
   let pullCount = parseInt(localStorage.getItem("pull-count") ?? "0") + 1;
-  //let pulledIDs = [];
   let cards = [];
   let card;
   let pulled_cards;
@@ -95,6 +94,11 @@ function pullCards(slots) {
     //This applies to as many rarities as declared in the slot.
     for (let rarity in slot) {
       if (dice <= slot[rarity]) {
+        //In each card pull, get 4 random cards and pick the first unique card from it.
+        //(Not present on the current pulled cards array)
+        //In the extremely unlikely case all 4 cards are duplicates, the first is returned
+        //since it means it was destined by the universe itself.
+        //(and saves us from potential infinite rerolling)
         pulled_cards = getRandomCards(cards_by_rarity[rarity], 4);
         card = pulled_cards[0];
         //Checks for no repeats in the same pull

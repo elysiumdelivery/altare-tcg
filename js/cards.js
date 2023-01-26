@@ -37,6 +37,8 @@ export async function defineCardComponent() {
         (card) => card["Collector Number"] == this.getAttribute("card-id")
       );
       if (this.data["Rarity Folder"] === "Element") {
+        //Copies the data variable by value.
+        //That way we can change the ID here while keeping the original intact.
         this.data = Object.assign({}, this.data);
         this.data["Collector Number"] = "000";
       }
