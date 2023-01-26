@@ -68,7 +68,7 @@ main {
 #homepage-footer.active {
   opacity: 1;
   height:auto;
-  padding: 30px;
+  padding: calc(30px + 10vmin) 30px 30px 30px;
   visibility: visible;
   position: initial;
 }
@@ -112,7 +112,7 @@ main {
 #welcome-nav a {
   position: absolute;
   width: 13vmin;
-  height: calc(13vmin*1.3975);
+  height: calc(13vmin*1.395);
   /* hack to get the tag's size to be the same as the card image */
 
   border-radius: 0.8vmin;
@@ -126,6 +126,7 @@ main {
 
 #welcome-nav a img {
     width: 100%;
+    border-radius: 6px;
 }
 
 #welcome-nav a.special-nav-card .special-nav-card-sparkle {
@@ -318,7 +319,8 @@ main {
     padding: 0.75em 0.5em;
 
     background: #bfdaf5;
-    background-image: url(../images/Button_Texture_800px_landscape.png);
+    background-image: url(../images/Button_Texture_800px_landscape.jpg);
+    background-position: 3% 0%;
     border-radius: 5px;
     border: 3px solid var(--accent-color);
 
@@ -339,6 +341,11 @@ main {
   /* hide the card images from desktop w/ the alt text and use the span for text instead */
   #welcome-nav a img {
     display: none;
+  }
+
+  /* make the padding less excessive */
+  #homepage-footer.active {
+    padding: 30px;
   }
 }
 
