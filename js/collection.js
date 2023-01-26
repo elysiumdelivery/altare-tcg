@@ -59,6 +59,9 @@ function getOwnedCards(cards_data) {
   for (let item in localStorage) {
     if (item.slice(0, 4) === "card") {
       let card_id = item.split("-")[1];
+      if (card_id === "000") {
+        card_id = `000-${item.split("-")[2]}`;
+      }
       ownedCards.push(
         cards_data.find((card) => card["Collector Number"] === card_id)
       );
