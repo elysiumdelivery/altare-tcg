@@ -37,20 +37,27 @@ export async function setupDetailsDialog() {
   });
 }
 
-function attackTraitsHTML(cost, damage, type) {
-  if (!cost && !damage && !type) {
+//Receives a traits object like this:
+//{
+//  Type: "Attack",
+//  Cost: "Game 1, AU 1",
+//  Damage: 090
+// }
+//returns them as a "|" separated string inside a <p> element.
+//You can define any key as long as it is a string:
+// {
+//   "<b>Custom Trait</b>": "Custom value"
+// }
+function attackTraitsHTML(traits) {
+  if (Object.values(traits).some((value) => !value)) {
     return "";
   }
+
   const htmlList = [];
-  if (type) {
-    htmlList.push(`Type: ${type}`);
+  for (const [trait, value] of Object.entries(traits)) {
+    htmlList.push(`${trait}: ${value}`);
   }
-  if (cost) {
-    htmlList.push(`Cost: ${cost}`);
-  }
-  if (damage) {
-    htmlList.push(`Damage: ${damage}`);
-  }
+
   return `<p>${htmlList.filter((item) => Boolean(item)).join(" | ")}</p>`;
 }
 
@@ -97,11 +104,11 @@ export function updateDetailsDialog(data, cardUrl) {
         data["Attack 1 Name"]
           ? `
         <h3>${data["Attack 1 Name"]}</h3>
-        ${attackTraitsHTML(
-          data["Attack 1 Element Cost"],
-          data["Attack 1 Damage"],
-          data["Attack 1 Type"]
-        )}
+        ${attackTraitsHTML({
+          Type: data["Attack 1 Type"],
+          Cost: data["Attack 1 Element Cost"],
+          Damage: data["Attack 1 Damage"],
+        })}
         <p>${data["Attack 1 Description"]}</p>
         `
           : ""
@@ -117,11 +124,11 @@ export function updateDetailsDialog(data, cardUrl) {
         data["Attack 2 Name"]
           ? `
         <h3>${data["Attack 2 Name"]}</h3>
-        ${attackTraitsHTML(
-          data["Attack 2 Element Cost"],
-          data["Attack 2 Damage"],
-          data["Attack 2 Type"]
-        )}
+        ${attackTraitsHTML({
+          Type: data["Attack 2 Type"],
+          Cost: data["Attack 2 Element Cost"],
+          Damage: data["Attack 2 Damage"],
+        })}
         <p>${data["Attack 2 Description"]}</p>
         `
           : ""

@@ -11,9 +11,9 @@ import { GACHA_BUTTONS, pullAndRenderCards } from "./gacha.js";
 import { showCollection, setupForeword } from "./collection.js";
 
 const CSV_FILENAME = "../Regis Altare Card List CSV.csv";
-const pathname = window.location.pathname;
+const pathname = window.location.pathname.replace(".html", "");
 const CURRENT_PAGE = pathname.slice(pathname.lastIndexOf("/"), pathname.length);
-const PAGES_WHERE_CARD_HIDDEN = ["/gacha.html"];
+const PAGES_WHERE_CARD_HIDDEN = ["/gacha"];
 const COLLECTIONS_MAIN_CONTENT = document.getElementById("card-list");
 const FULL_COLLECTION_TOGGLE = document.getElementById(
   "full-collection-toggle"
@@ -106,7 +106,7 @@ async function main() {
   await defineCardComponent();
   getCSVData(async (cards_data) => {
     switch (CURRENT_PAGE) {
-      case "/gacha.html":
+      case "/gacha":
         // watch for any selection changes - either grid or pile card display
         GACHA_VIEW_SETTING[0].addEventListener("change", updateGachaView);
         GACHA_VIEW_SETTING[1].addEventListener("change", updateGachaView);
@@ -133,10 +133,10 @@ async function main() {
         }
         break;
 
-      case "/collection.html":
+      case "/collection":
+        setupCollectionControls();
         await setupDetailsDialog();
         showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
-        setupCollectionControls();
         // check if we need to show the foreword/disclaimer when page loads
         setupForeword();
     }
