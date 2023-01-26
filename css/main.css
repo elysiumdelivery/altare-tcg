@@ -397,7 +397,7 @@ section.credits-column li {
 }
 section.credits-column#twitter-images {
   grid-area: twitter;
-  animation-delay: 2.5s;
+  animation-delay: 3s;
 }
 section.credits-column#twitter-images h2 {
   text-align: center;
@@ -478,11 +478,11 @@ section.credits-column p {
 @keyframes slide-up {
   0% {
     opacity: 0;
-    transform: translateY(25%);
+    transform: translateY(250px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0%);
+    transform: translateY(0px);
   }
 }
 
