@@ -37,6 +37,23 @@ export async function setupDetailsDialog() {
   });
 }
 
+function attackTraitsHTML(cost, damage, type) {
+  if (!cost && !damage && !type) {
+    return "";
+  }
+  const htmlList = [];
+  if (type) {
+    htmlList.push(`Type: ${type}`);
+  }
+  if (cost) {
+    htmlList.push(`Cost: ${cost}`);
+  }
+  if (damage) {
+    htmlList.push(`Damage: ${damage}`);
+  }
+  return `<p>${htmlList.filter((item) => Boolean(item)).join(" | ")}</p>`;
+}
+
 export function updateDetailsDialog(data, cardUrl) {
   // Header
   DETAILS_DIALOG_EL.getElementsByClassName("dialog-title")[0].innerHTML = "";
@@ -46,7 +63,11 @@ export function updateDetailsDialog(data, cardUrl) {
     "beforeend",
     `
     <h2 class="card-name">${data["Card Display Name"]}</h2>
-    <p>Level: ${data["Card Level"]} | HP: ${data["Card HP"]} |  Element: ${data["Card Element"]} |  Card #: ${data["Collector Number"]}</p>
+    <p>${data["Card Level"] ? `Level: ${data["Card Level"]} | ` : ""}${
+      data["Card HP"] ? `HP: ${data["Card HP"]} |  ` : ""
+    }${
+      data["Card Element"] ? `Element: ${data["Card Element"]} |  ` : ""
+    }Card #: ${data["Collector Number"]}</p>
     <p>Artist: ${data["Artist Credit"]} | Writer: ${data["Writer Credit"]}</p>
   `
   );
@@ -62,19 +83,60 @@ export function updateDetailsDialog(data, cardUrl) {
   // Clear + set card metadata
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
     "";
+  let detailsHTML = `<p><b>Image description: </b>${data["Card Image Alt Text Description"]}</p>`;
+  if (data["Item Description"]) {
+    // Item card without attacks
+    detailsHTML += `
+      <h3>Item Description</h3>
+      <p>${data["Item Description"]}</p>
+      <h4>Extended Lore</h4>
+      <p>${data["Item Extended Lore"]}</p>`;
+  } else {
+    detailsHTML += `
+      ${
+        data["Attack 1 Name"]
+          ? `
+        <h3>${data["Attack 1 Name"]}</h3>
+        ${attackTraitsHTML(
+          data["Attack 1 Element Cost"],
+          data["Attack 1 Damage"],
+          data["Attack 1 Type"]
+        )}
+        <p>${data["Attack 1 Description"]}</p>
+        `
+          : ""
+      }
+      ${
+        data["Attack 1 Extended Lore"]
+          ? ` <h4>Extended Lore</h4>
+              <p>${data["Attack 1 Extended Lore"]}</p>`
+          : ""
+      }
+
+      ${
+        data["Attack 2 Name"]
+          ? `
+        <h3>${data["Attack 2 Name"]}</h3>
+        ${attackTraitsHTML(
+          data["Attack 2 Element Cost"],
+          data["Attack 2 Damage"],
+          data["Attack 2 Type"]
+        )}
+        <p>${data["Attack 2 Description"]}</p>
+        `
+          : ""
+      }
+      ${
+        data["Attack 2 Extended Lore"]
+          ? `<h4>Extended Lore</h4>
+              <p>${data["Attack 2 Extended Lore"]}</p>`
+          : ""
+      }
+  `;
+  }
   DETAILS_DIALOG_EL.getElementsByClassName(
     "details-dialog-text"
-  )[0].insertAdjacentHTML(
-    "beforeend",
-    `
-    <h3>${data["Attack 1 Name"]}</h3>
-    <p>${data["Attack 1 Description"]}</p>
-    <p><i>${data["Attack 1 Extended Lore"]}</i></p>
-    <h3>${data["Attack 2 Name"]}</h3>
-    <p>${data["Attack 2 Description"]}</p>
-    <p><i>${data["Attack 2 Extended Lore"]}</i></p>
-  `
-  );
+  )[0].insertAdjacentHTML("beforeend", detailsHTML);
 }
 
 function animateCard(dialogCard) {

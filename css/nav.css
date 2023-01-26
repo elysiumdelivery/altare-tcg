@@ -30,7 +30,9 @@ nav a.active {
   z-index: 1;
 }
 
-nav a .icon {
+nav a .icon,
+footer a .icon,
+#download-links a .icon {
   position: relative;
   width: 2em;
   height: 2em;
@@ -147,6 +149,11 @@ nav a#nav-credits:focus-visible:not(.active)::before {
   height: 50%;
 }
 
+#nav-mobile-download-pdf, #nav-mobile-download-a11y {
+  display:none;
+}
+
+/* back to scheduled programming */
 #close-nav-menu {
   position: relative;
   width: 2em;
@@ -247,6 +254,10 @@ nav a#nav-credits:focus-visible:not(.active)::before {
   nav.open a.active {
     transform: translateY(0%) scale(1.1);
     opacity: 1;
+  }
+
+  #nav-mobile-download-pdf, #nav-mobile-download-a11y {
+    display: flex;
   }
 }
 

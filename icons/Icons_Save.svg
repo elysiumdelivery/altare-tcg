@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 7.25px;
+      }
+    </style>
+  </defs>
+  <g id="_Blue_Border_static_design" data-name="&amp;quot;Blue Border&amp;quot; static design">
+    <path id="_Blue_Border_static_design_-_Common_Uncommon" data-name="&amp;quot;Blue Border&amp;quot; static design - Common/Uncommon" class="cls-1" d="m15,53.08v42.8c0,1.96,1.59,3.55,3.55,3.55h90.9c1.96,0,3.55-1.59,3.55-3.55v-42.8"/>
+  </g>
+  <g>
+    <line class="cls-1" x1="64" y1="28.57" x2="64" y2="68.86"/>
+    <polyline class="cls-1" points="40.48 49.85 64 73.37 87.52 49.85"/>
+  </g>
+</svg>

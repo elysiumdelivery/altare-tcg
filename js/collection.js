@@ -18,6 +18,7 @@ const PAGINATION_BTNS = {
 const COLLECTED_CARDS_NUMBER = document.getElementById(
   "collected-cards-number"
 );
+let closed_foreword = localStorage.getItem("closedForeword");
 
 //Object to store all supported sorting functions.
 //These are stored as closures to support reverse order without declaring new functions.
@@ -58,6 +59,9 @@ function getOwnedCards(cards_data) {
   for (let item in localStorage) {
     if (item.slice(0, 4) === "card") {
       let card_id = item.split("-")[1];
+      if (card_id === "000") {
+        card_id = `000-${item.split("-")[2]}`;
+      }
       ownedCards.push(
         cards_data.find((card) => card["Collector Number"] === card_id)
       );
@@ -187,4 +191,20 @@ export function showCollection(cards_data, htmlLocation, page = 1, query = "") {
   cards = paginateCards(cards, cards_per_page, page, navigateToPage);
 
   renderCards(cards, htmlLocation, true, true);
+}
+
+export function setupForeword(){
+  if(closed_foreword == null){
+    document.getElementById("collection-foreword").classList.remove("hidden");
+    document.getElementById("foreword-close").addEventListener("click", closeForeword);
+  } else {
+    closeForeword();
+  }
+}
+
+function closeForeword(){
+  document.getElementById("collection-foreword").classList.add("hidden");
+  if(closed_foreword == null){
+    localStorage.setItem('closedForeword', true);
+  }
 }

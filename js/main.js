@@ -8,9 +8,9 @@ import {
 } from "./cards.js";
 import { setupDetailsDialog } from "./dialog.js";
 import { GACHA_BUTTONS, pullAndRenderCards } from "./gacha.js";
-import { showCollection } from "./collection.js";
+import { showCollection, setupForeword } from "./collection.js";
 
-const CSV_FILENAME = "../Test Card List CSV.csv";
+const CSV_FILENAME = "../Regis Altare Card List CSV.csv";
 const pathname = window.location.pathname;
 const CURRENT_PAGE = pathname.slice(pathname.lastIndexOf("/"), pathname.length);
 const PAGES_WHERE_CARD_HIDDEN = ["/gacha.html"];
@@ -129,7 +129,7 @@ async function main() {
           GACHA_BUTTONS.item(i).onclick = (event) => {
             document.getElementById("card-list").classList.add("gacha-drawn");
             pullAndRenderCards(COLLECTIONS_MAIN_CONTENT);
-          }
+          };
         }
         break;
 
@@ -137,6 +137,8 @@ async function main() {
         await setupDetailsDialog();
         showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
         setupCollectionControls();
+        // check if we need to show the foreword/disclaimer when page loads
+        setupForeword();
     }
   });
 }
