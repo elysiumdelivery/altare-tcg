@@ -542,7 +542,9 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 5; /* set to 10 so that it's greater than nav a.active's z-index */
+  /* set to 20 so that it's greater than nav a.active's z-index */
+  /* also so it's greater than the hamburger button, which has to be greater than the max z-index value of the last flipped card in the gacha page */
+  z-index: 20; 
 }
 
 .dialog-overlay {
@@ -569,7 +571,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   position: relative;
   margin: 20px;
   overflow: hidden;
-  z-index: 10;
+  z-index: 25;
   border-radius: 5%/3.5%;
   box-shadow: 0 55px 35px -10px rgb(0 0 0 / 50%);
   transition: transform 0.5s ease;

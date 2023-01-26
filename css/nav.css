@@ -177,8 +177,8 @@ nav a#nav-credits:focus-visible:not(.active)::before {
   /* portrait / small width styling, show burger menu */
   #nav-hamburger {
     display: block;
-    /* ensure that this always stays up top */
-    z-index: 999;
+    /* ensure that this always stays above gacha cards, but below the card dialog */
+    z-index: 15;
   }
 
   nav {
