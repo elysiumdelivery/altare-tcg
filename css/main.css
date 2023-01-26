@@ -482,6 +482,11 @@ section.credits-column p {
 @media only screen and (max-width: 800px) {
   /* mobile / portrait styling */
 
+  html {
+    /* use portrait ver of bg */
+    background-image: url(../images/bg-mobile.png);
+  }
+
   section#artist-writer-board ul {
     column-count: 1;
   }
@@ -517,6 +522,7 @@ section.credits-column p {
 @keyframes slide-up {
   0% {
     opacity: 0;
+    /* 250px defined as set value to fix the large gap that appears at the very bottom of the credits page */
     transform: translateY(250px);
   }
   100% {
