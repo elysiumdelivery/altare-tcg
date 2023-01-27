@@ -428,6 +428,15 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
 }
 
 /* only make card bigger if the screen height is tall enough to support that card height in full */
+@media screen and (min-width: 1400px) and (min-height: 950px) {
+  .details-dialog-card {
+    /* make the card larger when the screen is resized - 500px width end state*/
+    --card-width: 250px;
+    --card-height: calc(250px * 1.395);
+  }
+}
+
+/* only make card bigger if the screen height is tall enough to support that card height in full */
 @media screen and (min-width: 1600px) and (min-height: 1070px) {
   .details-dialog-card {
     /* make the card larger when the screen is resized - 600px width end state*/
