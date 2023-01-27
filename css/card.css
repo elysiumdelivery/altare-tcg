@@ -389,10 +389,18 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   display: none;
 }
 
+.dialog-container p.card-info {
+  font-size: 1.1em;
+}
 .dialog-container p.attack-traits {
   background-color: rgba(255, 255, 255, 0.4);
   padding: 10px;
   border-radius: 5px 0px;
+  line-height: 1.6em;
+}
+.dialog-container p span {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .dialog-container,
@@ -418,7 +426,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
 }
 
 /* any width but 770px height or less */
-@media screen and (max-height: 770px) {
+@media screen and (max-height: 760px) {
   #card-details-dialog {
     /* let whole dialog scroll */
     overflow: auto;
