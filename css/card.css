@@ -397,6 +397,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   padding: 10px;
   border-radius: 5px 0px;
   line-height: 1.6em;
+  font-size: 0.9em;
 }
 .dialog-container p span {
   display: inline-block;
