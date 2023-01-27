@@ -722,17 +722,26 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   }
   .details-dialog-card {
     /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
-    width: calc(var(--card-width) * 1.1);
-    height: calc(var(--card-height) * 1.1);
+    width: calc(var(--card-width) * 1.5);
+    height: calc(var(--card-height) * 1.5);
   }
   .details-dialog-text {
     margin-top: 0em;
   }
   #card-details-dialog {
     /* this is a fix intended for iPhone, to prevent overflow-x scroll
-    this doesn't happen when testing on desktop or emulation */
+    this doesn't happen when testing on desktop or emulation.
+    putting it down here near the smallest screen size to avoid possible issues */
     overflow-x: hidden;
     overflow-y: auto;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .details-dialog-card {
+    /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
+    width: calc(var(--card-width) * 1.1);
+    height: calc(var(--card-height) * 1.1);
   }
 }
 
