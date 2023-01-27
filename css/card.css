@@ -728,6 +728,12 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   .details-dialog-text {
     margin-top: 0em;
   }
+  #card-details-dialog {
+    /* this is a fix intended for iPhone, to prevent overflow-x scroll
+    this doesn't happen when testing on desktop or emulation */
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 }
 
 /* set the card overlay gradients */
