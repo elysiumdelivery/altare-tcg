@@ -114,7 +114,7 @@ export async function defineCardComponent() {
       // for optimization purposes, only animate two at a time.
       if (secondToLastCardClicked) {
         secondToLastCardClicked.image.classList.remove("animated");
-        secondToLastCardClicked.classList.add("unclickable");
+        secondToLastCardClicked.front.classList.add("unclickable");
       }
       secondToLastCardClicked = lastCardClicked;
       lastCardClicked = this;
@@ -295,7 +295,7 @@ export function removeUnclickableFromCards() {
   let clickedCard = document.getElementsByClassName("opened");
   for (let i = 0; i < clickedCard.length; i++) {
     clickedCard[i].classList.remove("unclickable");
-    clickedCard[i].parentElement.remove("unclickable");
+    clickedCard[i].parentElement.classList.remove("unclickable");
     clickedCard[i].parentElement.removeAttribute("tabindex");
     clickedCard[i].parentElement.removeAttribute("aria-hidden");
   }
@@ -319,6 +319,7 @@ export function addUnclickableToCardsExceptLast() {
         clickedCard[i].parentElement.setAttribute("aria-hidden", "true");
       } else {
         clickedCard[i].classList.remove("unclickable");
+        clickedCard[i].parentElement.classList.remove("unclickable");
       }
     }
   }
