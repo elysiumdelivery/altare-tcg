@@ -1099,6 +1099,10 @@ card will still fly across the screen, or flip when opened */
   margin-top: 10px;
 }
 
+#collection-border .card-image {
+  touch-action: none;
+}
+
 /* prevent interaction without removing the event listeners */
 .unclickable {
   pointer-events: none;

@@ -114,6 +114,7 @@ export async function defineCardComponent() {
       // for optimization purposes, only animate two at a time.
       if (secondToLastCardClicked) {
         secondToLastCardClicked.image.classList.remove("animated");
+        secondToLastCardClicked.classList.add("unclickable");
       }
       secondToLastCardClicked = lastCardClicked;
       lastCardClicked = this;
@@ -186,9 +187,9 @@ function setupHover() {
   for (let i = 0; i < cardList.length; i++) {
     cardList[i].addEventListener("animationend", removeAnimation);
     cardList[i].parentElement.addEventListener("blur", removeAnimation);
+    cardList[i].parentElement.addEventListener("mouseover", addAnimation);
     cardList[i].parentElement.addEventListener("focus", addAnimation);
     cardList[i].parentElement.addEventListener("click", addAnimation);
-    cardList[i].parentElement.addEventListener("mouseover", addAnimation);
   }
 }
 export function updateGachaView(e) {
@@ -291,6 +292,7 @@ export function removeUnclickableFromCards() {
   let clickedCard = document.getElementsByClassName("opened");
   for (let i = 0; i < clickedCard.length; i++) {
     clickedCard[i].classList.remove("unclickable");
+    clickedCard[i].parentElement.remove("unclickable");
     clickedCard[i].parentElement.removeAttribute("tabindex");
     clickedCard[i].parentElement.removeAttribute("aria-hidden");
   }
@@ -309,6 +311,7 @@ export function addUnclickableToCardsExceptLast() {
       // while the unmatching ones are beneath the most recently flipped card, so should have any unclickable class removed
       if (parseInt(z) !== card_z_index) {
         clickedCard[i].classList.add("unclickable");
+        clickedCard[i].parentElement.classList.add("unclickable");
         clickedCard[i].parentElement.tabIndex = "-1";
         clickedCard[i].parentElement.setAttribute("aria-hidden", "true");
       } else {
