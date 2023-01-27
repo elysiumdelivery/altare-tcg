@@ -46,7 +46,7 @@ function renderMessages(message_data) {
 
 function renderCredits(credits_data) {
   // these are the sections in order of display (as per the CSS)
-  let creditsHeaders = ["Project Leads", "Website Design / Development", "Accessibility Writers", "Twitter Illustrators"];
+  let creditsHeaders = ["Project Leads", "Website Design / Development", "Accessibility Lead and Support", "Twitter Illustrators"];
   // remainder of the normal code
   let creditsContainer = document.getElementById("credits");
   let roleMapping = [[]];
