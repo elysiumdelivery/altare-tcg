@@ -114,7 +114,9 @@ export async function defineCardComponent() {
       // for optimization purposes, only animate two at a time.
       if (secondToLastCardClicked) {
         secondToLastCardClicked.image.classList.remove("animated");
-        secondToLastCardClicked.front.classList.add("unclickable");
+        if (gacha_display_selection != "gacha-grid") {
+          secondToLastCardClicked.front.classList.add("unclickable");
+        }
       }
       secondToLastCardClicked = lastCardClicked;
       lastCardClicked = this;
