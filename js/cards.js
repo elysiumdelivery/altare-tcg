@@ -114,6 +114,7 @@ export async function defineCardComponent() {
       // for optimization purposes, only animate two at a time.
       if (secondToLastCardClicked) {
         secondToLastCardClicked.image.classList.remove("animated");
+        // only add unclickable when in deck mode. otherwise we get a random assortment of uninteractable cards in grid mode
         if (gacha_display_selection != "gacha-grid") {
           secondToLastCardClicked.front.classList.add("unclickable");
         }
