@@ -162,10 +162,13 @@ function addAnimation(e) {
   if (target.className.includes("card-front")) {
     target = e.target.querySelector('.card-image');
   }
-  // animation optimization: inform browser that we are changing the following properties
-  target.style.willChange = "transform, filter, opacity, background-position";
-  // apply the animated class to start the CSS animation
-  target.classList.add("animated");
+
+  if (location.href.includes("/gacha") || target.classList.includes("details-dialog-card")) {
+    // animation optimization: inform browser that we are changing the following properties
+    target.style.willChange = "transform, filter, opacity, background-position";
+    // apply the animated class to start the CSS animation
+    target.classList.add("animated");
+  }
 }
 function removeAnimation (e) {
   let target = e.target;
