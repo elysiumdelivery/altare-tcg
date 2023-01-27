@@ -49,13 +49,15 @@ export async function setupDetailsDialog() {
 //   "<b>Custom Trait</b>": "Custom value"
 // }
 function attackTraitsHTML(traits) {
-  if (Object.values(traits).some((value) => !value)) {
+  if (Object.values(traits).every((value) => !value)) {
     return "";
   }
 
   const htmlList = [];
   for (const [trait, value] of Object.entries(traits)) {
-    htmlList.push(`${trait}: ${value}`);
+    if (value) {
+      htmlList.push(`${trait}: ${value}`);
+    }
   }
 
   return `<p>${htmlList.filter((item) => Boolean(item)).join(" | ")}</p>`;
