@@ -389,6 +389,21 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   display: none;
 }
 
+.dialog-container p.card-info {
+  font-size: 1.1em;
+}
+.dialog-container p.attack-traits {
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 10px;
+  border-radius: 5px 0px;
+  line-height: 1.6em;
+  font-size: 0.9em;
+}
+.dialog-container p span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .dialog-container,
 .dialog-overlay {
   position: fixed;
@@ -403,7 +418,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
 
 /* create a clearer separation between the different text sections of the card */
 .dialog-container h3:not(:first-child) {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
   padding-top: 1em;
 }
 
@@ -412,7 +427,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
 }
 
 /* any width but 770px height or less */
-@media screen and (max-height: 770px) {
+@media screen and (max-height: 760px) {
   #card-details-dialog {
     /* let whole dialog scroll */
     overflow: auto;
@@ -707,11 +722,26 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   }
   .details-dialog-card {
     /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
-    width: calc(var(--card-width) * 1.1);
-    height: calc(var(--card-height) * 1.1);
+    width: calc(var(--card-width) * 1.5);
+    height: calc(var(--card-height) * 1.5);
   }
   .details-dialog-text {
     margin-top: 0em;
+  }
+  #card-details-dialog {
+    /* this is a fix intended for iPhone, to prevent overflow-x scroll
+    this doesn't happen when testing on desktop or emulation.
+    putting it down here near the smallest screen size to avoid possible issues */
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .details-dialog-card {
+    /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
+    width: calc(var(--card-width) * 1.1);
+    height: calc(var(--card-height) * 1.1);
   }
 }
 

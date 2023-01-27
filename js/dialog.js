@@ -43,15 +43,15 @@ function attackTraitsHTML(cost, damage, type) {
   }
   const htmlList = [];
   if (type) {
-    htmlList.push(`Type: ${type}`);
+    htmlList.push(`<span><strong>Type:</strong> ${type}</span>`);
   }
   if (cost) {
-    htmlList.push(`Cost: ${cost}`);
+    htmlList.push(`<span><strong>Cost:</strong> ${cost}</span>`);
   }
   if (damage) {
-    htmlList.push(`Damage: ${damage}`);
+    htmlList.push(`<span><strong>Damage:</strong> ${damage}</span>`);
   }
-  return `<p>${htmlList.filter((item) => Boolean(item)).join(" | ")}</p>`;
+  return `<p class="attack-traits">${htmlList.filter((item) => Boolean(item)).join(" | ")}</p>`;
 }
 
 export function updateDetailsDialog(data, cardUrl) {
@@ -63,12 +63,12 @@ export function updateDetailsDialog(data, cardUrl) {
     "beforeend",
     `
     <h2 class="card-name">${data["Card Display Name"]}</h2>
-    <p>${data["Card Level"] ? `Level: ${data["Card Level"]} | ` : ""}${
-      data["Card HP"] ? `HP: ${data["Card HP"]} |  ` : ""
+    <p class="card-info">${data["Card Level"] ? `<span><strong>Level:</strong> ${data["Card Level"]}</span> | ` : ""}${
+      data["Card HP"] ? `<span><strong>HP:</strong> ${data["Card HP"]}</span> |  ` : ""
     }${
-      data["Card Element"] ? `Element: ${data["Card Element"]} |  ` : ""
-    }Card #: ${data["Collector Number"]}</p>
-    <p>Artist: ${data["Artist Credit"]} | Writer: ${data["Writer Credit"]}</p>
+      data["Card Element"] ? `<span><strong>Element:</strong> ${data["Card Element"]}</span> |  ` : ""
+    }<span><strong>Card #:</strong> ${data["Collector Number"]}</span></p>
+    <p><span><strong>Artist:</strong> ${data["Artist Credit"]}</span> | <span><strong>Writer:</strong> ${data["Writer Credit"]}</span></p>
   `
   );
 
@@ -83,7 +83,7 @@ export function updateDetailsDialog(data, cardUrl) {
   // Clear + set card metadata
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
     "";
-  let detailsHTML = `<h3>Image description</h3><p>${data["Card Image Alt Text Description"]}</p>`;
+  let detailsHTML = `<h3>Image Description</h3><p>${data["Card Image Alt Text Description"]}</p>`;
   if (data["Item Description"]) {
     // Item card without attacks
     detailsHTML += `
