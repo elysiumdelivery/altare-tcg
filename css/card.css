@@ -389,6 +389,12 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   display: none;
 }
 
+.dialog-container p.attack-traits {
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 10px;
+  border-radius: 5px 0px;
+}
+
 .dialog-container,
 .dialog-overlay {
   position: fixed;
@@ -403,7 +409,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
 
 /* create a clearer separation between the different text sections of the card */
 .dialog-container h3:not(:first-child) {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
   padding-top: 1em;
 }
 
