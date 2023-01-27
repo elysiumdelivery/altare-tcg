@@ -396,7 +396,9 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 5; /* set to 10 so that it's greater than nav a.active's z-index */
+  /* set to 20 so that it's greater than nav a.active's z-index */
+  /* also so it's greater than the hamburger button, which has to be greater than the max z-index value of the last flipped card in the gacha page */
+  z-index: 20;
 }
 
 /* create a clearer separation between the different text sections of the card */
@@ -600,28 +602,6 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
       margin-top: calc(var(--card-height) + 1vmin + 100px);
     }
   }
-}
-
-.dialog-container,
-.dialog-overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  /* set to 20 so that it's greater than nav a.active's z-index */
-  /* also so it's greater than the hamburger button, which has to be greater than the max z-index value of the last flipped card in the gacha page */
-  z-index: 20;
-}
-
-/* create a clearer separation between the different text sections of the card */
-.dialog-container h3:not(:first-child) {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  padding-top: 1em;
-}
-
-.dialog-overlay {
-  background-color: rgba(43, 46, 56, 0.7);
 }
 
 /* Card animation code, credit to simeydotme for base animation setup
