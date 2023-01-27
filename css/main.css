@@ -359,6 +359,13 @@ section.credits-column {
   animation-iteration-count: 1;
   will-change: transform;
 }
+section.credits-column h2 {
+  text-align: center;
+  font-size: 1.4em;
+  /* this is the credits background color */
+  border-bottom: 3px solid #2852b3;
+  padding-bottom: 1em;
+}
 section.credits-column ul {
   list-style: none;
   padding: 0;
@@ -400,9 +407,6 @@ section.credits-column#twitter-images {
   grid-area: twitter;
   animation-delay: 3s;
 }
-section.credits-column#twitter-images h2 {
-  text-align: center;
-}
 section.credits-column#twitter-images ul {
   display: flex;
   flex-wrap: wrap;
@@ -426,12 +430,12 @@ section.credits-column#twitter-images li a {
   margin-top: 0.5em;
 }
 
-section.credits-column h2 {
+section.credits-column h3 {
   font-size: 1.25em;
   margin-bottom: 0.25em;
 }
 
-section.credits-column h3 {
+section.credits-column h4 {
   font-size: 1em;
   margin: 0.5em 0;
 }
