@@ -177,6 +177,8 @@ nav a#nav-credits:focus-visible:not(.active)::before {
   /* portrait / small width styling, show burger menu */
   #nav-hamburger {
     display: block;
+    /* ensure that this always stays above gacha cards, but below the card dialog */
+    z-index: 15;
   }
 
   nav {
@@ -192,6 +194,8 @@ nav a#nav-credits:focus-visible:not(.active)::before {
     z-index: 999;
 
     background-color: rgb(59 71 179 / 80%);
+    /* blur background for readability */
+    backdrop-filter: blur(5px);
 
     visibility: hidden;
     transition: 0.25s opacity ease;
