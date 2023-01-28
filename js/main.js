@@ -90,11 +90,17 @@ function setupCollectionControls() {
     FULL_COLLECTION_TOGGLE.textContent = "Hide Full Collection";
   }
   RESET_COLLECTION.onclick = (event) => {
-    localStorage.clear();
-    localStorage.setItem("showFullCollection", "true");
-    localStorage.setItem("sort", SORT_DROPDOWN.value);
-    localStorage.setItem("page-size", CARDS_PER_PAGE_DROPDOWN.value);
-    toggleCollection();
+    // confirm if they want to clear first using a js dialog
+    var confirmReset = window.confirm("Do you want to clear your entire collection?\nSelect OK to clear now, or Cancel to stop.\nIf using a keyboard: use Enter to clear now, or Escape to stop.");
+    // if OK is clicked, then proceed as normal
+    if(confirmReset){
+      localStorage.clear();
+      localStorage.setItem("showFullCollection", "true");
+      localStorage.setItem("sort", SORT_DROPDOWN.value);
+      localStorage.setItem("page-size", CARDS_PER_PAGE_DROPDOWN.value);
+      toggleCollection();
+    }
+    // nothing happens if cancel is clicked
   };
 
   SEARCH_BAR.onchange = (event) =>

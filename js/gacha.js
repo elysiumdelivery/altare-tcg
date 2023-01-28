@@ -206,8 +206,22 @@ export function pullAndRenderCards(render_location) {
     "aria-labelledby",
     "roll-again-prompt gacha-button-roll-again"
   );
-  gachaRollAgainButton.onclick = (event) =>
+  gachaRollAgainButton.onclick = (event) =>{
+    // if in a grid display, scroll to the top
+    if(document.getElementById("gacha-grid").checked){
+      // check if on a narrow screen or not
+      if(innerWidth < 480){
+        // scroll just to the top of the section if on a phone
+        let sectionDistanceFromTop = window.pageYOffset + document.getElementById("gacha-controls").getBoundingClientRect().top;
+        window.scrollTo(0, sectionDistanceFromTop);
+      } else {
+        // scroll to the very top of the page if on a computer (likely more space to work with)
+        window.scrollTo(0, 0);
+      }
+    }
+    // then pull cards again
     pullAndRenderCards(document.getElementById("card-list"));
+  }
 
   gachaRollAgain.append(gachaRollAgainButton);
   render_location.append(gachaRollAgain);
