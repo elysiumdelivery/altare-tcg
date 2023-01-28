@@ -568,8 +568,12 @@ section.credits-column p {
   }
 
   #card-details-dialog {
-    background-color: var(--bg-color-darken-50);
+    background-color: var(--darkreader-bg--bg-color);
     color: rgb(232, 230, 227);
+  }
+  
+  #card-details-dialog .card-details-dialog-close {
+    outline: 1px solid white;
   }
 
   button:not(.card-front):not(.card-back), select, input {
@@ -595,11 +599,11 @@ section.credits-column p {
   }
 
   .dialog-container p.attack-traits {
-    background-color: rgba(--darkreader-bg--accent-color, 0.4);
+    background-color: rgba(30, 104, 145, 0.4) !important;
   }
-}
-
-/* workaround fix for dark reader to not invert our card dialog */
-div[role="dialog"] div[role="document"] {
-  filter: none !important;
+  
+  /* workaround fix for dark reader to not invert our card dialog */
+  div[role="dialog"] div[role="document"] {
+    filter: none !important;
+  }
 }
