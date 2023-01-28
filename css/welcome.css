@@ -392,27 +392,3 @@ main {
     transform: scale(1) rotate3d(0.5, 1, 0, 30deg);
   }
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --darkreader-bg--color1: #404548;
-    --darkreader-bg--color2: #51575b;
-    --darkreader-bg--accent-color: #1e6891;
-    --darkreader-bg--accent-color-lighten-50: #14445e;
-    --darkreader-bg--bg-color: #172a57;
-    --darkreader-text--bg-color: #95bae3;
-    --bg-color-lighten-30: #345ec5;
-    --darkreader-text--bg-color-lighten-50: #70a1d8;
-    --darkreader-border--bg-color-lighten-50: #223c7c;
-  }
-
-  html, body {
-    border-color: #736b5e;
-    color: #e8e6e3;
-  }
-
-  .welcome-splash {
-    background-color: var(--bg-color-darken-50);
-    color: rgb(232, 230, 227);
-  }
-}
