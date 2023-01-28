@@ -72,12 +72,12 @@ export function updateDetailsDialog(data, cardUrl) {
     "beforeend",
     `
     <h2 class="card-name">${data["Card Display Name"]}</h2>
-    <p>${data["Card Level"] ? `Level: ${data["Card Level"]} | ` : ""}${
-      data["Card HP"] ? `HP: ${data["Card HP"]} |  ` : ""
+    <p class="card-info">${data["Card Level"] ? `<span><strong>Level:</strong> ${data["Card Level"]}</span> | ` : ""}${
+      data["Card HP"] ? `<span><strong>HP:</strong> ${data["Card HP"]}</span> |  ` : ""
     }${
-      data["Card Element"] ? `Element: ${data["Card Element"]} |  ` : ""
-    }Card #: ${data["Collector Number"]}</p>
-    <p>Artist: ${data["Artist Credit"]} | Writer: ${data["Writer Credit"]}</p>
+      data["Card Element"] ? `<span><strong>Element:</strong> ${data["Card Element"]}</span> |  ` : ""
+    }<span><strong>Card #:</strong> ${data["Collector Number"]}</span></p>
+    <p><span><strong>Artist:</strong> ${data["Artist Credit"]}</span> | <span><strong>Writer:</strong> ${data["Writer Credit"]}</span></p>
   `
   );
 
@@ -92,14 +92,18 @@ export function updateDetailsDialog(data, cardUrl) {
   // Clear + set card metadata
   DETAILS_DIALOG_EL.getElementsByClassName("details-dialog-text")[0].innerHTML =
     "";
-  let detailsHTML = `<p><b>Image description: </b>${data["Card Image Alt Text Description"]}</p>`;
+  let detailsHTML = `<h3>Image Description</h3><p>${data["Card Image Alt Text Description"]}</p>`;
   if (data["Item Description"]) {
     // Item card without attacks
     detailsHTML += `
       <h3>Item Description</h3>
-      <p>${data["Item Description"]}</p>
+      <p>${data["Item Description"]}</p>`;
+    // if there's no extended lore, skip it
+    if(data["Item Extended Lore"] !== ""){
+      detailsHTML += `
       <h4>Extended Lore</h4>
       <p>${data["Item Extended Lore"]}</p>`;
+    }
   } else {
     detailsHTML += `
       ${

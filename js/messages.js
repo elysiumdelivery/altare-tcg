@@ -31,6 +31,7 @@ function renderMessages(message_data) {
     if (message["Twitter"]) {
       let userSocial = document.createElement("a");
       userSocial.href = `https://twitter.com/${message["Twitter"]}`;
+      userSocial.setAttribute('target', '_blank');
       userSocial.textContent = message["Twitter"];
       messageUserInfo.append(userSocial);
     }
@@ -45,6 +46,9 @@ function renderMessages(message_data) {
 }
 
 function renderCredits(credits_data) {
+  // these are the sections in order of display (as per the CSS)
+  let creditsHeaders = ["General / Management", "Website Development", "Accessibility", "Twitter Illustrators"];
+  // remainder of the normal code
   let creditsContainer = document.getElementById("credits");
   let roleMapping = [[]];
   let roleElements = [];
@@ -53,6 +57,9 @@ function renderCredits(credits_data) {
       let creditsColumn = document.createElement("section");
       creditsColumn.classList.add("credits-column");
       creditsColumn.id = "credits-role-id-" + roleElements.length;
+      let creditHeader = document.createElement("h2");
+      creditHeader.textContent = creditsHeaders[roleElements.length];
+      creditsColumn.append(creditHeader);
       roleMapping.push([]);
       roleElements.push(creditsColumn);
       creditsContainer.append(creditsColumn);
@@ -69,14 +76,15 @@ function renderCredits(credits_data) {
     staffList.forEach((credit) => {
       let creditListingWrapper = document.createElement("ul");
       let creditListing = document.createElement("li");
-      let creditName = document.createElement("h2");
+      let creditName = document.createElement("h3");
       let creditRole = document.createElement("p");
       creditName.textContent = credit["Staff name"];
       creditListing.append(creditName);
       if (credit["Twitter"]) {
-        let creditTwitterHeader = document.createElement("h3");
+        let creditTwitterHeader = document.createElement("h4");
         let creditTwitter = document.createElement("a");
         creditTwitter.href = `https://twitter.com/${credit["Twitter"]}`;
+        creditTwitter.setAttribute('target', '_blank');
         creditTwitter.textContent = credit["Twitter"];
         creditTwitterHeader.append(creditTwitter);
         creditListing.append(creditTwitterHeader);
@@ -109,6 +117,7 @@ function renderTwitterArtCredits(twitter_art_data) {
     if (artData["Twitter"]) {
       let creditTwitter = document.createElement("a");
       creditTwitter.href = `https://twitter.com/${artData["Twitter"]}`;
+      creditTwitter.setAttribute('target', '_blank');
       creditTwitter.textContent = artData["Staff name"];
       artContainer.append(creditTwitter);
     }
