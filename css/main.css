@@ -546,3 +546,20 @@ section.credits-column p {
   }
 
 }
+
+/* dark reader doesn't auto add styles to these elements so ensure it looks good when it's toggled on */
+[data-darkreader-scheme="dark"] section#artist-writer-board h1 {
+  color: #e8e6e3;
+}
+[data-darkreader-scheme="dark"] section#artist-writer-board .artist-writer-message,
+[data-darkreader-scheme="dark"] section.credits-column,
+[data-darkreader-scheme="dark"] section.credits-column#twitter-images {
+  background-color: #272c3a;
+  color: #e8e6e3;
+}
+
+[data-darkreader-scheme="dark"] section#artist-writer-board .artist-writer-message a,
+[data-darkreader-scheme="dark"] section.credits-column a,
+[data-darkreader-scheme="dark"] section.credits-column#twitter-images li a {
+  color: #70a1d8;
+}

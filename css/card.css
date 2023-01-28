@@ -1230,6 +1230,11 @@ card will still fly across the screen, or flip when opened */
   pointer-events: none;
 }
 
+/* workaround fix for dark reader to not invert our card dialog */
+div[role="dialog"] div[role="document"] {
+  filter: none !important;
+}
+
 @keyframes button-wiggle {
   0% {
     transform: scaleX(1) scaleY(1);
