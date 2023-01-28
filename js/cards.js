@@ -1,8 +1,11 @@
-import { cards_data, CARD_ART_HIDDEN_ON_LOAD } from "./main.js";
+import {
+  cards_data,
+  CARD_ART_HIDDEN_ON_LOAD,
+  cards_by_rarity,
+} from "./main.js";
 import { updateDetailsDialog, DETAILS_DIALOG_A11Y } from "./dialog.js";
 
-const CLOUD_NAME = "dazcxdgiy";
-const CLOUDINARY_URL = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/`;
+const CARD_IMAGES_URL = `../images/Card Images`;
 const HIGHEST_Z_INDEX = 10;
 let card_z_index = HIGHEST_Z_INDEX;
 let gacha_display_selection;
@@ -33,6 +36,12 @@ export async function defineCardComponent() {
       this.data = cards_data.find(
         (card) => card["Collector Number"] == this.getAttribute("card-id")
       );
+      if (this.data["Rarity Folder"] === "Element") {
+        //Copies the data variable by value.
+        //That way we can change the ID here while keeping the original intact.
+        this.data = Object.assign({}, this.data);
+        this.data["Collector Number"] = "000";
+      }
       this.innerHTML = html;
       this.holder = this.getElementsByClassName("card-component")[0];
       this.front = this.getElementsByClassName("card-front")[0];
@@ -51,9 +60,9 @@ export async function defineCardComponent() {
     }
 
     //Returns an url of the form:
-    //`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${RARITY}/${FILENAME}.png`
+    //`https://${DOMAIN}/images/Card Images/${RARITY}/${FILENAME}.jpg`
     getImageURL() {
-      return `${CLOUDINARY_URL}q_auto/${this.data["Rarity Folder"]}/${this.data["Filename"]}.png`;
+      return `${CARD_IMAGES_URL}/${this.data["Rarity Folder"]}/${this.data["Filename"]}`;
     }
 
     setupCardForGacha() {
@@ -95,26 +104,35 @@ export async function defineCardComponent() {
       } else {
         this.subtitle.style.willChange = "opacity";
         this.subtitle.classList.remove("hidden");
-        // update value back after animation 
+        // update value back after animation
         let currentSubtitle = this.subtitle;
-        this.subtitle.addEventListener("animationend", function(){
+        this.subtitle.addEventListener("animationend", function () {
           currentSubtitle.style.willChange = "auto";
-        })
+        });
       }
 
-      // for optimization purposes, only animate two at a time. 
+      // for optimization purposes, only animate two at a time.
       if (secondToLastCardClicked) {
         secondToLastCardClicked.image.classList.remove("animated");
+        // only add unclickable when in deck mode. otherwise we get a random assortment of uninteractable cards in grid mode
+        if (gacha_display_selection != "gacha-grid") {
+          secondToLastCardClicked.front.classList.add("unclickable");
+        }
       }
       secondToLastCardClicked = lastCardClicked;
       lastCardClicked = this;
 
       // check if we pulled all possible cards. if yes, display the roll again prompt
-      if (document.getElementsByClassName("clicked").length === document.getElementsByTagName("tcg-card").length) {
+      if (
+        document.getElementsByClassName("clicked").length ===
+        document.getElementsByTagName("tcg-card").length
+      ) {
         // reset memory of clicked cards
         lastCardClicked = undefined;
         secondToLastCardClicked = undefined;
-        document.getElementById("gacha-prompt-roll-again").classList.remove("hidden");
+        document
+          .getElementById("gacha-prompt-roll-again")
+          .classList.remove("hidden");
       }
     }
 
@@ -142,10 +160,27 @@ export async function defineCardComponent() {
 }
 
 function addAnimation(e) {
-  // animation optimization: inform browser that we are changing the following properties
-  e.target.style.willChange = "transform, filter, opacity, background-position";
-  // apply the animated class to start the CSS animation
-  e.target.classList.add("animated");
+  let target = e.target;
+  // if our target is the parent button (from keyboard focus, then target the child image after)
+  if (target.className.includes("card-front")) {
+    target = e.target.querySelector('.card-image');
+  }
+
+  if (location.href.includes("/gacha") || target.className.includes("details-dialog-card")) {
+    // animation optimization: inform browser that we are changing the following properties
+    target.style.willChange = "transform, filter, opacity, background-position";
+    // apply the animated class to start the CSS animation
+    target.classList.add("animated");
+  }
+}
+function removeAnimation (e) {
+  let target = e.target;
+  // if our target is the parent button (from keyboard blur, then target the child image after)
+  if (target.className.includes("card-front")) {
+    target = e.target.querySelector('.card-image');
+  }
+  target.classList.remove("animated");
+  target.style.willChange = "auto";
 }
 function updateZIndex(e) {
   e.target.style.zIndex = card_z_index;
@@ -156,12 +191,11 @@ function setupHover() {
   // setup the initial event listeners for all cards
   let cardList = document.getElementsByClassName("card-image");
   for (let i = 0; i < cardList.length; i++) {
-    cardList[i].addEventListener("animationend", function () {
-      cardList[i].classList.remove("animated");
-      cardList[i].style.willChange = "auto";
-    });
-    cardList[i].addEventListener("mouseover", addAnimation);
-    cardList[i].addEventListener("click", addAnimation);
+    cardList[i].addEventListener("animationend", removeAnimation);
+    cardList[i].parentElement.addEventListener("blur", removeAnimation);
+    cardList[i].parentElement.addEventListener("mouseover", addAnimation);
+    cardList[i].parentElement.addEventListener("focus", addAnimation);
+    cardList[i].parentElement.addEventListener("click", addAnimation);
   }
 }
 export function updateGachaView(e) {
@@ -201,34 +235,38 @@ export function updateGachaView(e) {
       .classList.remove("visually-hidden");
   }
 }
-export function updateGachaMotion(){
+export function updateGachaMotion() {
   // get the list of cards
   let cardImageList = document.getElementsByClassName("card-image");
   let cardList = document.getElementsByTagName("tcg-card");
   // get the card prompt
   let rollPrompt;
-  if(document.getElementsByClassName("gacha-prompt") !== null){
+  if (document.getElementsByClassName("gacha-prompt") !== null) {
     rollPrompt = document.getElementsByClassName("gacha-prompt")[0];
   }
-  if(document.getElementById("gacha-prompt-roll-again") !== null){
+  if (document.getElementById("gacha-prompt-roll-again") !== null) {
     rollPrompt = document.getElementById("gacha-prompt-roll-again");
   }
   // see the checkbox settings
-  if(GACHA_MOTION_SETTING[0].checked){
+  if (GACHA_MOTION_SETTING[0].checked) {
     // remove motion from all cards
     for (let i = 0; i < cardImageList.length; i++) {
       cardImageList[i].classList.add("reduced-motion");
       cardList[i].classList.add("reduced-motion");
     }
     // update the roll prompt/roll again prompt
-    if(rollPrompt !== undefined){
-      rollPrompt.getElementsByTagName('img')[0].src = "../images/slimenolooptransparent.png";
-      rollPrompt.getElementsByTagName('img')[0].alt = "Cultare slime smiling happily";
+    if (rollPrompt !== undefined) {
+      rollPrompt.getElementsByTagName("img")[0].src =
+        "../images/slimenolooptransparent.png";
+      rollPrompt.getElementsByTagName("img")[0].alt =
+        "Cultare slime smiling happily";
     }
     // update the button wiggle, but wait for it to be added first
-    setTimeout(function(){
-      if(document.getElementsByClassName("gacha-button") !== null){
-        document.getElementsByClassName("gacha-button")[0].classList.add("reduced-motion");
+    setTimeout(function () {
+      if (document.getElementsByClassName("gacha-button") !== null) {
+        document
+          .getElementsByClassName("gacha-button")[0]
+          .classList.add("reduced-motion");
       }
     }, 100);
   } else {
@@ -238,14 +276,18 @@ export function updateGachaMotion(){
       cardList[i].classList.remove("reduced-motion");
     }
     // update the roll prompt/roll again prompt
-    if(rollPrompt !== undefined){
-      rollPrompt.getElementsByTagName('img')[0].src = "../images/slimelooptransparent.gif";
-      rollPrompt.getElementsByTagName('img')[0].alt = "Cultare slime bouncing up and down";
+    if (rollPrompt !== undefined) {
+      rollPrompt.getElementsByTagName("img")[0].src =
+        "../images/slimelooptransparent.gif";
+      rollPrompt.getElementsByTagName("img")[0].alt =
+        "Cultare slime bouncing up and down";
     }
     // update the button wiggle, but wait for it to be added first
-    setTimeout(function(){
-      if(document.getElementsByClassName("gacha-button") !== null){
-        document.getElementsByClassName("gacha-button")[0].classList.remove("reduced-motion");
+    setTimeout(function () {
+      if (document.getElementsByClassName("gacha-button") !== null) {
+        document
+          .getElementsByClassName("gacha-button")[0]
+          .classList.remove("reduced-motion");
       }
     }, 100);
   }
@@ -256,6 +298,7 @@ export function removeUnclickableFromCards() {
   let clickedCard = document.getElementsByClassName("opened");
   for (let i = 0; i < clickedCard.length; i++) {
     clickedCard[i].classList.remove("unclickable");
+    clickedCard[i].parentElement.classList.remove("unclickable");
     clickedCard[i].parentElement.removeAttribute("tabindex");
     clickedCard[i].parentElement.removeAttribute("aria-hidden");
   }
@@ -274,10 +317,12 @@ export function addUnclickableToCardsExceptLast() {
       // while the unmatching ones are beneath the most recently flipped card, so should have any unclickable class removed
       if (parseInt(z) !== card_z_index) {
         clickedCard[i].classList.add("unclickable");
+        clickedCard[i].parentElement.classList.add("unclickable");
         clickedCard[i].parentElement.tabIndex = "-1";
         clickedCard[i].parentElement.setAttribute("aria-hidden", "true");
       } else {
         clickedCard[i].classList.remove("unclickable");
+        clickedCard[i].parentElement.classList.remove("unclickable");
       }
     }
   }
@@ -290,7 +335,7 @@ export function renderCards(cards, htmlLocation, replace = false) {
   if (replace) {
     htmlLocation.innerHTML = "";
     // only on the gacha page
-    if(document.getElementById("gacha-controls") !== null){
+    if (document.getElementById("gacha-controls") !== null) {
       // reset the z-index to the highest on the closed pile
       card_z_index = HIGHEST_Z_INDEX;
       // reset the subtitle in the pile display
@@ -308,7 +353,7 @@ export function renderCards(cards, htmlLocation, replace = false) {
   setupHover();
 
   // only on the gacha page, but we want to do this after cards are added
-  if(document.getElementById("gacha-controls") !== null){
+  if (document.getElementById("gacha-controls") !== null) {
     // update the motion settings based on the checkbox
     updateGachaMotion();
   }

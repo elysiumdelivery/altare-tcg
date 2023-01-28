@@ -90,6 +90,10 @@ tcg-card {
   margin: 0.5em 0;
   text-align: center;
   font-size: 1em;
+  /* this is added as a hack/fix for the variable height of the gacha section tag
+  after content is inserted into the pull announcement after first pull,
+  this causes the height to suddenly change from 0 to roughly 19.something */
+  height: 1em;
 }
 
 /* rotate card differently depending on its position in the pile */
@@ -147,7 +151,8 @@ tcg-card {
   This is kept separately as it's not used in the grid layout */
 #gacha-controls #card-list tcg-card.clicked {
   animation: left 1s ease 0s 1;
-  animation-fill-mode: forwards;
+  /* for some reason this gets ignored in Firefox unless important applied */
+  animation-fill-mode: forwards !important;
 }
 #gacha-controls.pile-display tcg-card.clicked:nth-child(3n + 1) {
   --rotation: -3deg;
@@ -186,6 +191,8 @@ tcg-card {
   background: none;
   cursor: pointer;
   position: absolute;
+  /* card-back showing fix for Firefox */
+  transform: rotateX(0deg);
 }
 
 .card-component {
@@ -269,8 +276,14 @@ tcg-card {
   margin-left: 4px;
 }
 
+#reset-collection {
+  margin-right: 15px;
+}
+
 section label {
-  padding-left: 15px;
+  padding-right: 15px;
+  display: inline-block;
+  white-space: nowrap;
 }
 .grid-display.pulled section {
   padding-bottom: 70px;
@@ -282,11 +295,7 @@ section label {
   animation: button-wiggle 2.32s ease 0s infinite;
 }
 .pile-display button.gacha-button {
-  margin-bottom:0.5em;
-}
-
-#search-bar {
-  margin-top: 15px;
+  margin-bottom: 0.5em;
 }
 
 #gacha-controls button.gacha-button:hover,
@@ -302,14 +311,19 @@ section#gacha-controls label {
 section#gacha-controls input {
   margin-left: 15px;
 }
-section#gacha-controls fieldset:nth-child(2){
-  margin-left:20px;
-  border-left:1px solid var(--bg-color-lighten-50);
+section#gacha-controls fieldset:nth-child(2) {
+  margin-left: 20px;
+  border-left: 1px solid var(--bg-color-lighten-50);
 }
 section#gacha-controls fieldset:nth-child(2) > input:first-child {
-  margin-left:20px;
+  margin-left: 20px;
 }
 
+.grid-display .gacha-prompt {
+  /* this is also part of the hack to ensure that the gacha section tag doesn't change
+  as much when switching between display methods */
+  margin-top: 1.5em;
+}
 .gacha-prompt {
   display: flex;
   flex-direction: column;
@@ -355,10 +369,10 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   padding: 2em;
   border: 1px solid #000;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: #bbd5da;
   height: 90%;
   width: 90%;
-  z-index: 10; /* set to 10 so that it's greater than nav a.active's z-index and #dialog-overlay */
+  z-index: 25; /* set to 25 so that it's greater than nav a.active's z-index and #dialog-overlay */
   display: grid;
   grid-column-gap: 0.5em;
   grid-template-areas:
@@ -375,20 +389,117 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   display: none;
 }
 
+.dialog-container p.card-info {
+  font-size: 1.1em;
+}
+.dialog-container p.attack-traits {
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 10px;
+  border-radius: 5px 0px;
+  line-height: 1.6em;
+  font-size: 0.9em;
+}
+.dialog-container p span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.dialog-container,
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* set to 20 so that it's greater than nav a.active's z-index */
+  /* also so it's greater than the hamburger button, which has to be greater than the max z-index value of the last flipped card in the gacha page */
+  z-index: 20;
+}
+
+/* create a clearer separation between the different text sections of the card */
+.dialog-container h3:not(:first-child) {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 1em;
+}
+
+.dialog-overlay {
+  background-color: rgba(43, 46, 56, 0.7);
+}
+
+/* any width but 770px height or less */
+@media screen and (max-height: 760px) {
+  #card-details-dialog {
+    /* let whole dialog scroll */
+    overflow: auto;
+  }
+  .details-dialog-card {
+    /* make the card sit up the top instead */
+    align-self: start;
+  }
+  .details-dialog-text {
+    /* Override overflow: auto for small screens,
+    and let whole dialog scroll instead of just the text section */
+    overflow: visible;
+    height: max-content;
+  }
+}
+
+/* only make card bigger if the screen height is tall enough to support that card height in full */
+@media screen and (min-width: 1400px) and (min-height: 950px) {
+  .details-dialog-card {
+    /* make the card larger when the screen is resized - 500px width end state*/
+    --card-width: 250px;
+    --card-height: calc(250px * 1.395);
+  }
+}
+
+/* only make card bigger if the screen height is tall enough to support that card height in full */
+@media screen and (min-width: 1600px) and (min-height: 1070px) {
+  .details-dialog-card {
+    /* make the card larger when the screen is resized - 600px width end state*/
+    --card-width: 300px;
+    --card-height: calc(300px * 1.395);
+  }
+}
+
+/* only make card bigger if the screen height is tall enough to support that card height in full */
+@media screen and (min-width: 2200px) and (min-height: 1350px) {
+  .details-dialog-card {
+    /* make the card larger when the screen is resized - 700px width end state*/
+    --card-width: 350px;
+    --card-height: calc(350px * 1.395);
+  }
+  /* adjust the background grain overlay so it doesn't look so pixellated */
+  .details-dialog-card.basic:after,
+  #gacha-controls .card-image.basic:after {
+    background-size: 120% !important;
+    background-repeat: repeat;
+  }
+}
+
 @media screen and (max-width: 1400px) {
   #gacha-controls {
     /* make the card smaller when the screen is resized */
     --card-width: 300px;
     --card-height: 419px;
   }
+  #pull-announcement {
+    margin: 1.5em 0 0.5em 0;
+  }
+  .grid-display .gacha-prompt {
+    /* this number is a bit arbitrary */
+    margin-top: calc(20px + 1.1em);
+  }
 
   .details-dialog-card {
     width: 25vw;
     height: calc(25vw * 1.395);
   }
+}
 
-  #pull-announcement {
-    margin:1.5em 0 0.5em 0;
+@media screen and (max-width: 1320px) {
+  #search-bar {
+    margin-top: 15px;
   }
 }
 
@@ -397,6 +508,12 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     /* make the card even smaller whtn the screen is resized further */
     --card-width: 200px;
     --card-height: 279px;
+  }
+  #gacha-controls.grid-display.pulled .gacha-prompt img {
+    width: 12vmax;
+  }
+  .card-subtitle {
+    font-size: 0.8em;
   }
 
   #card-details-dialog {
@@ -410,37 +527,26 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     /* 3em for close button. fr unit doesn't seem to work when column is 1 */
     grid-template-rows: 3em 0.5fr 1fr 1fr;
   }
-
-  .card-subtitle {
-    font-size: 0.8em;
-  }
-
   .details-dialog-card {
     /* fill in container */
     height: auto;
     width: 100%;
   }
-
   .details-dialog-text {
     /* Override overflow: auto for small screens, and let whole dialog scroll instead of just the text section */
     overflow: visible;
     /* ignore min-height */
     min-height: auto;
     padding: 1em 2vmin;
-  }
-
-  #gacha-controls.grid-display .gacha-prompt img {
-    width: 12vmax;
+    /* push it slightly further down to match spacing with top of card */
+    margin-top: 1.5em;
   }
 }
 
 @media screen and (max-width: 900px) {
   section label {
     /* drop the filter options together to the second line when the screen becomes too small */
-    white-space: nowrap;
     margin-top: 10px;
-    display: block;
-    padding-left: 0px;
   }
   section#gacha-controls label {
     /* ensure the options display as a single line even when the screen is small */
@@ -448,6 +554,10 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     margin-top: 0px;
     display: inline-block;
     padding-left: 0px;
+  }
+
+  #search-bar {
+    margin-top: 0px;
   }
 }
 
@@ -463,6 +573,9 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     right: 0;
     z-index: 1;
     width: calc(100% - 6em);
+  }
+  .grid-display .gacha-prompt {
+    margin-top: 0px;
   }
   #gacha-controls #card-list {
     /* make the card area smaller when the screen is small */
@@ -483,15 +596,13 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     animation: bottom 1s ease 0s 1;
     animation-fill-mode: forwards;
   }
-  .pile-display .gacha-prompt img {
+  .pile-display.pulled .gacha-prompt img {
     width: 11vmax;
   }
-
   #gacha-controls.grid-display #gacha-prompt-roll-again {
     bottom: 0;
     right: 5vmin;
   }
-
   #gacha-controls.pile-display #gacha-prompt-roll-again {
     position: relative;
     width: 100%;
@@ -506,20 +617,6 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
       margin-top: calc(var(--card-height) + 1vmin + 100px);
     }
   }
-}
-
-.dialog-container,
-.dialog-overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 5; /* set to 10 so that it's greater than nav a.active's z-index */
-}
-
-.dialog-overlay {
-  background-color: rgba(43, 46, 56, 0.7);
 }
 
 /* Card animation code, credit to simeydotme for base animation setup
@@ -542,8 +639,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   position: relative;
   margin: 20px;
   overflow: hidden;
-  z-index: 10;
-  touch-action: none;
+  z-index: 25;
   border-radius: 5%/3.5%;
   box-shadow: 0 55px 35px -10px rgb(0 0 0 / 50%);
   transition: transform 0.5s ease;
@@ -576,20 +672,18 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   margin: 0;
 }
 
-@media screen and (max-width: 620px) {
-
+@media screen and (max-width: 670px) {
   /* adjust the display of the reduce motion checkbox when screen is small */
   section#gacha-controls fieldset {
     display: block;
   }
-  section#gacha-controls fieldset:nth-child(2){
+  section#gacha-controls fieldset:nth-child(2) {
     border-left: none;
     margin: 10px 0px 20px 0px;
   }
   section#gacha-controls fieldset:nth-child(2) > input:first-child {
     margin-left: 0px;
   }
-  
 }
 
 @media screen and (max-width: 600px) {
@@ -601,10 +695,53 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
     font-size: 0.8em;
     padding-top: 2vmin;
   }
+  #collection-border {
+    --card-width: 250px;
+    --card-height: 349px;
+  }
   .details-dialog-card {
     /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
     width: calc(var(--card-width) * 1.5);
     height: calc(var(--card-height) * 1.5);
+  }
+}
+
+@media screen and (max-width: 520px) {
+  #reset-collection {
+    margin-top: 10px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  #sort-dropdown {
+    width: 52vw;
+    text-overflow: ellipsis;
+  }
+  #search-bar {
+    width: 52vw;
+  }
+  .details-dialog-card {
+    /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
+    width: calc(var(--card-width) * 1.5);
+    height: calc(var(--card-height) * 1.5);
+  }
+  .details-dialog-text {
+    margin-top: 0em;
+  }
+  #card-details-dialog {
+    /* this is a fix intended for iPhone, to prevent overflow-x scroll
+    this doesn't happen when testing on desktop or emulation.
+    putting it down here near the smallest screen size to avoid possible issues */
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .details-dialog-card {
+    /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
+    width: calc(var(--card-width) * 1.1);
+    height: calc(var(--card-height) * 1.1);
   }
 }
 
@@ -649,6 +786,7 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   mix-blend-mode: color-dodge;
   transition: transform 0.33s ease, filter 0.33s ease, background 0.33s ease;
   border-radius: var(--border-radius);
+  pointer-events: none;
 }
 
 /* before is the gradient layer - only 2 base colours are used by default */
@@ -718,7 +856,8 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
 #gacha-controls .card-image.holo:after {
   --space: 4%;
   --galaxybg: center 521px;
-  background-image: url(../images/AltareTCG_GachaBG_Galaxy.jpg), url(../images/AltareTCG_GachaBG_Galaxy.jpg),
+  background-image: url(../images/AltareTCG_GachaBG_Galaxy.jpg),
+    url(../images/AltareTCG_GachaBG_Galaxy.jpg),
     url(../images/AltareTCG_GachaBG_Galaxy.jpg),
     repeating-linear-gradient(
       82deg,
@@ -830,7 +969,9 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   transition: none;
   animation: holoSparkle 12s ease 0s 1;
 }
-
+.details-dialog-card.basic.animated:after {
+  animation: holoBasicSparkle 12s ease 0s 1;
+}
 .details-dialog-card.secret.animated:after {
   animation: holoSecretSparkle 12s ease 0s 1;
 }
@@ -864,6 +1005,33 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   55% {
     opacity: 0.33;
     background-position: 45% 45%;
+    filter: brightness(1.2) contrast(1.25);
+  }
+}
+
+@keyframes holoBasicSparkle {
+  /* same as above, less movement of the background */
+  0%,
+  100% {
+    opacity: 0;
+    filter: brightness(1.2) contrast(1.25);
+  }
+  6%,
+  11% {
+    opacity: 0.6;
+  }
+  13%,
+  16% {
+    opacity: 0.5;
+    filter: brightness(1.2) contrast(0.8);
+  }
+  35%,
+  38% {
+    opacity: 1;
+    filter: brightness(1) contrast(1);
+  }
+  55% {
+    opacity: 0.33;
     filter: brightness(1.2) contrast(1.25);
   }
 }
@@ -996,7 +1164,10 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   transition: none;
   animation: holoSparkle 3s ease 0.5s 1;
 }
-
+#gacha-controls .card-image.basic.animated:after {
+  transition: none;
+  animation: holoBasicSparkle 3s ease 0.5s 1;
+}
 #gacha-controls .card-image.secret.animated:after {
   transition: none;
   animation: holoSecretSparkle 3s ease 0.5s 1;
@@ -1004,8 +1175,8 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
 
 /* remove the card shake motion if 'Disable Animation' is selected.
 card will still fly across the screen, or flip when opened */
-#gacha-controls .card-image.animated.reduced-motion, 
-#gacha-controls .card-image.animated.reduced-motion:after, 
+#gacha-controls .card-image.animated.reduced-motion,
+#gacha-controls .card-image.animated.reduced-motion:after,
 #gacha-controls .card-image.animated.reduced-motion:before,
 #gacha-controls button.gacha-button.reduced-motion,
 #gacha-controls #card-list tcg-card.clicked.reduced-motion,
@@ -1022,10 +1193,36 @@ card will still fly across the screen, or flip when opened */
   color: white;
   background-color: transparent;
   margin: 1em 0;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 #gacha-notes p {
-  margin: 0.3em;
+  margin: 0.3em 0;
+}
+
+/* for any additional text on the collections page */
+#collection-foreword {
+  text-align: right;
+  font-size: 1em;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 1.2em;
+  border-radius: 8px 0;
+  margin: 1.2em 0;
+}
+#collection-foreword p {
+  text-align: left;
+}
+#collection-foreword p {
+  margin: 0;
+}
+#collection-foreword p:nth-child(2) {
+  margin-top: 0.5em;
+}
+#foreword-close {
+  margin-top: 10px;
+}
+
+#collection-border .card-image {
+  touch-action: none;
 }
 
 /* prevent interaction without removing the event listeners */
@@ -1034,10 +1231,22 @@ card will still fly across the screen, or flip when opened */
 }
 
 @keyframes button-wiggle {
-  0% { transform: scaleX(1) scaleY(1); }
-  50% { transform: scaleX(1) scaleY(1); }
-  51% { transform: scaleX(1.1) scaleY(0.9); }
-  60% { transform: scaleX(0.9) scaleY(1.1); }
-  70% { transform: scaleX(1) scaleY(1); }
-  100% { transform: scaleX(1) scaleY(1); }
+  0% {
+    transform: scaleX(1) scaleY(1);
+  }
+  50% {
+    transform: scaleX(1) scaleY(1);
+  }
+  51% {
+    transform: scaleX(1.1) scaleY(0.9);
+  }
+  60% {
+    transform: scaleX(0.9) scaleY(1.1);
+  }
+  70% {
+    transform: scaleX(1) scaleY(1);
+  }
+  100% {
+    transform: scaleX(1) scaleY(1);
+  }
 }

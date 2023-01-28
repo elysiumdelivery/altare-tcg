@@ -8,51 +8,54 @@ export const GACHA_BUTTONS = document.getElementsByClassName("gacha-button");
 //The sum of all rarities on a slot should be 100 or higher for proper function.
 const slots = [
   {
+    //1
     Element: 100,
   },
+
   {
+    //2
     Common: 100,
   },
   {
-    Common: 80,
-    Uncommon: 20,
+    //3
+    Common: 100,
   },
   {
-    Common: 80,
-    Uncommon: 20,
+    //4
+    Common: 70,
+    Uncommon: 30,
   },
   {
+    //5
     Common: 50,
     Uncommon: 50,
   },
   {
+    //6
     Uncommon: 100,
   },
   {
-    Uncommon: 26,
-    Rare: 26,
-    HoloRare: 21,
-    UltraRare: 17,
-    SecretRare: 10,
-  },
-  {
-    Uncommon: 26,
-    Rare: 26,
-    HoloRare: 21,
-    UltraRare: 17,
-    SecretRare: 10,
-  },
-  {
+    //7
+    Uncommon: 60,
     Rare: 40,
-    HoloRare: 20,
-    UltraRare: 20,
-    SecretRare: 20,
   },
   {
-    Rare: 40,
-    HoloRare: 20,
-    UltraRare: 20,
-    SecretRare: 20,
+    //8
+    Uncommon: 40,
+    Rare: 60,
+  },
+  {
+    //9
+    Rare: 45,
+    HoloRare: 50,
+    UltraRare: 5,
+  },
+  {
+    //10
+    Rare: 25,
+    HoloRare: 45,
+    UltraRare: 25,
+    SecretRare: 5,
   },
 ];
 
@@ -60,22 +63,27 @@ const slots = [
 //This can be used to help collect all cards.
 const specialSlots = {
   69: {
-    HoloRare: 100 / 3,
-    UltraRare: 100 / 3,
-    SecretRare: 100 / 3,
+    HoloRare: 50,
+    UltraRare: 35,
+    SecretRare: 15,
   },
 };
 
 //Pulls a set of cards guided by an array of "slots" passed to the function.
 function pullCards(slots) {
   let pullCount = parseInt(localStorage.getItem("pull-count") ?? "0") + 1;
-  let pulledIDs = [];
   let cards = [];
   let card;
+  let pulled_cards;
+  let special_count = parseInt(localStorage.getItem("special-count") ?? 0);
   for (let slot of slots) {
     let dice = Math.floor(Math.random() * 100) + 1;
     if (dice in specialSlots) {
-      slot = specialSlots[dice];
+      special_count = (special_count + 1) % 3;
+      localStorage.setItem("special-count", special_count.toString());
+      if (special_count == 2) {
+        slot = specialSlots[dice];
+      }
     }
     //This algorithm divides the range [1, 100] into rarity intervals, dictated by the slots.
     //Example: A slot with the following definition:
@@ -86,9 +94,28 @@ function pullCards(slots) {
     //This applies to as many rarities as declared in the slot.
     for (let rarity in slot) {
       if (dice <= slot[rarity]) {
-        card = getRandomCards(cards_by_rarity[rarity], 1)[0];
+        //In each card pull, get 4 random cards and pick the first unique card from it.
+        //(Not present on the current pulled cards array)
+        //In the extremely unlikely case all 4 cards are duplicates, the first is returned
+        //since it means it was destined by the universe itself.
+        //(and saves us from potential infinite rerolling)
+        pulled_cards = getRandomCards(cards_by_rarity[rarity], 4);
+        card = pulled_cards[0];
+        //Checks for no repeats in the same pull
+        for (let pulled_card in pulled_cards) {
+          if (
+            !cards.some(
+              (card) =>
+                card["Collector Number"] ===
+                pulled_cards[pulled_card]["Collector Number"]
+            )
+          ) {
+            card = pulled_cards[pulled_card];
+            break;
+          }
+        }
         cards.push(card);
-        pulledIDs.push(card["Collector Number"]);
+        //pulledIDs.push(card["Collector Number"]);
         //Saves the card's id to localStorage if it's new,, to keep track of owned cards.
         //Also saves the count of owned cards per rarity.
         if (!localStorage.getItem(`card-${card["Collector Number"]}`)) {
@@ -112,8 +139,9 @@ function pullCards(slots) {
       }
     }
   }
-  localStorage.setItem("pull-count", pullCount);
-  localStorage.setItem(`pull-${pullCount}`, JSON.stringify(pulledIDs));
+  //Commenting because we aren't doing anything with this yet... if ever.
+  //localStorage.setItem("pull-count", pullCount);
+  //localStorage.setItem(`pull-${pullCount}`, JSON.stringify(pulledIDs));
   return cards;
 }
 
@@ -153,24 +181,34 @@ export function pullAndRenderCards(render_location) {
     "beforeend",
     `<span id="roll-again-prompt" class="visually-hidden">No more cards in this pack.</span>`
   );
-  
+
   // Add prompt to roll again
   let gachaRollAgain = document.createElement("div");
   gachaRollAgain.id = "gacha-prompt-roll-again";
   gachaRollAgain.className = "gacha-prompt hidden";
-  if(GACHA_MOTION_SETTING[0].checked){
-    gachaRollAgain.insertAdjacentHTML("beforeend", `<img src="../images/slimenolooptransparent.png" alt="Cultare slime smiling happily"/>`);
+  if (GACHA_MOTION_SETTING[0].checked) {
+    gachaRollAgain.insertAdjacentHTML(
+      "beforeend",
+      `<img src="../images/slimenolooptransparent.png" alt="Cultare slime smiling happily"/>`
+    );
   } else {
-    gachaRollAgain.insertAdjacentHTML("beforeend", `<img src="../images/slimelooptransparent.gif" alt="Cultare slime bouncing up and down"/>`);
+    gachaRollAgain.insertAdjacentHTML(
+      "beforeend",
+      `<img src="../images/slimelooptransparent.gif" alt="Cultare slime bouncing up and down"/>`
+    );
   }
-  
+
   let gachaRollAgainButton = document.createElement("button");
   gachaRollAgainButton.id = "gacha-button-roll-again";
   gachaRollAgainButton.className = "gacha-button";
   gachaRollAgainButton.type = "button";
   gachaRollAgainButton.textContent = "Roll Again?";
-  gachaRollAgainButton.setAttribute("aria-labelledby", "roll-again-prompt gacha-button-roll-again");
-  gachaRollAgainButton.onclick = (event) => pullAndRenderCards(document.getElementById("card-list"));
+  gachaRollAgainButton.setAttribute(
+    "aria-labelledby",
+    "roll-again-prompt gacha-button-roll-again"
+  );
+  gachaRollAgainButton.onclick = (event) =>
+    pullAndRenderCards(document.getElementById("card-list"));
 
   gachaRollAgain.append(gachaRollAgainButton);
   render_location.append(gachaRollAgain);
