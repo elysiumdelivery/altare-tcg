@@ -31,7 +31,9 @@ function renderMessages(message_data) {
     if (message["Twitter"]) {
       let userSocial = document.createElement("a");
       userSocial.href = `https://twitter.com/${message["Twitter"]}`;
+      userSocial.setAttribute('target', '_blank');
       userSocial.textContent = message["Twitter"];
+      userSocial.title = "Twitter page for " + message["Participant Name"] + " (" + message["Twitter"] + ")";
       messageUserInfo.append(userSocial);
     }
     messageUserMessage.innerText = message["Birthday Message"];
@@ -83,7 +85,9 @@ function renderCredits(credits_data) {
         let creditTwitterHeader = document.createElement("h4");
         let creditTwitter = document.createElement("a");
         creditTwitter.href = `https://twitter.com/${credit["Twitter"]}`;
+        creditTwitter.setAttribute('target', '_blank');
         creditTwitter.textContent = credit["Twitter"];
+        creditTwitter.title = "Twitter page for " + credit["Staff name"] + " (" + credit["Twitter"] + ")";
         creditTwitterHeader.append(creditTwitter);
         creditListing.append(creditTwitterHeader);
       }
@@ -115,7 +119,9 @@ function renderTwitterArtCredits(twitter_art_data) {
     if (artData["Twitter"]) {
       let creditTwitter = document.createElement("a");
       creditTwitter.href = `https://twitter.com/${artData["Twitter"]}`;
+      creditTwitter.setAttribute('target', '_blank');
       creditTwitter.textContent = artData["Staff name"];
+      creditTwitter.title = "Twitter page for " + artData["Staff name"] + " (" + artData["Twitter"] + ")";
       artContainer.append(creditTwitter);
     }
     artList.append(artContainer);
