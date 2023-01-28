@@ -213,7 +213,24 @@ section#collection-pagination {
   padding: 0;
 }
 
-#collected-cards-number {
+#collection-stats {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+#collection-stats h2 {
+  padding: 0 0.5em;
+}
+#collection-stats h2:first-child {
+  padding-left: 0;
+}
+#collection-stats h2:not(:first-child) {
+  border-left: 2px solid black;
+}
+
+#collected-cards-number,
+#gacha-pull-count {
   font-size: 1em;
 }
 
@@ -501,6 +518,15 @@ section.credits-column p {
       "accessibility"
       "twitillust"
       "twitter";
+  }
+
+  #collection-stats h2 {
+    flex-basis: 50%;
+    text-align: center;
+  }
+  #collection-stats #gacha-pull-count {
+    /* force the numbers to flow to the 2nd line */
+    flex-basis: 30%;
   }
 }
 

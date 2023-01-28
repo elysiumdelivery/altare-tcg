@@ -311,12 +311,18 @@ section#gacha-controls label {
 section#gacha-controls input {
   margin-left: 15px;
 }
-section#gacha-controls fieldset:nth-child(2){
+section#gacha-controls fieldset:nth-child(2) {
   margin-left:20px;
   border-left:1px solid var(--bg-color-lighten-50);
 }
 section#gacha-controls fieldset:nth-child(2) > input:first-child {
   margin-left:20px;
+}
+
+section#gacha-controls fieldset:nth-child(3) {
+  padding: 0 20px;
+  margin-left: 0;
+  border-left:1px solid var(--bg-color-lighten-50);
 }
 
 .grid-display .gacha-prompt {
@@ -609,12 +615,20 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   section#gacha-controls fieldset {
     display: block;
   }
-  section#gacha-controls fieldset:nth-child(2){
+  section#gacha-controls fieldset:nth-child(1) label:nth-child(1) {
+    width: 100%;
+  }
+  section#gacha-controls fieldset:nth-child(2),
+  section#gacha-controls fieldset:nth-child(3) {
     border-left: none;
     margin: 10px 0px 20px 0px;
   }
   section#gacha-controls fieldset:nth-child(2) > input:first-child {
     margin-left: 0px;
+  }
+
+  section#gacha-controls fieldset:nth-child(3) {
+    padding: 0;
   }
   
 }

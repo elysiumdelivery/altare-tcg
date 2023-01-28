@@ -139,6 +139,7 @@ function pullCards(slots) {
   }
   //Commenting because we aren't doing anything with this yet... if ever.
   localStorage.setItem("pull-count", pullCount);
+  document.getElementById("gacha-pull-count").textContent = `Total Pulls: ${pullCount}`;
   //localStorage.setItem(`pull-${pullCount}`, JSON.stringify(pulledIDs));
   return cards;
 }

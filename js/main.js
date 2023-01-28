@@ -23,6 +23,8 @@ const SORT_DROPDOWN = document.getElementById("sort-dropdown");
 const CARDS_PER_PAGE_DROPDOWN = document.getElementById("size-dropdown");
 const SEARCH_BAR = document.getElementById("search-bar");
 
+const PULLED_COUNT_NUMBER = document.getElementById("gacha-pull-count");
+
 export const CARD_ART_HIDDEN_ON_LOAD =
   PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
 
@@ -111,6 +113,9 @@ async function main() {
         GACHA_VIEW_SETTING[0].addEventListener("change", updateGachaView);
         GACHA_VIEW_SETTING[1].addEventListener("change", updateGachaView);
         GACHA_MOTION_SETTING[0].addEventListener("change", updateGachaMotion);
+        // Check pull count
+        var totalPulls = localStorage.getItem("pull-count") ?? 0;
+        PULLED_COUNT_NUMBER.textContent = `Total pulls: ${totalPulls}`;
         // if the window is less than 800, default to a grid layout
         // this checks the box and dispatches a change event
         if (window.innerWidth <= 800) {
@@ -134,6 +139,8 @@ async function main() {
         break;
 
       case "/collection":
+        var totalPulls = localStorage.getItem("pull-count") ?? 0;
+        PULLED_COUNT_NUMBER.textContent = `Total pulls: ${totalPulls}`;
         setupCollectionControls();
         await setupDetailsDialog();
         showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
