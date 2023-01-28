@@ -294,6 +294,8 @@ section label {
   margin-bottom: 1em;
   background-color: var(--accent-color);
   animation: button-wiggle 2.32s ease 0s infinite;
+  /* ensure the button does not wrap outside of the button area */
+  white-space: nowrap;
 }
 .pile-display button.gacha-button {
   margin-bottom: 0.5em;
@@ -803,6 +805,10 @@ section#gacha-controls fieldset:nth-child(3) {
     /* card height is calculated by measurement in Photoshop */
     --card-width: 200px;
     --card-height: 279px;
+  }
+  #gacha-controls button.gacha-button {
+    /* ensure the button is not too small */
+    font-size: 0.8em;
   }
 }
 
