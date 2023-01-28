@@ -609,14 +609,26 @@ section#gacha-controls fieldset:nth-child(3) {
   margin: 0;
 }
 
+.spacer {
+  display: none;
+}
+
 @media screen and (max-width: 670px) {
 
   /* adjust the display of the reduce motion checkbox when screen is small */
   section#gacha-controls fieldset {
     display: block;
   }
-  section#gacha-controls fieldset:nth-child(1) label:nth-child(1) {
-    width: 100%;
+  section#gacha-controls fieldset:nth-child(1) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  section#gacha-controls fieldset:nth-child(1) label {
+    padding: 0;
+    white-space: nowrap;
+  }
+  section#gacha-controls fieldset:nth-child(1) input {
+    margin-left: 10px;
   }
   section#gacha-controls fieldset:nth-child(2),
   section#gacha-controls fieldset:nth-child(3) {
@@ -671,6 +683,10 @@ section#gacha-controls fieldset:nth-child(3) {
   }
   #search-bar {
     width: 52vw;
+  }
+  section#gacha-controls fieldset:nth-child(1) .spacer {
+    display: block;
+    width: 100%;
   }
 }
 
