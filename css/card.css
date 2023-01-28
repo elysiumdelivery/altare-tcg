@@ -504,7 +504,8 @@ section#gacha-controls fieldset:nth-child(3) {
   }
 }
 
-@media screen and (max-width: 1320px) {
+@media screen and (max-width: 1395px) {
+  /* bump the whole second line down when the screen gets too small */
   #search-bar {
     margin-top: 15px;
   }
@@ -683,7 +684,17 @@ section#gacha-controls fieldset:nth-child(3) {
   display: none;
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 860px) {
+  /* roll the pull count onto its own new line first */
+  section#gacha-controls fieldset:nth-child(3) {
+    border-left: none;
+    margin: 10px 0px 20px 0px;
+    padding: 0px;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 680px) {
   /* adjust the display of the reduce motion checkbox when screen is small */
   section#gacha-controls fieldset {
     display: block;
@@ -693,7 +704,7 @@ section#gacha-controls fieldset:nth-child(3) {
     flex-wrap: wrap;
   }
   section#gacha-controls fieldset:nth-child(1) label {
-    padding: 0;
+    padding: 0px 0px 0px 5px;
     white-space: nowrap;
   }
   section#gacha-controls fieldset:nth-child(1) input {
@@ -702,7 +713,7 @@ section#gacha-controls fieldset:nth-child(3) {
   section#gacha-controls fieldset:nth-child(2),
   section#gacha-controls fieldset:nth-child(3) {
     border-left: none;
-    margin: 10px 0px 20px 0px;
+    margin: 20px 0px; /* evenly space each part */
   }
   section#gacha-controls fieldset:nth-child(2) > input:first-child {
     margin-left: 0px;
