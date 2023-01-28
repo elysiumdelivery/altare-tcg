@@ -225,7 +225,8 @@ tcg-card {
 
 .card-cover {
   border-radius: var(--border-radius);
-  background-image: url("../images/AltareTCG_Back_Compressed.jpg");
+  /* important to prevent dark reader from removing it */
+  background-image: url("../images/AltareTCG_Back_Compressed.jpg") !important;
   background-color: #58abda;
 }
 
