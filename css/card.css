@@ -630,7 +630,12 @@ section#gacha-controls fieldset:nth-child(3) {
   section#gacha-controls fieldset:nth-child(3) {
     padding: 0;
   }
-  
+
+  #collection-settings button:not(.card-front):not(.card-back), 
+  #collection-settings select,
+  #collection-settings input {
+    max-height: none;
+  }
 }
 
 @media screen and (max-width: 600px) {

@@ -522,6 +522,7 @@ section.credits-column p {
 
   #collection-stats h2 {
     flex-basis: 50%;
+    flex-grow: 1;
     text-align: center;
   }
   #collection-stats #gacha-pull-count {
