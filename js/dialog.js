@@ -59,8 +59,7 @@ function attackTraitsHTML(traits) {
       htmlList.push(`${trait}: ${value}`);
     }
   }
-
-  return `<p>${htmlList.filter((item) => Boolean(item)).join(" | ")}</p>`;
+  return `<p class="attack-traits">${htmlList.filter((item) => Boolean(item)).join(" | ")}</p>`;
 }
 
 export function updateDetailsDialog(data, cardUrl) {
