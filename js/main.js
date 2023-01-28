@@ -90,7 +90,7 @@ function setupCollectionControls() {
     FULL_COLLECTION_TOGGLE.textContent = "Hide Full Collection";
   }
   RESET_COLLECTION.onclick = (event) => {
-    var confirmReset = window.confirm("Do you want to clear your entire collection?\nSelect OK to clear now, or Cancel to stop.\nIf using a keyboard: use Enter to clear now, or Esc to stop.");
+    var confirmReset = window.confirm("Do you want to clear your entire collection?\nSelect OK to clear now, or Cancel to stop.\nIf using a keyboard: use Enter to clear now, or Escape to stop.");
     if(confirmReset){
       localStorage.clear();
       localStorage.setItem("showFullCollection", "true");
