@@ -329,14 +329,6 @@ nav a#nav-credits:focus-visible:not(.active)::before {
     transform-origin: 0 0%;
   }
 
-  #dark-mode-setting {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 0.5em;
-    margin: 0.5em;
-  }
-
   /* specifying #nav-credits here since the last element in the nav is not a tab */
   nav a#nav-credits {
     transform-origin: 100% 0%;

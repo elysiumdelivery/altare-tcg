@@ -1,4 +1,4 @@
-body.dark-mode {
+.dark-mode {
     border-color: #736b5e;
     color: #e8e6e3;
 }
@@ -16,50 +16,51 @@ body.dark-mode {
         --darkreader-text--bg-color-lighten-50: #70a1d8;
         --darkreader-border--bg-color-lighten-50: #223c7c;
     }
-
+    
     html {
+        background-color: var(--darkreader-bg--bg-color);
         border-color: #736b5e;
         color: #e8e6e3;
     }
 }
         
-body.dark-mode .welcome-splash {
+.dark-mode .welcome-splash {
     background-color: var(--bg-color-darken-50);
     color: rgb(232, 230, 227);
 }
 
-body.dark-mode #card-details-dialog {
+.dark-mode #card-details-dialog {
     background-color: var(--darkreader-bg--bg-color);
     color: rgb(232, 230, 227);
 }
 
-body.dark-mode body.dark-mode #card-details-dialog .card-details-dialog-close {
+.dark-mode #card-details-dialog .card-details-dialog-close {
     outline: 1px solid white;
 }
 
-body.dark-mode button:not(.card-front):not(.card-back), select, input {
+.dark-mode button:not(.card-front):not(.card-back), select, input {
     background-color: var(--darkreader-bg--bg-color);
     color: rgb(232, 230, 227);
 }
 
-body.dark-mode section#artist-writer-board h1 {
+.dark-mode section#artist-writer-board h1 {
     color: #e8e6e3;
 }
 
-body.dark-mode section#artist-writer-board .artist-writer-message,
-body.dark-mode section.credits-column,
-body.dark-mode section.credits-column#twitter-images {
+.dark-mode section#artist-writer-board .artist-writer-message,
+.dark-mode section.credits-column,
+.dark-mode section.credits-column#twitter-images {
     background-color: #272c3a;
     color: #e8e6e3;
 }
 
-body.dark-mode section#artist-writer-board .artist-writer-message a,
-body.dark-mode section.credits-column a,
-body.dark-mode section.credits-column#twitter-images li a {
+.dark-mode section#artist-writer-board .artist-writer-message a,
+.dark-mode section.credits-column a,
+.dark-mode section.credits-column#twitter-images li a {
     color: var(--darkreader-text--bg-color);
 }
 
-body.dark-mode .dialog-container p.attack-traits {
+.dark-mode .dialog-container p.attack-traits {
     background-color: rgba(30, 104, 145, 0.4) !important;
 }
 
@@ -68,62 +69,75 @@ div[role="dialog"] div[role="document"] {
     filter: none !important;
 }
 
-body.dark-mode nav a#nav-gacha::before,
-body.dark-mode section#gacha-controls section#card-list,
-body.dark-mode section#gacha-controls {
+.dark-mode nav a#nav-gacha::before,
+.dark-mode section#gacha-controls section#card-list,
+.dark-mode section#gacha-controls {
     background-color: rgb(47, 57, 143);
 }
 
-body.dark-mode nav a#nav-gacha:hover:not(.active)::before,
-body.dark-mode nav a#nav-gacha:focus-visible:not(.active)::before {
+.dark-mode nav a#nav-gacha:hover:not(.active)::before,
+.dark-mode nav a#nav-gacha:focus-visible:not(.active)::before {
     background-color: #6f79cf;
 }
 
-body.dark-mode nav a#nav-collection::before,
-body.dark-mode section#collection-border section#card-list,
-body.dark-mode section#collection-border {
+.dark-mode nav a#nav-collection::before,
+.dark-mode section#collection-border section#card-list,
+.dark-mode section#collection-border {
     background-color: rgb(48, 72, 133);
 }
 
-body.dark-mode nav a#nav-collection:hover:not(.active)::before,
-body.dark-mode nav a#nav-collection:focus-visible:not(.active)::before {
+.dark-mode nav a#nav-collection:hover:not(.active)::before,
+.dark-mode nav a#nav-collection:focus-visible:not(.active)::before {
     background-color: #8ea2d6;
 }
 
-body.dark-mode nav a#nav-artist-writer-board::before,
-body.dark-mode section#artist-writer-board {
+.dark-mode nav a#nav-artist-writer-board::before,
+.dark-mode section#artist-writer-board {
     background-color: rgb(61, 69, 96);
 }
 
-body.dark-mode nav a#nav-artist-writer-board:hover:not(.active)::before,
-body.dark-mode nav a#nav-artist-writer-board:focus-visible:not(.active)::before {
+.dark-mode nav a#nav-artist-writer-board:hover:not(.active)::before,
+.dark-mode nav a#nav-artist-writer-board:focus-visible:not(.active)::before {
     background-color: rgb(58, 75, 143);
 }
 
-body.dark-mode nav a#nav-message-board::before,
-body.dark-mode section#message-board {
+.dark-mode nav a#nav-message-board::before,
+.dark-mode section#message-board {
     background-color: rgb(32, 66, 143);
 }
 
-body.dark-mode nav a#nav-message-board:hover:not(.active)::before,
-body.dark-mode nav a#nav-message-board:focus-visible:not(.active)::before {
+.dark-mode nav a#nav-message-board:hover:not(.active)::before,
+.dark-mode nav a#nav-message-board:focus-visible:not(.active)::before {
     background-color: #7d8dca;
 }
 
-body.dark-mode nav a#nav-credits::before,
-body.dark-mode section#credits {
+.dark-mode nav a#nav-credits::before,
+.dark-mode section#credits {
     background-color: #2852b3;
 }
 
-body.dark-mode nav a#nav-credits:hover:not(.active)::before,
-body.dark-mode nav a#nav-credits:focus-visible:not(.active)::before {
+.dark-mode nav a#nav-credits:hover:not(.active)::before,
+.dark-mode nav a#nav-credits:focus-visible:not(.active)::before {
     background-color: #587fd9;
 }
 
+#dark-mode-setting {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.5em;
+    margin: 0.5em;
+}
+
 @media only screen and (max-width: 1000px) {
-    body.dark-mode nav {
+    .dark-mode nav {
         /* bg-darken-50 at 80% opacity */
         background-color: rgb(14 25 54 / 80%); 
+    }
+
+    .dark-mode #welcome-fancy-menu nav {
+        /* welcome screen exception */
+        background-color: transparent;
     }
 }
   

@@ -34,7 +34,9 @@ function darkModeCheck () {
   }
   // if dark mode is preferred, add the dark mode class to the body element
   if (systemPrefersDarkMode) {
-    themeColor.content = systemPrefersDarkMode ? 'black' : 'white'; 
+    if (themeColor) {
+      themeColor.content = systemPrefersDarkMode ? 'black' : 'white'; 
+    }
     toggleDarkMode(true);
   }
   // if user decides to adjust on the site, add/remove the appropriate class
