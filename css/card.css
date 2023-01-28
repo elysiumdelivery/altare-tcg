@@ -319,6 +319,12 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   margin-left: 20px;
 }
 
+section#gacha-controls fieldset:nth-child(3) {
+  padding: 0 20px;
+  margin-left: 0;
+  border-left:1px solid var(--bg-color-lighten-50);
+}
+
 .grid-display .gacha-prompt {
   /* this is also part of the hack to ensure that the gacha section tag doesn't change
   as much when switching between display methods */
@@ -672,17 +678,43 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   margin: 0;
 }
 
+.spacer {
+  display: none;
+}
+
 @media screen and (max-width: 670px) {
   /* adjust the display of the reduce motion checkbox when screen is small */
   section#gacha-controls fieldset {
     display: block;
   }
-  section#gacha-controls fieldset:nth-child(2) {
+  section#gacha-controls fieldset:nth-child(1) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  section#gacha-controls fieldset:nth-child(1) label {
+    padding: 0;
+    white-space: nowrap;
+  }
+  section#gacha-controls fieldset:nth-child(1) input {
+    margin-left: 10px;
+  }
+  section#gacha-controls fieldset:nth-child(2),
+  section#gacha-controls fieldset:nth-child(3) {
     border-left: none;
     margin: 10px 0px 20px 0px;
   }
   section#gacha-controls fieldset:nth-child(2) > input:first-child {
     margin-left: 0px;
+  }
+
+  section#gacha-controls fieldset:nth-child(3) {
+    padding: 0;
+  }
+
+  #collection-settings button:not(.card-front):not(.card-back), 
+  #collection-settings select,
+  #collection-settings input {
+    max-height: none;
   }
 }
 
@@ -719,6 +751,10 @@ section#gacha-controls fieldset:nth-child(2) > input:first-child {
   }
   #search-bar {
     width: 52vw;
+  }
+  section#gacha-controls fieldset:nth-child(1) .spacer {
+    display: block;
+    width: 100%;
   }
   .details-dialog-card {
     /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/

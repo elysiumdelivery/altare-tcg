@@ -22,40 +22,38 @@ const slots = [
   },
   {
     //4
+    Common: 90,
+    Uncommon: 10,
+  },
+  {
+    //5
     Common: 70,
     Uncommon: 30,
   },
   {
-    //5
+    //6
     Common: 50,
     Uncommon: 50,
   },
   {
-    //6
+    //7
     Uncommon: 100,
   },
   {
-    //7
-    Uncommon: 60,
-    Rare: 40,
-  },
-  {
     //8
-    Uncommon: 40,
-    Rare: 60,
+    Uncommon: 70,
+    Rare: 30,
   },
   {
     //9
-    Rare: 45,
+    Rare: 50,
     HoloRare: 50,
-    UltraRare: 5,
   },
   {
     //10
-    Rare: 25,
     HoloRare: 45,
-    UltraRare: 25,
-    SecretRare: 5,
+    UltraRare: 45,
+    SecretRare: 10,
   },
 ];
 
@@ -140,7 +138,8 @@ function pullCards(slots) {
     }
   }
   //Commenting because we aren't doing anything with this yet... if ever.
-  //localStorage.setItem("pull-count", pullCount);
+  localStorage.setItem("pull-count", pullCount);
+  document.getElementById("gacha-pull-count").textContent = `Total Pulls: ${pullCount}`;
   //localStorage.setItem(`pull-${pullCount}`, JSON.stringify(pulledIDs));
   return cards;
 }

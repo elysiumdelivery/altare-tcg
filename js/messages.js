@@ -1,7 +1,7 @@
 const MESSAGES_CSV = "../contributor_data.csv";
 const CREDITS_CSV = "../credits_data.csv";
 const TWITTER_ART_CREDITS_CSV = "../twitter_art_data.csv";
-const pathname = window.location.pathname;
+const pathname = window.location.pathname.replace(".html", "");
 const CURRENT_PAGE = pathname.slice(pathname.lastIndexOf("/"), pathname.length);
 
 function getCSVData(filename, callback = undefined) {
@@ -129,10 +129,10 @@ function renderTwitterArtCredits(twitter_art_data) {
 
 async function main() {
   switch (CURRENT_PAGE) {
-    case "/contributor-board.html":
+    case "/contributor-board":
       getCSVData(MESSAGES_CSV, renderMessages);
       break;
-    case "/credits.html":
+    case "/credits":
       getCSVData(CREDITS_CSV, renderCredits);
       getCSVData(TWITTER_ART_CREDITS_CSV, renderTwitterArtCredits);
       break;

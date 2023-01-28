@@ -11,9 +11,9 @@ import { GACHA_BUTTONS, pullAndRenderCards } from "./gacha.js";
 import { showCollection, setupForeword } from "./collection.js";
 
 const CSV_FILENAME = "../Regis Altare Card List CSV.csv";
-const pathname = window.location.pathname;
+const pathname = window.location.pathname.replace(".html", "");
 const CURRENT_PAGE = pathname.slice(pathname.lastIndexOf("/"), pathname.length);
-const PAGES_WHERE_CARD_HIDDEN = ["/gacha.html"];
+const PAGES_WHERE_CARD_HIDDEN = ["/gacha"];
 const COLLECTIONS_MAIN_CONTENT = document.getElementById("card-list");
 const FULL_COLLECTION_TOGGLE = document.getElementById(
   "full-collection-toggle"
@@ -22,6 +22,8 @@ const RESET_COLLECTION = document.getElementById("reset-collection");
 const SORT_DROPDOWN = document.getElementById("sort-dropdown");
 const CARDS_PER_PAGE_DROPDOWN = document.getElementById("size-dropdown");
 const SEARCH_BAR = document.getElementById("search-bar");
+
+const PULLED_COUNT_NUMBER = document.getElementById("gacha-pull-count");
 
 export const CARD_ART_HIDDEN_ON_LOAD =
   PAGES_WHERE_CARD_HIDDEN.includes(CURRENT_PAGE);
@@ -106,11 +108,14 @@ async function main() {
   await defineCardComponent();
   getCSVData(async (cards_data) => {
     switch (CURRENT_PAGE) {
-      case "/gacha.html":
+      case "/gacha":
         // watch for any selection changes - either grid or pile card display
         GACHA_VIEW_SETTING[0].addEventListener("change", updateGachaView);
         GACHA_VIEW_SETTING[1].addEventListener("change", updateGachaView);
         GACHA_MOTION_SETTING[0].addEventListener("change", updateGachaMotion);
+        // Check pull count
+        var totalPulls = localStorage.getItem("pull-count") ?? 0;
+        PULLED_COUNT_NUMBER.textContent = `Total pulls: ${totalPulls}`;
         // if the window is less than 800, default to a grid layout
         // this checks the box and dispatches a change event
         if (window.innerWidth <= 800) {
@@ -133,10 +138,12 @@ async function main() {
         }
         break;
 
-      case "/collection.html":
+      case "/collection":
+        var totalPulls = localStorage.getItem("pull-count") ?? 0;
+        PULLED_COUNT_NUMBER.textContent = `Total pulls: ${totalPulls}`;
+        setupCollectionControls();
         await setupDetailsDialog();
         showCollection(cards_data, COLLECTIONS_MAIN_CONTENT);
-        setupCollectionControls();
         // check if we need to show the foreword/disclaimer when page loads
         setupForeword();
     }
