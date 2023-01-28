@@ -770,6 +770,11 @@ section#gacha-controls fieldset:nth-child(3) {
     display: block;
     width: 100%;
   }
+  #collection-border {
+    /* make it smaller again at this point, for small phones */
+    --card-width: 200px;
+    --card-height: 279px;
+  }
   .details-dialog-card {
     /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
     width: calc(var(--card-width) * 1.5);
