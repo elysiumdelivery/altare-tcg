@@ -811,9 +811,10 @@ section#gacha-controls fieldset:nth-child(3) {
     --card-width: 200px;
     --card-height: 279px;
   }
-  #gacha-controls button.gacha-button {
-    /* ensure the button is not too small */
-    font-size: 0.8em;
+  #gacha-controls.grid-display button.gacha-button {
+    /* ensure the button is not too small, only for grid display though */
+    font-size: 0.9em;
+    border-width: 9px 2px;
   }
 }
 
