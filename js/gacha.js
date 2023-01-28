@@ -51,10 +51,9 @@ const slots = [
   },
   {
     //10
-    Rare: 15,
     HoloRare: 45,
-    UltraRare: 35,
-    SecretRare: 5,
+    UltraRare: 45,
+    SecretRare: 10,
   },
 ];
 
