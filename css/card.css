@@ -786,10 +786,23 @@ section#gacha-controls fieldset:nth-child(3) {
 }
 
 @media screen and (max-width: 340px) {
+  #gacha-controls.grid-display, #gacha-controls.pulled.grid-display {
+    /* card height is calculated by measurement in Photoshop */
+    --card-width: 250px;
+    --card-height: 349px;
+  }
   .details-dialog-card {
     /* adjust the card size further in the dialog depending on the screen size - probably a better way to do it*/
     width: calc(var(--card-width) * 1.1);
     height: calc(var(--card-height) * 1.1);
+  }
+}
+
+@media screen and (max-width: 290px) {
+  #gacha-controls.grid-display, #gacha-controls.pulled.grid-display {
+    /* card height is calculated by measurement in Photoshop */
+    --card-width: 200px;
+    --card-height: 279px;
   }
 }
 
