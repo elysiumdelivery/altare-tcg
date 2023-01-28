@@ -593,4 +593,13 @@ section.credits-column p {
   section.credits-column#twitter-images li a {
     color: var(--darkreader-text--bg-color);
   }
+
+  .dialog-container p.attack-traits {
+    background-color: rgba(--darkreader-bg--accent-color, 0.4);
+  }
+}
+
+/* workaround fix for dark reader to not invert our card dialog */
+div[role="dialog"] div[role="document"] {
+  filter: none !important;
 }
