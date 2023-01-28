@@ -1249,18 +1249,21 @@ card will still fly across the screen, or flip when opened */
   animation-fill-mode: forwards;
 }
 
-/* for any additional text on the gacha page */
-#gacha-notes {
+/* for any additional text on the gacha and collections page */
+#gacha-notes, #collection-notes {
   color: white;
   background-color: transparent;
   margin: 1em 0;
   font-size: 1em;
 }
-#gacha-notes p {
+#gacha-notes p, #collection-notes p {
   margin: 0.3em 0;
 }
 
 /* for any additional text on the collections page */
+#collection-notes {
+  color: black;
+}
 #collection-foreword {
   text-align: right;
   font-size: 1em;
