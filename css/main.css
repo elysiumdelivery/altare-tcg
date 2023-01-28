@@ -129,6 +129,11 @@ input:focus-visible {
   background-color: var(--accent-color);
 }
 
+/* make this look more like a warning */
+#reset-collection:hover {
+  background-color: rgb(114, 0, 0);
+}
+
 fieldset {
   border: none;
   padding: 0;
