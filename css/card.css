@@ -225,7 +225,8 @@ tcg-card {
 
 .card-cover {
   border-radius: var(--border-radius);
-  background-image: url("../images/AltareTCG_Back_Compressed.jpg");
+  /* important to prevent dark reader from removing it */
+  background-image: url("../images/AltareTCG_Back_Compressed.jpg") !important;
   background-color: #58abda;
 }
 
@@ -1264,6 +1265,11 @@ card will still fly across the screen, or flip when opened */
 /* prevent interaction without removing the event listeners */
 .unclickable {
   pointer-events: none;
+}
+
+/* workaround fix for dark reader to not invert our card dialog */
+div[role="dialog"] div[role="document"] {
+  filter: none !important;
 }
 
 @keyframes button-wiggle {
