@@ -138,7 +138,7 @@ function pullCards(slots) {
     }
   }
   //Commenting because we aren't doing anything with this yet... if ever.
-  //localStorage.setItem("pull-count", pullCount);
+  localStorage.setItem("pull-count", pullCount);
   //localStorage.setItem(`pull-${pullCount}`, JSON.stringify(pulledIDs));
   return cards;
 }
