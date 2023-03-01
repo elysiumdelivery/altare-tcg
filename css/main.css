@@ -4,10 +4,12 @@
 
 :root {
   --accent-color: #54acdc;
+  --accent-color-darken-50: #195a7e;
   --accent-color-lighten-50: #a9d5ed;
   --bg-color: #1d346d;
   --bg-color-lighten-30: #345ec5;
   --bg-color-lighten-50: #6c8bd7;
+  --bg-color-darken-50: #0e1936;
 }
 
 html {

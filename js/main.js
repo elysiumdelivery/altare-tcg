@@ -110,7 +110,43 @@ function setupCollectionControls() {
   setupDropdown(CARDS_PER_PAGE_DROPDOWN, "page-size", "10");
 }
 
+function darkModeCheck () {
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  let systemPrefersDarkMode = false;
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // system dark mode
+    systemPrefersDarkMode = true;
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      toggleDarkMode(event.matches);
+    });  
+  }
+  // if dark mode is preferred, add the dark mode class to the body element
+  if (systemPrefersDarkMode) {
+    if (themeColor) {
+      themeColor.content = systemPrefersDarkMode ? 'black' : 'white'; 
+    }
+    toggleDarkMode(true);
+  }
+  // if user decides to adjust on the site, add/remove the appropriate class
+  document.getElementById("dark-mode-toggle").addEventListener("change", (e) => {
+    toggleDarkMode(e.target.checked);
+  });
+}
+
+function toggleDarkMode (isDarkModeOn) {
+  let toggleEl = document.getElementById("dark-mode-toggle");
+  if (isDarkModeOn) {
+    document.querySelector('body').classList.add("dark-mode");
+    toggleEl.checked = true;
+  }
+  else {
+    document.querySelector('body').classList.remove("dark-mode");
+    toggleEl.checked = false;
+  }
+}
+
 async function main() {
+  darkModeCheck();
   await defineCardComponent();
   getCSVData(async (cards_data) => {
     switch (CURRENT_PAGE) {

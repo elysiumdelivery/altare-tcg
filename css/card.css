@@ -946,7 +946,7 @@ section#gacha-controls fieldset:nth-child(3) {
       rgb(58, 192, 183) calc(var(--space) * 10),
       rgb(121, 199, 58) calc(var(--space) * 11),
       rgb(219, 204, 86) calc(var(--space) * 12)
-    );
+    ) !important;
   background-blend-mode: color-dodge, color-burn, saturation;
   background-position: var(--galaxybg, cover), var(--galaxybg, cover),
     var(--galaxybg, cover),
@@ -982,7 +982,7 @@ section#gacha-controls fieldset:nth-child(3) {
       hsl(180, 10%, 60%) 5.2%,
       #0e152e 10%,
       #0e152e 12%
-    );
+    ) !important;
   background-blend-mode: exclusion, hue;
   background-size: var(--imgsize), 200% 400%, 195% 100%;
   background-position: center center, 0% var(--posy),
@@ -1017,7 +1017,7 @@ section#gacha-controls fieldset:nth-child(3) {
       hsl(180, 10%, 60%) 5.2%,
       #0e152e 10%,
       #0e152e 12%
-    );
+    ) !important;
   background-blend-mode: difference, hue;
   background-size: var(--imgsize), 200% 700%, 300% 100%;
   background-position: center, 0% var(--posy), var(--posx) var(--posy);

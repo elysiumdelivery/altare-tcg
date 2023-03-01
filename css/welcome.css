@@ -352,6 +352,14 @@ main {
 @media only screen and (min-width: 600px) {
   /* desktop / landscape styling */
 
+  #dark-mode-setting {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.5em;
+    margin: 0.5em;
+  }
+
   #welcome-nav a {
     font-size: 1.8vmin;
   }
